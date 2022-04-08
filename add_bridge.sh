@@ -1,3 +1,6 @@
-sudo brctl addbr clab-br
-sudo ip link set clab-br up
-sudo ip link set clab-br promisc on
+#!/bin/bash
+bridge="clab-br"
+sudo brctl delbr $bridge
+sudo brctl addbr $bridge
+sudo ip link set $bridge up
+sudo iptables -I FORWARD -i $bridge -j ACCEPT
