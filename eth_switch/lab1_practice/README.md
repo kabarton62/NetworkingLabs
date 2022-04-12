@@ -32,10 +32,9 @@
 3. The network uses two **_Linux Bridges_** as Ethernet switch devices, clab_br1 and clab_br2. 
 4. Each host has ssh enabled. Users can connect to ssh using the IPv4 Address, which is a management interface. The management interface on each host is eth0. Each host has a second interface, eth1, which is connected to clab-br1 or clab-br2.
 5. The bridges can be examined with brctl. Command **brctl show** lists existing bridges and localhost interfaces connected to those bridges:
-```
-brctl show
-```
 ```diff
+$ brctl show
+
 bridge name             bridge id               STP enabled     interfaces
 br-335a0a1cd5f8         8000.0242e0387690           no          veth0581fd3
                                                                 vetha90123d
@@ -52,20 +51,19 @@ docker0                 8000.0242d9304a43           no
 ```
 6. We can use **tcpdump** to examine the traffic on an interface, or on a bridge. Tcpdump captures packets on the interface and either displays them in the terminal or writes them to a file. Capture packets on clab-br1 and display them.
 ```
-sudo tcpdump -i clab-br1
-```
-```
+$ sudo tcpdump -i clab-br1
+
 tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
 listening on clab-br1, link-type EN10MB (Ethernet), capture size 262144 bytes
 ```
 7. Try capturing ping request and reply (technically, echo request and echo reply) from h1 to h2. This requires two terminals to your host. Open a second ssh shell.
 8. Start a packet capture on clab-br1.
 ```
-sudo tcpdump -i clab-br1
+$ sudo tcpdump -i clab-br1
 ```
 10. Next, ssh into h1 and ping from h1 to h2. The username/password for h1 through h4 is admin/admin. The IP address for h1 is 192.168.1.10 and for h2 is 192.168.1.200. See the topology diagram. **Use CTRL-C to stop the pings.**
 ```
-ssh admin@172.20.0.21
+$ ssh admin@172.20.0.21
 h1:~$ ping 192.168.1.200
 PING 192.168.1.200 (192.168.1.200) 56(84) bytes of data.
 64 bytes from 192.168.1.200: icmp_seq=1 ttl=64 time=0.231 ms
@@ -76,7 +74,7 @@ PING 192.168.1.200 (192.168.1.200) 56(84) bytes of data.
 - Two pairs of ICMP echo request and reply.
 - ARP request from 192.168.1.200 and the corresponding response.
 ```
-sudo tcpdump -i clab-br1
+$ sudo tcpdump -i clab-br1
 tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
 listening on clab-br1, link-type EN10MB (Ethernet), capture size 262144 bytes
 
