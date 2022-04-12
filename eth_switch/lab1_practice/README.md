@@ -1,3 +1,4 @@
+<img src="https://github.com/kabarton62/NetworkingLabs/blob/main/src/images/tamusa_final_logo-16.jpg" width="400" height="200">
 # Lab Instructions
 ## Practicing with Ethernet Switches in containerlab & Illustrating a Network Diagram
 ### **Deploy the containerlab topology**
@@ -38,8 +39,8 @@ br-335a0a1cd5f8         8000.0242e0387690           no          veth0581fd3
                                                                 vethca2d91b
                                                                 vethf06f352
                                                                 
-clab-br1                8000.aac1ab03790a           no          eth13
-                                                                eth14
+-clab-br1                8000.aac1ab03790a           no          eth13
+-                                                                eth14
                                                                 
 clab-br2                8000.aac1ab4f0bea           no          eth15
                                                                 eth16
@@ -54,4 +55,36 @@ sudo tcpdump -i clab-br1
 tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
 listening on clab-br1, link-type EN10MB (Ethernet), capture size 262144 bytes
 ```
-7. 
+7. Try capturing ping request and reply (technically, echo request and echo reply) from h1 to h2. This requires two terminals to your host. Open a second ssh shell.
+8. Start a packet capture on clab-br1.
+```
+sudo tcpdump -i clab-br1
+```
+10. Next, ssh into h1 and ping from h1 to h2. The username/password for h1 through h4 is admin/admin. The IP address for h1 is 192.168.1.10 and for h2 is 192.168.1.200. See the topology diagram. **Use CTRL C to stop the pings.**
+```
+ssh admin@172.20.0.21
+h1:~$ ping 192.168.1.200
+PING 192.168.1.200 (192.168.1.200) 56(84) bytes of data.
+64 bytes from 192.168.1.200: icmp_seq=1 ttl=64 time=0.231 ms
+64 bytes from 192.168.1.200: icmp_seq=2 ttl=64 time=0.146 ms
+```
+11. Observe the packet capture. Note that we see:
+- ARP request from 192.168.1.10 and the corresponding response.
+- Two pairs of ICMP echo request and reply.
+- ARP request from 192.168.1.200 and the corresponding response.
+```
+sudo tcpdump -i clab-br1
+tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
+listening on clab-br1, link-type EN10MB (Ethernet), capture size 262144 bytes
+23:34:45.731740 ARP, Request who-has 192.168.1.200 tell 192.168.1.10, length 28
+23:34:45.731809 ARP, Reply 192.168.1.200 is-at aa:c1:ab:7c:f2:80 (oui Unknown), length 28
+
+23:34:45.731831 IP 192.168.1.10 > 192.168.1.200: ICMP echo request, id 84, seq 1, length 64
+23:34:45.731855 IP 192.168.1.200 > 192.168.1.10: ICMP echo reply, id 84, seq 1, length 64
+
+23:34:46.756263 IP 192.168.1.10 > 192.168.1.200: ICMP echo request, id 84, seq 2, length 64
+23:34:46.756348 IP 192.168.1.200 > 192.168.1.10: ICMP echo reply, id 84, seq 2, length 64
+
+23:34:50.820182 ARP, Request who-has 192.168.1.10 tell 192.168.1.200, length 28
+23:34:50.820205 ARP, Reply 192.168.1.10 is-at aa:c1:ab:91:3c:cc (oui Unknown), length 28
+```
