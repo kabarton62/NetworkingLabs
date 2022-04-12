@@ -1,4 +1,7 @@
-<img src="https://github.com/kabarton62/NetworkingLabs/blob/main/src/images/tamusa_final_logo-16.jpg" width="400" height="200">
+<p align="center">
+  <img src="https://www.tamusa.edu/brandguide/jpeglogos/tamusa_final_logo_bw1.jpg" width="400" height="200">
+</p>
+
 # Lab Instructions
 ## Practicing with Ethernet Switches in containerlab & Illustrating a Network Diagram
 ### **Deploy the containerlab topology**
