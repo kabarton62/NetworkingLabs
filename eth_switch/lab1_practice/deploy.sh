@@ -53,21 +53,20 @@ topology:
     clab-br2: 
       kind: bridge
   links:
-    - endpoints: ["h1:eth1", "clab-br1:eth3"]
-    - endpoints: ["h2:eth1", "clab-br1:eth4"]
-    - endpoints: ["h3:eth1", "clab-br1:eth5"]
-    - endpoints: ["h4:eth1", "clab-br1:eth6"]
-    - endpoints: ["h5:eth1", "clab-br1:eth7"]
-    - endpoints: ["h6:eth1", "clab-br1:eth8"]
-    - endpoints: ["h7:eth1", "clab-br1:eth9"]
-    - endpoints: ["h1:eth2", "clab-br2:eth3"]
-    - endpoints: ["h2:eth2", "clab-br2:eth4"]
-    - endpoints: ["h3:eth2", "clab-br2:eth5"]
-    - endpoints: ["h4:eth2", "clab-br2:eth6"]
-    - endpoints: ["h5:eth2", "clab-br2:eth7"]
-    - endpoints: ["h6:eth2", "clab-br2:eth8"]
-    - endpoints: ["h7:eth2", "clab-br2:eth9"]
-
+    - endpoints: ["h1:eth1", "clab-br1:eth13"]
+    - endpoints: ["h2:eth1", "clab-br1:eth14"]
+    - endpoints: ["h3:eth1", "clab-br1:eth15"]
+    - endpoints: ["h4:eth1", "clab-br1:eth16"]
+    - endpoints: ["h5:eth1", "clab-br1:eth17"]
+    - endpoints: ["h6:eth1", "clab-br1:eth18"]
+    - endpoints: ["h7:eth1", "clab-br1:eth19"]
+    - endpoints: ["h1:eth2", "clab-br2:eth23"]
+    - endpoints: ["h2:eth2", "clab-br2:eth24"]
+    - endpoints: ["h3:eth2", "clab-br2:eth25"]
+    - endpoints: ["h4:eth2", "clab-br2:eth26"]
+    - endpoints: ["h5:eth2", "clab-br2:eth27"]
+    - endpoints: ["h6:eth2", "clab-br2:eth28"]
+    - endpoints: ["h7:eth2", "clab-br2:eth29"]
 mgmt: 
   network: srl-mgmt
   ipv4_subnet: 172.20.0.0/24
