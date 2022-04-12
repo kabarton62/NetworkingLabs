@@ -42,11 +42,11 @@ br-335a0a1cd5f8         8000.0242e0387690           no          veth0581fd3
                                                                 vethca2d91b
                                                                 vethf06f352
                                                                 
--clab-br1                8000.aac1ab03790a           no          eth13
--                                                                eth14
+-clab-br1               8000.aac1ab03790a           no          eth13
+-                                                               eth14
                                                                 
--clab-br2                8000.aac1ab4f0bea           no          eth15
--                                                                eth16
+-clab-br2               8000.aac1ab4f0bea           no          eth15
+-                                                               eth16
 
 docker0                 8000.0242d9304a43           no
 ```
@@ -63,7 +63,7 @@ listening on clab-br1, link-type EN10MB (Ethernet), capture size 262144 bytes
 ```
 sudo tcpdump -i clab-br1
 ```
-10. Next, ssh into h1 and ping from h1 to h2. The username/password for h1 through h4 is admin/admin. The IP address for h1 is 192.168.1.10 and for h2 is 192.168.1.200. See the topology diagram. **Use CTRL C to stop the pings.**
+10. Next, ssh into h1 and ping from h1 to h2. The username/password for h1 through h4 is admin/admin. The IP address for h1 is 192.168.1.10 and for h2 is 192.168.1.200. See the topology diagram. **Use CTRL-C to stop the pings.**
 ```
 ssh admin@172.20.0.21
 h1:~$ ping 192.168.1.200
@@ -79,6 +79,7 @@ PING 192.168.1.200 (192.168.1.200) 56(84) bytes of data.
 sudo tcpdump -i clab-br1
 tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
 listening on clab-br1, link-type EN10MB (Ethernet), capture size 262144 bytes
+
 23:34:45.731740 ARP, Request who-has 192.168.1.200 tell 192.168.1.10, length 28
 23:34:45.731809 ARP, Reply 192.168.1.200 is-at aa:c1:ab:7c:f2:80 (oui Unknown), length 28
 
