@@ -3,7 +3,9 @@
 ### **Deploy the containerlab topology**
 
 1. Launch the topology by running script deploy.sh
-**```
+**
+```
   bash deploy.sh
-```**  
+```
+**  
 2. 
