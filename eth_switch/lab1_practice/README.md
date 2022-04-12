@@ -6,7 +6,7 @@
 ```
   bash deploy.sh
 ```
-2. Sample output:
+2. Sample output. The topology includes four hosts (h1 through h4). 
 ```
 +---+--------------+--------------+--------------------------+-------+---------+----------------+-------------------
 +
@@ -25,4 +25,33 @@
 +---+--------------+--------------+--------------------------+-------+---------+----------------+-------------------
 +
 ```
-3. 
+3. The network uses two **_Linux Bridges_** as Ethernet switch devices, clab_br1 and clab_br2. 
+4. Each host has ssh enabled. Users can connect to ssh using the IPv4 Address, which is a management interface. The management interface on each host is eth0. Each host has a second interface, eth1, which is connected to clab-br1 or clab-br2.
+5. The bridges can be examined with brctl. Command **brctl show** lists existing bridges and localhost interfaces connected to those bridges:
+```
+brctl show
+```
+```
+bridge name             bridge id               STP enabled     interfaces
+br-335a0a1cd5f8         8000.0242e0387690           no          veth0581fd3
+                                                                vetha90123d
+                                                                vethca2d91b
+                                                                vethf06f352
+                                                                
+clab-br1                8000.aac1ab03790a           no          eth13
+                                                                eth14
+                                                                
+clab-br2                8000.aac1ab4f0bea           no          eth15
+                                                                eth16
+
+docker0                 8000.0242d9304a43           no
+```
+6. We can use **tcpdump** to examine the traffic on an interface, or on a bridge. Tcpdump captures packets on the interface and either displays them in the terminal or writes them to a file. Capture packets on clab-br1 and display them.
+```
+sudo tcpdump -i clab-br1
+```
+```
+tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
+listening on clab-br1, link-type EN10MB (Ethernet), capture size 262144 bytes
+```
+7. 
