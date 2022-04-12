@@ -35,7 +35,7 @@
 ```
 brctl show
 ```
-```
+```diff
 bridge name             bridge id               STP enabled     interfaces
 br-335a0a1cd5f8         8000.0242e0387690           no          veth0581fd3
                                                                 vetha90123d
@@ -45,8 +45,8 @@ br-335a0a1cd5f8         8000.0242e0387690           no          veth0581fd3
 -clab-br1                8000.aac1ab03790a           no          eth13
 -                                                                eth14
                                                                 
-clab-br2                8000.aac1ab4f0bea           no          eth15
-                                                                eth16
+-clab-br2                8000.aac1ab4f0bea           no          eth15
+-                                                                eth16
 
 docker0                 8000.0242d9304a43           no
 ```
