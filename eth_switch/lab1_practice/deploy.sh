@@ -4,12 +4,14 @@ br2="clab-br2"
 f=/tmp/.s.yml
 
 # Create and enable clab_br1
+sudo ip link set $br1 down
 sudo brctl delbr $br1
 sudo brctl addbr $br1
 sudo ip link set $br1 up
 sudo iptables -I FORWARD -i $br1 -j ACCEPT
 
 # Create and enable clab_br2
+sudo ip link set $br2 down
 sudo brctl delbr $br2
 sudo brctl addbr $br2
 sudo ip link set $br2 up
