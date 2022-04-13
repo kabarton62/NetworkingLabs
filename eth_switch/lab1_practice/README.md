@@ -25,6 +25,8 @@
 +---+--------------+--------------+--------------------------+-------+---------+----------------+-------------------
 +
 ```
+### **Examining the network topology and services**
+
 3. The network uses two **_Linux Bridges_** as Ethernet switch devices: *clab_br1* and *clab_br2*. 
 4. Each host has ssh enabled. Users can connect to ssh using the IPv4 Address, which is a management interface. The management interface on each host is eth0. Each host has a second interface, eth1, which is connected to clab-br1 or clab-br2.
 5. The bridges can be examined with brctl. Command **brctl show** lists existing bridges and localhost interfaces connected to those bridges:
@@ -45,7 +47,9 @@ br-335a0a1cd5f8         8000.0242e0387690           no          veth0581fd3
 
 docker0                 8000.0242d9304a43           no
 ```
-6. We can use **tcpdump** to examine the traffic on an interface, or on a bridge. Tcpdump captures packets on the interface and either displays them in the terminal or writes them to a file. Capture packets on clab-br1 and display them.
+### **Examining network traffic**
+
+6. Use **tcpdump** to examine the traffic on an interface, or on a bridge. Tcpdump captures packets on the interface and either displays them in the terminal or writes them to a file. Capture packets on clab-br1 and display them.
 ```
 $ sudo tcpdump -i clab-br1
 
