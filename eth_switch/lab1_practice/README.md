@@ -4,7 +4,7 @@
 
 1. Launch the topology by running script deploy.sh
 ```
-  bash deploy.sh
+  $ bash deploy.sh
 ```
 2. Sample output. The topology includes four hosts (h1 through h4). 
 ```
