@@ -101,3 +101,14 @@ listening on clab-br1, link-type EN10MB (Ethernet), capture size 262144 bytes
 23:34:50.820182 ARP, Request who-has 192.168.1.10 tell 192.168.1.200, length 28
 23:34:50.820205 ARP, Reply 192.168.1.10 is-at aa:c1:ab:91:3c:cc (oui Unknown), length 28
 ```
+### **Address Resolution Protocol (ARP)** 
+ARP is a TCP/IP Layer 2 protocol used to discover physical MAC addresses associated with logical IP addresses. ARP allows network devices to build and maintain tables that associate dynamic logical addresses with static physical addresses. An *ARP Request* is a Layer 2 broadcast message that requests the owner of a specific IP address to respond to the sender with their physical address. An *ARP Reply* returns the physical address, or MAC address, for the interface with the IP address requested in an ARP Request. The reply is sent to the requesting host.
+### **Internet Control Message Protocol ICMP**
+ICMP is an Internet manangement protocol that supports dozens of different message types. *Echo Request* and *Echo Reply* are just two message types. The **ping** command uses Echo Request and Echo Reply to identify live hosts in a network. Hosts are addressed by their logical address. In other words, hosts are addressed by IP address. 
+### **ICMP and ARP Working Together**
+The command **ping 192.168.1.10** would send an Echo Request to the IP 192.168.1.10 (H1). Let's assume the source IP is 192.168.1.20 (H2), and that H1 and H2 are in the same network. In this scenario, H2 needs to know the MAC address for H1, so before H2 can send the ICMP Echo Request packet it first needs to send an ARP Request to learn H1's MAC address.
+The first frame sent by H2 will be an ARP Request asking who has 192.168.1.10. H1 will respond with an ARP Reply. Now that H2 has the MAC address for H1, H2 will send the ICMP Echo Request. H1 should already know H2's MAC address, which it learned when H2 sent the ARP Request. H1 responds with an Echo Reply. H2 receives the Echo Reply, which communicates that 192.168.1.10 (H1) is a live host.
+### **Capturing Packets with _tcpdump_**
+Tcpdump is a Linux utility used to capture and examine packets. We can view packets in the terminal or write those packet to a file and examine them offline using tcpdump or Wireshark. Although tcpdump will let you do deep packet inspection, Wireshark has a GUI and is a much more powerful tool for examining network flows and doing deep packet inspection. Wireshark can be used to examine packet captures saved with tcpdump.
+## Stretch
+### Modifying Network Topology in containerlab
