@@ -112,3 +112,22 @@ The first frame sent by H2 will be an ARP Request asking who has 192.168.1.10. H
 Tcpdump is a Linux utility used to capture and examine packets. We can view packets in the terminal or write those packet to a file and examine them offline using tcpdump or Wireshark. Although tcpdump will let you do deep packet inspection, Wireshark has a GUI and is a much more powerful tool for examining network flows and doing deep packet inspection. Wireshark can be used to examine packet captures saved with tcpdump.
 ## Stretch
 ### Modifying Network Topology in containerlab
+Before attempting this stretch exercise, first destroy the practice network by running the command:
+```
+$ bash destroy.sh
+```
+Next, modify the topology to add a new link between clab-br1 and clab-br2. The following snippet in deploy.sh creates the links.
+```
+  links:
+    - endpoints: ["h1:eth1", "clab-br1:eth13"]
+    - endpoints: ["h2:eth1", "clab-br1:eth14"]
+    - endpoints: ["h3:eth1", "clab-br2:eth15"]
+    - endpoints: ["h4:eth1", "clab-br2:eth16"]
+```
+In this case, all links are between hosts and the switches. Note that each connection to clab-br1 or clab-br2 are on different Ethernet interfaces. Technically, we could use eth13 and eth14 on both clab-br1 and clab-br2, but we could not use clab-br1:eth13 more than once. 
+1. Modify deploy.sh to add a link between clab-br1 and clab-br2.
+2. Modify destroy.sh to add the same link between clab-br1 and clab-br2.
+3. Start the modified lab.
+4. Demonstrate that H1 can communicate with H4.
+5. Examine network traffic on clab-br1 when attempting to ping H1 -> H4. Note the captured packets.
+6. Destroy the containerlab network.
