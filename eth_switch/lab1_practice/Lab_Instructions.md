@@ -229,3 +229,13 @@ $d exec -it $h4 ip addr add $a4 $b2
 3. Demonstrate that the new host can communicate with h1 and h2. **Capture a screeshot showing successful pings from the new host to h1 and h2.**
 4. Examine network traffic on clab-br1 and clab-br2 when attempting to ping H1 and H4 from the new host. Note your observations and offer an explanation of the observed behavior.
 5. Destroy the containerlab network.
+
+### **Challenge 7: Illustrate Network Topology
+
+Challenge 6 modified the network topology illustrated in Challenge 1. Use diagramming software, such as [Lucidchart](https://www.lucidchart.com/pages/) or Visio or whatever you like to illustrate the network you created in Challenge 6. The diagram should:
+1. Name switches and hosts
+2. Provide host IP addresses
+3. Accruately illustrate the organization of network devices (switches/bridges and hosts)
+
+Both Lucidchart and Visio allow the use of various stencils or shapes. In Lucidcharts, start a drawing, select **Shapes** and **Cisco Network Icons**. In Visio, select **More Shapes** and **Open Stencils**. Open a stencil. You can download Cisco icons from [Cisco](https://www.cisco.com/c/en/us/about/brand-center/network-topology-icons.html)
+**Save the network diagram as a pdf, png, or jpg file.** 
