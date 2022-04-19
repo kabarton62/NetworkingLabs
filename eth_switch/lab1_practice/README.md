@@ -116,18 +116,44 @@ Before attempting this stretch exercise, first destroy the practice network by r
 ```
 $ bash destroy.sh
 ```
-Next, modify the topology to add a new link between clab-br1 and clab-br2. The following snippet in deploy.sh creates the links.
+Next, modify the topology to add a new host to the network. Connect the new host to clab-br1 and assign the IP address 172.20.0.25 for management and IP address 192.168.1.150 for passing traffic. The following snippet in deploy.sh creates a host.
+```
+  nodes:
+    h1:
+      kind: linux
+      mgmt_ipv4: 172.20.0.21
+```
+The following snippet shows how the configuration of connections from hosts to the bridges clab-br1 and clab-br2.
 ```
   links:
     - endpoints: ["h1:eth1", "clab-br1:eth13"]
     - endpoints: ["h2:eth1", "clab-br1:eth14"]
     - endpoints: ["h3:eth1", "clab-br2:eth15"]
     - endpoints: ["h4:eth1", "clab-br2:eth16"]
+```    
+The following snippet shows how IP addresses are assigned to pass traffic in the 192.168.1.0/24 network.
 ```
-In this case, all links are between hosts and the switches. Note that each connection to clab-br1 or clab-br2 are on different Ethernet interfaces. Technically, we could use eth13 and eth14 on both clab-br1 and clab-br2, but we could not use clab-br1:eth13 more than once. 
-1. Modify deploy.sh to add a link between clab-br1 and clab-br2.
-2. Modify destroy.sh to add the same link between clab-br1 and clab-br2.
-3. Start the modified lab.
-4. Demonstrate that H1 can communicate with H4.
-5. Examine network traffic on clab-br1 when attempting to ping H1 -> H4. Note the captured packets.
-6. Destroy the containerlab network.
+# Configure IPs on hosts
+d="sudo docker"
+l=$(cat $f|grep name: | cut -d " " -f2)
+a1=192.168.1.10/24
+a2=192.168.1.200/24
+a3=192.168.1.15/24
+a4=192.168.1.215/24
+b1="dev eth1"
+b2="dev eth1"
+h1="clab-$l-h1"
+h2="clab-$l-h2"
+h3="clab-$l-h3"
+h4="clab-$l-h4"
+$d exec -it $h1 ip addr add $a1 $b1
+$d exec -it $h2 ip addr add $a2 $b2
+$d exec -it $h3 ip addr add $a3 $b1
+$d exec -it $h4 ip addr add $a4 $b2
+```
+
+1. Modify deploy.sh to add a link a new host.
+2. Start the modified lab.
+3. Demonstrate that the new host can communicate with H1 and H2.
+4. Examine network traffic on clab-br1 and clab-br2 when attempting to ping H1 and H4 from the new host. Note your observations and offer an explanation of the observed behavior.
+5. Destroy the containerlab network.
