@@ -15,7 +15,7 @@ The cloud shows there are details we know exist but are not attempting to illust
 
 ### **Challenge 2: Reading deploy.sh**
 
-A detailed explanation of deploy.sh is provided in [Script_Explainer.md](Script_Explainer.md). However, if you can read this bash script without additional assistance, here is a quick summary of what happens in deploy.sh. The script can be examined in four parts:
+A detailed explanation of deploy.sh is provided in [Script_Explainer](Script_Explainer.md). However, if you can read this bash script without additional assistance, here is a quick summary of what happens in deploy.sh. The script can be examined in four parts:
 1. Create and enable Linux bridges, clab-br1 and clab-br2
 ```
 # Create and enable clab_br1
