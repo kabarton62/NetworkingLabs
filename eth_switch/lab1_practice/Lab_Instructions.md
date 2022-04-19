@@ -238,4 +238,5 @@ Challenge 6 modified the network topology illustrated in Challenge 1. Use diagra
 3. Accruately illustrate the organization of network devices (switches/bridges and hosts)
 
 Both Lucidchart and Visio allow the use of various stencils or shapes. In Lucidcharts, start a drawing, select **Shapes** and **Cisco Network Icons**. In Visio, select **More Shapes** and **Open Stencils**. Open a stencil. You can download Cisco icons from [Cisco](https://www.cisco.com/c/en/us/about/brand-center/network-topology-icons.html)
+
 **Save the network diagram as a pdf, png, or jpg file.** 
