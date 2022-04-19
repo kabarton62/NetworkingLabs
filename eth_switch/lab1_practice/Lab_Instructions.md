@@ -13,6 +13,7 @@ The cloud shows there are details we know exist but are not attempting to illust
 <p></p>
 <p></p>
 
+--- 
 ### **Challenge 2: Reading deploy.sh**
 
 A detailed explanation of deploy.sh is provided in [Script_Explainer](Script_Explainer.md). However, if you can read this bash script without additional assistance, here is a quick summary of what happens in deploy.sh. The script can be examined in four parts:
@@ -82,6 +83,7 @@ This last section is broken down to demonstrate how an IP address is configured 
 ```
 sudo docker exec -it clab-lab1-h1 ip addr add 192.168.1.10/24 dev eth1
 ```
+--- 
 ## Operating the Lab Network
 ### **Challenge 3: Deploy the Lab Network**
 Launch the topology by running the script deploy.sh and **capture a screenshot of the results**.
@@ -107,6 +109,7 @@ Sample output. The topology includes four hosts (h1 through h4).
 +---+--------------+--------------+--------------------------+-------+---------+----------------+-------------------
 +
 ```
+--- 
 ### **Challenge 4: Examining the network topology and services**
 
 The network uses two **_Linux Bridges_** as Ethernet switch devices: *clab_br1* and *clab_br2*. 
@@ -130,6 +133,8 @@ br-335a0a1cd5f8         8000.0242e0387690           no          veth0581fd3
 docker0                 8000.0242d9304a43           no
 ```
 **Capture a screenshot showing the interfaces connected to clab-br1 and clab-br2.**
+
+--- 
 ### **Challenge 5: Examining network traffic**
 
 Use **tcpdump** to examine the traffic on an interface, or on a bridge. Tcpdump captures packets on the interface and either displays them in the terminal or writes them to a file. Capture packets on clab-br1 and display them. **Capture a screenshot showing packets forwarded through clab-br1.**
@@ -173,6 +178,8 @@ listening on clab-br1, link-type EN10MB (Ethernet), capture size 262144 bytes
 23:34:50.820182 ARP, Request who-has 192.168.1.10 tell 192.168.1.200, length 28
 23:34:50.820205 ARP, Reply 192.168.1.10 is-at aa:c1:ab:91:3c:cc (oui Unknown), length 28
 ```
+
+---
 #### **Address Resolution Protocol (ARP)** 
 ARP is a TCP/IP Layer 2 protocol used to discover physical MAC addresses associated with logical IP addresses. ARP allows network devices to build and maintain tables that associate dynamic logical addresses with static physical addresses. An *ARP Request* is a Layer 2 broadcast message that requests the owner of a specific IP address to respond to the sender with their physical address. An *ARP Reply* returns the physical address, or MAC address, for the interface with the IP address requested in an ARP Request. The reply is sent to the requesting host.
 #### **Internet Control Message Protocol ICMP**
@@ -182,6 +189,8 @@ The command **ping 192.168.1.10** would send an Echo Request to the IP 192.168.1
 The first frame sent by H2 will be an ARP Request asking who has 192.168.1.10. H1 will respond with an ARP Reply. Now that H2 has the MAC address for H1, H2 will send the ICMP Echo Request. H1 should already know H2's MAC address, which it learned when H2 sent the ARP Request. H1 responds with an Echo Reply. H2 receives the Echo Reply, which communicates that 192.168.1.10 (H1) is a live host.
 #### **Capturing Packets with _tcpdump_**
 Tcpdump is a Linux utility used to capture and examine packets. We can view packets in the terminal or write those packet to a file and examine them offline using tcpdump or Wireshark. Although tcpdump will let you do deep packet inspection, Wireshark has a GUI and is a much more powerful tool for examining network flows and doing deep packet inspection. Wireshark can be used to examine packet captures saved with tcpdump.
+
+---
 ## Stretch
 ### **Challenge 6: Modifying Network Topology in containerlab**
 Before attempting this stretch exercise, first destroy the practice network by running the command:
@@ -230,6 +239,7 @@ $d exec -it $h4 ip addr add $a4 $b2
 4. Examine network traffic on clab-br1 and clab-br2 when attempting to ping H1 and H4 from the new host. Note your observations and offer an explanation of the observed behavior.
 5. Destroy the containerlab network.
 
+---
 ### **Challenge 7: Illustrate Network Topology
 
 Challenge 6 modified the network topology illustrated in Challenge 1. Use diagramming software, such as [Lucidchart](https://www.lucidchart.com/pages/) or Visio or whatever you like to illustrate the network you created in Challenge 6. The diagram should:
