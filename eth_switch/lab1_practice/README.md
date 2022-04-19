@@ -13,6 +13,8 @@ The script [deploy.sh](deploy.sh) accomplishes several things:
 3. Starts the lab network in containerlab
 4. Configures IP addresses on interface eth1 on h1 through h4
 ```
+If you can read and understand deploy.sh, great! If you need help reading and understanding the script, please take a look at the detailed explanation of deploy.sh provided in [Script_Explainer](Script_Explainer.md).
+
 ### **Understanding destroy.sh**
 The script [destroy.sh](destroy.sh) is simpler than deploy.sh. Destroy.sh:
 ```
