@@ -3,3 +3,6 @@
 ### **Prerequisites**
 
 Install docker-ce, containerlab, nmap, net-utils and bridge-utils by running the script [install.sh](../../install.sh)
+```
+$ bash install.sh
+```
