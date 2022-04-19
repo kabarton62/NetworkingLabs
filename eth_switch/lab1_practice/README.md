@@ -20,6 +20,6 @@ The script [destroy.sh](destroy.sh) is simpler than deploy.sh. Destroy.sh:
 2. Deletes the containerlab topology configuration file, lab1.yml
 3. Deletes the two Linux bridges, clab-br1 and clab-br2
 ```
-### **Detailed Lab Instructions**
+### **Lab Instructions**
 Detailed lab instructions are in [Lab_Instructions.md](Lab_Instructions.md).
 Lab submission requirements are in [Lab_Submission.md](Lab_Submission.md)
