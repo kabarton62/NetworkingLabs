@@ -1,23 +1,94 @@
 # <img src="https://www.tamusa.edu/brandguide/jpeglogos/tamusa_final_logo_bw1.jpg" width="100" height="50"> Lab Instructions
-## Practicing with Ethernet Switches in containerlab & Illustrating a Network Diagram
-### **Understanding the Network Diagram**
+## Network Topology and Reading deploy.sh
+### **Challenge 1: Understanding the Network Diagram**
 
 Network diagrams communicate a lot of information, but only if a reader understands the common conventions used in network diagrams. Figure 1 illustrates the network topology for this lab.
 
 This lab deploys a simple network with two Ethernet switches (clab-br1 and clab-br2) and four Linux hosts (h1 thru h4). Note, the breakout for connections from h3 and h4 to clab-br2. Hosts h3 and h4 are connected to separate ports on clab-br2 but network illustrations normally do not draw those individual connections to the switch. Instead, a single line is drawn to the switch and hosts are connected to a vertical line. For Ethernet, this is understood to represent "home run" connections from each host to the switch. Alternatively, the switches could be removed from the illustration altogether without changing the meaning of the topology. The vertical lines can represent multiple switching layers (core, distribution, and workgroup).
 
-The cloud shows there are details we know exist but are not attempting to illustrate. In this case, there is some type of routng and Network Address Translation (NAT) that happens in the cloud. We would normally just include an empty cloud.
+The cloud shows there are details we know exist but are not attempting to illustrate. In this case, there is some type of routng and Network Address Translation (NAT) that happens in the cloud. 
 
 <img src="../images/switch.png" width="600" height="600">
 <sub><i>Figure 1. Network Topology</i></sub>
 <p></p>
 <p></p>
 
-1. Launch the topology by running script deploy.sh
+### **Challenge 2: Reading deploy.sh**
+
+A detailed explanation of deploy.sh is provided in [Script_Explainer.md](Script_Explainer.md). However, if you can read this bash script without additional assistance, here is a quick summary of what happens in deploy.sh. The script can be examined in four parts:
+1. Create and enable Linux bridges, clab-br1 and clab-br2
+```
+# Create and enable clab_br1
+sudo brctl delbr $br1
+sudo brctl addbr $br1
+sudo ip link set $br1 up
+sudo iptables -I FORWARD -i $br1 -j ACCEPT
+```
+Bridge Control (brctl) is a used to create, delete, manage and inspect Linux bridges. The first command in this string deletes the bridge named in the variable $br1. $br1 was previously defined as clab_br1. The second command creates bridge clab_br1. The third command brings the newly created bridge into the *up* state. Finally, the last step is to configure iptables to forward traffic from clab_br1.
+
+Similar commands are included to create and enable clab_br2.
+
+2. Create the containerlab topology configuration file, lab1.yml
+```
+# Create and yml file and write to lab1.yml
+cat << EOF > $f
+name: lab2
+topology:
+  defaults:
+    kind: linux
+  kinds:
+    linux:
+      image: docker.io/akpinar/alpine 
+  nodes:
+    h1:
+      kind: linux
+      mgmt_ipv4: 172.20.0.21
+
+    ... Lines ommitted for brevity ...
+
+    links:
+    - endpoints: ["h1:eth1", "clab-br1:eth13"]
+    
+    ... Lines ommitted for brevity ...
+
+mgmt: 
+  network: srl-mgmt
+  ipv4_subnet: 172.20.0.0/24
+  ipv6_subnet: 2001:172:20::/80  
+EOF
+```
+*cat << EOF > $f* creates lab1.yml. Nodes h1 through h4 are created. Each node is created from the *kind* linux, and linux is built from the Docker image docker.io/akpinar/alpine. Finally, nodes h1 through h4 are connected to clab_br1 and clab_br2 in the *links* section.
+
+3. Start the lab network in containerlab
+```
+sudo clab deploy --topo $f
+```
+The above command executes as *sudo clab deploy --topo lab1.yml*.
+
+4. Configure IP addresses on h1 through h4
+```
+# Configure IPs on hosts
+d="sudo docker"
+l=$(cat $f|grep name: | cut -d " " -f2)
+a1=192.168.1.10/24
+
+b1="dev eth1"
+
+h1="clab-$l-h1"
+
+$d exec -it $h1 ip addr add $a1 $b1
+```
+This last section is broken down to demonstrate how an IP address is configured on a single host, h1. The IP address is configured by running a command on the host h1 use *docker exec*. Host h1 is a Docker container. Either the *container id* or *container name* is required to use *docker exec*. The containerlab lab name is a part of the container name. That lab name is retrieved from lab1.yml and defined as variable *$l*. Finally, the IP address and netmask 192.168.1.10/24 are configured on h1 with the command:
+```
+sudo docker exec -it clab-lab1-h1 ip addr add 192.168.1.10/24 dev eth1
+```
+## Operating the Lab Network
+### **Challenge 3: Deploy the Lab Network**
+Launch the topology by running the script deploy.sh and **capture a screenshot of the results**.
 ```
   $ bash deploy.sh
 ```
-2. Sample output. The topology includes four hosts (h1 through h4). 
+Sample output. The topology includes four hosts (h1 through h4). 
 ```
 +---+--------------+--------------+--------------------------+-------+---------+----------------+-------------------
 +
@@ -36,11 +107,11 @@ The cloud shows there are details we know exist but are not attempting to illust
 +---+--------------+--------------+--------------------------+-------+---------+----------------+-------------------
 +
 ```
-### **Examining the network topology and services**
+### **Challenge 4: Examining the network topology and services**
 
-3. The network uses two **_Linux Bridges_** as Ethernet switch devices: *clab_br1* and *clab_br2*. 
-4. Each host has ssh enabled. Users can connect to ssh using the IPv4 Address, which is a management interface. The management interface on each host is eth0. Each host has a second interface, eth1, which is connected to clab-br1 or clab-br2.
-5. The bridges can be examined with brctl. Command **brctl show** lists existing bridges and localhost interfaces connected to those bridges:
+The network uses two **_Linux Bridges_** as Ethernet switch devices: *clab_br1* and *clab_br2*. 
+Each host has ssh enabled. Users can connect to ssh using the IPv4 Address, which is a management interface. The management interface on each host is eth0. Each host has a second interface, eth1, which is connected to clab-br1 or clab-br2.
+The bridges can be examined with brctl. Command **brctl show** lists existing bridges and localhost interfaces connected to those bridges:
 ```diff
 $ brctl show
 
@@ -58,21 +129,22 @@ br-335a0a1cd5f8         8000.0242e0387690           no          veth0581fd3
 
 docker0                 8000.0242d9304a43           no
 ```
-### **Examining network traffic**
+**Capture a screenshot showing the interfaces connected to clab-br1 and clab-br2.**
+### **Challenge 5: Examining network traffic**
 
-6. Use **tcpdump** to examine the traffic on an interface, or on a bridge. Tcpdump captures packets on the interface and either displays them in the terminal or writes them to a file. Capture packets on clab-br1 and display them.
+Use **tcpdump** to examine the traffic on an interface, or on a bridge. Tcpdump captures packets on the interface and either displays them in the terminal or writes them to a file. Capture packets on clab-br1 and display them. **Capture a screenshot showing packets forwarded through clab-br1.**
 ```
 $ sudo tcpdump -i clab-br1
 
 tcpdump: verbose output suppressed, use -v or -vv for full protocol decode
 listening on clab-br1, link-type EN10MB (Ethernet), capture size 262144 bytes
 ```
-7. Try capturing ping request and reply (technically, echo request and echo reply) from h1 to h2. This requires two terminals to your host. Open a second ssh shell.
-8. Start a packet capture on clab-br1.
+Try capturing a ping request and reply (technically, echo request and echo reply) from h1 to h2. This requires two terminals to your host. Open a second ssh shell.
+Start a packet capture on clab-br1.
 ```
 $ sudo tcpdump -i clab-br1
 ```
-10. Next, ssh into h1 and ping from h1 to h2. The username/password for h1 through h4 is admin/admin. The IP address for h1 is 192.168.1.10 and for h2 is 192.168.1.200. See the topology diagram. **Use CTRL-C to stop the pings.**
+Next, ssh into h1 and ping from h1 to h2. The username/password for h1 through h4 is admin/admin. The IP address for h1 is 192.168.1.10 and for h2 is 192.168.1.200. See the topology diagram. **Use CTRL-C to stop the pings.**
 ```
 $ ssh admin@172.20.0.21
 h1:~$ ping 192.168.1.200
@@ -80,7 +152,7 @@ PING 192.168.1.200 (192.168.1.200) 56(84) bytes of data.
 64 bytes from 192.168.1.200: icmp_seq=1 ttl=64 time=0.231 ms
 64 bytes from 192.168.1.200: icmp_seq=2 ttl=64 time=0.146 ms
 ```
-11. Observe the packet capture. Note that we see:
+Observe the packet capture. Note that we see:
 - ARP request from 192.168.1.10 and the corresponding response.
 - Two pairs of ICMP echo request and reply.
 - ARP request from 192.168.1.200 and the corresponding response.
@@ -101,17 +173,17 @@ listening on clab-br1, link-type EN10MB (Ethernet), capture size 262144 bytes
 23:34:50.820182 ARP, Request who-has 192.168.1.10 tell 192.168.1.200, length 28
 23:34:50.820205 ARP, Reply 192.168.1.10 is-at aa:c1:ab:91:3c:cc (oui Unknown), length 28
 ```
-### **Address Resolution Protocol (ARP)** 
+#### **Address Resolution Protocol (ARP)** 
 ARP is a TCP/IP Layer 2 protocol used to discover physical MAC addresses associated with logical IP addresses. ARP allows network devices to build and maintain tables that associate dynamic logical addresses with static physical addresses. An *ARP Request* is a Layer 2 broadcast message that requests the owner of a specific IP address to respond to the sender with their physical address. An *ARP Reply* returns the physical address, or MAC address, for the interface with the IP address requested in an ARP Request. The reply is sent to the requesting host.
-### **Internet Control Message Protocol ICMP**
+#### **Internet Control Message Protocol ICMP**
 ICMP is an Internet manangement protocol that supports dozens of different message types. *Echo Request* and *Echo Reply* are just two message types. The **ping** command uses Echo Request and Echo Reply to identify live hosts in a network. Hosts are addressed by their logical address. In other words, hosts are addressed by IP address. 
-### **ICMP and ARP Working Together**
+#### **ICMP and ARP Working Together**
 The command **ping 192.168.1.10** would send an Echo Request to the IP 192.168.1.10 (H1). Let's assume the source IP is 192.168.1.20 (H2), and that H1 and H2 are in the same network. In this scenario, H2 needs to know the MAC address for H1, so before H2 can send the ICMP Echo Request packet it first needs to send an ARP Request to learn H1's MAC address.
 The first frame sent by H2 will be an ARP Request asking who has 192.168.1.10. H1 will respond with an ARP Reply. Now that H2 has the MAC address for H1, H2 will send the ICMP Echo Request. H1 should already know H2's MAC address, which it learned when H2 sent the ARP Request. H1 responds with an Echo Reply. H2 receives the Echo Reply, which communicates that 192.168.1.10 (H1) is a live host.
-### **Capturing Packets with _tcpdump_**
+#### **Capturing Packets with _tcpdump_**
 Tcpdump is a Linux utility used to capture and examine packets. We can view packets in the terminal or write those packet to a file and examine them offline using tcpdump or Wireshark. Although tcpdump will let you do deep packet inspection, Wireshark has a GUI and is a much more powerful tool for examining network flows and doing deep packet inspection. Wireshark can be used to examine packet captures saved with tcpdump.
 ## Stretch
-### Modifying Network Topology in containerlab
+### **Challenge 6: Modifying Network Topology in containerlab**
 Before attempting this stretch exercise, first destroy the practice network by running the command:
 ```
 $ bash destroy.sh
@@ -154,6 +226,6 @@ $d exec -it $h4 ip addr add $a4 $b2
 
 1. Modify deploy.sh to add a link a new host.
 2. Start the modified lab.
-3. Demonstrate that the new host can communicate with H1 and H2.
+3. Demonstrate that the new host can communicate with h1 and h2. **Capture a screeshot showing successful pings from the new host to h1 and h2.**
 4. Examine network traffic on clab-br1 and clab-br2 when attempting to ping H1 and H4 from the new host. Note your observations and offer an explanation of the observed behavior.
 5. Destroy the containerlab network.
