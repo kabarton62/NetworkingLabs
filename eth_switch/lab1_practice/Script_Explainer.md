@@ -50,7 +50,9 @@ sudo clab deploy --topo lab1.yml
 For the command to work, you need the file lab1.yml. That file could be provided separately, either in the GitHub repository or somewhere else, but an easier way to manage it is to create lab1.yml in this script. Lab1.yml is created in the script with a *here-document*. The here-document is created in lines 19 to 53. The following is a truncated copy of the here-document.
 ```
 cat << EOF > $f
---- TRUNCATED CONTENT
+
+--- TRUNCATED CONTENT ---
+
 EOF
 ```
 You will recognize the variable $f. Recall that $f contains the string "lab1.yml". The command **cat << EOF > $f** will write the content of the here-document to lab1.yml. The value EOF on line 53 terminates the content of the here-document. Running the script deploy.sh creates a file in the current directory named lab1.yml with the content:
