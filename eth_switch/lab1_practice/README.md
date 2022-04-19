@@ -2,4 +2,4 @@
 ## Practicing with Ethernet Switches in containerlab & Illustrating a Network Diagram
 ### **Prerequisites**
 
-Install docker-ce, containerlab, nmap, net-utils and bridge-utils by running the script [install.sh](../../../install.sh)
+Install docker-ce, containerlab, nmap, net-utils and bridge-utils by running the script [install.sh](../../install.sh)
