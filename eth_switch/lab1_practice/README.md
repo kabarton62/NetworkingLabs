@@ -6,3 +6,5 @@ Install docker-ce, containerlab, nmap, net-utils and bridge-utils by running the
 ```
 $ bash install.sh
 ```
+### **Understanding deploy.sh**
+The script [deploy.sh](deploy.sh) accomplishes several things.
