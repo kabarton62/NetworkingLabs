@@ -17,6 +17,6 @@ The executable destroy-lab2.x is similar to destroy.sh, but has to recreate to t
 3. Deletes the Linux bridges
 ```
 ### **Lab Instructions**
-Detailed lab instructions are in [Lab_Instructions.md](Lab_Instructions.md).
+The overall goal of this lab is to use the skills developed in Lab 1 Practice to discover the network deployed by lab2.x and illustrating that network in a network diagram. Detailed lab instructions are in [Lab_Instructions.md](Lab_Instructions.md).
 Lab submission requirements are in [Lab_Submission.md](Lab_Submission.md)
 
