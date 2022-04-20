@@ -178,6 +178,33 @@ listening on clab-br1, link-type EN10MB (Ethernet), capture size 262144 bytes
 23:34:50.820182 ARP, Request who-has 192.168.1.10 tell 192.168.1.200, length 28
 23:34:50.820205 ARP, Reply 192.168.1.10 is-at aa:c1:ab:91:3c:cc (oui Unknown), length 28
 ```
+Linux net-tools utilities can be used to examine host network configurations. In particular, **ifconfig** lists network interfaces and interface configuration. The following snippet shows the result of ifconfig on h1. Note that eth0 is connected to the management network (IP address 172.20.0.21) and eth1 is connected to clab-br1 (IP address 192.168.1.10). These details can be aggregated with details learned through other methods, such as packet captures, to build an understanding of a network's topology.
+```
+$ ifconfig
+eth0      Link encap:Ethernet  HWaddr 02:42:AC:14:00:15  
+          inet addr:172.20.0.21  Bcast:172.20.0.255  Mask:255.255.255.0
+          inet6 addr: 2001:172:20::3/80 Scope:Global
+          inet6 addr: fe80::42:acff:fe14:15/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:1500  Metric:1
+          RX packets:79 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:43 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0 
+          RX bytes:9031 (8.8 KiB)  TX bytes:6399 (6.2 KiB)
+
+eth1      Link encap:Ethernet  HWaddr AA:C1:AB:AB:DA:46  
+          inet addr:192.168.1.10  Bcast:0.0.0.0  Mask:255.255.255.0
+          inet6 addr: fe80::a8c1:abff:feab:da46/64 Scope:Link
+          UP BROADCAST RUNNING MULTICAST  MTU:9500  Metric:1
+          RX packets:14 errors:0 dropped:0 overruns:0 frame:0
+          TX packets:8 errors:0 dropped:0 overruns:0 carrier:0
+          collisions:0 txqueuelen:0 
+          RX bytes:1436 (1.4 KiB)  TX bytes:656 (656.0 B)
+
+lo        Link encap:Local Loopback  
+          inet addr:127.0.0.1  Mask:255.0.0.0
+          inet6 addr: ::1/128 Scope:Host
+          UP LOOPBACK RUNNING  MTU:65536  Metric:1
+```
 
 ---
 #### **Address Resolution Protocol (ARP)** 
