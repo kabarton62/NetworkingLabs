@@ -178,7 +178,7 @@ listening on clab-br1, link-type EN10MB (Ethernet), capture size 262144 bytes
 23:34:50.820182 ARP, Request who-has 192.168.1.10 tell 192.168.1.200, length 28
 23:34:50.820205 ARP, Reply 192.168.1.10 is-at aa:c1:ab:91:3c:cc (oui Unknown), length 28
 ```
-Linux net-tools utilities can be used to examine host network configurations. In particular, **ifconfig** lists network interfaces and interface configuration. The following snippet shows the result of ifconfig on h1. Note that eth0 is connected to the management network (IP address 172.20.0.21) and eth1 is connected to clab-br1 (IP address 192.168.1.10). These details can be aggregated with details learned through other methods, such as packet captures, to build an understanding of a network's topology.
+Linux net-tools utilities can be used to examine host network configurations. In particular, **ifconfig** lists network interfaces and interface configuration. The following snippet shows the result of ifconfig on h1. Note that eth0 is connected to the management network (IP address 172.20.0.21) and eth1 is connected to clab-br1 (IP address 192.168.1.10). These details can be aggregated with details learned through other methods, such as packet captures, to build an understanding of a network's topology. An alternative to ifconfig is **ip address** or the shortcut **ip a**. 
 ```
 $ ifconfig
 eth0      Link encap:Ethernet  HWaddr 02:42:AC:14:00:15  
