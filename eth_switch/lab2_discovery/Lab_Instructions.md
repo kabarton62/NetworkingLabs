@@ -13,4 +13,11 @@ $ chmod u+x *.x
 ```
 ---
 
-### Challenge 2: 
+### Challenge 2: Network Discovery
+Use containerlab feedback and utilities such as brctl, ifconfig, ip a, and ping to discover hosts and configuration. Note that a shell can be opened in any of the hosts created by lab2.x using SSH. **The username and password for every host created in lab2.x is admin/admin**.
+
+### Challenge 3: Illustrate Network Topology
+Create a network diagram that accurately and completely illustrates the network topology. Node, network devices, links, and IP addresses must be explicitly reported in the network diagram.
+
+### Challenge 4: Destroy the Network
+Use destroy-lab2.x to destroy the network. Not sure how to destroy the network with destroy-lab2.x? Adapt information from Challenge 1 to complete this challenge.
