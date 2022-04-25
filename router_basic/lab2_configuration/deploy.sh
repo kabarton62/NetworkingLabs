@@ -18,6 +18,7 @@ sudo iptables -I FORWARD -i $br2 -j ACCEPT
 # Create yml file and write to lab1.yml
 cat << EOF > $f
 name: lab1
+topology:
   nodes:
     h1:
       kind: linux
