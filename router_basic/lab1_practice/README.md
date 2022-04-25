@@ -1,5 +1,6 @@
 # <img src="https://www.tamusa.edu/brandguide/jpeglogos/tamusa_final_logo_bw1.jpg" width="100" height="50"> Lab 1 Practice
 ## Practicing with FRRouting in containerlab
+This lab uses a two-router topology built with Free Range Routing (FRRouting) containers. The hosts h1 through h4 have basic IP address and default gateway configurations but the routers r1 and r2 are not configured. The lab runs some basic network troubleshooting steps on the hosts and then walks through interface configurations on r1 and r2. Static routes are introduced as Stretch challenges.
 ### **Prerequisites**
 Install docker-ce, containerlab, nmap, net-utils and bridge-utils by running the script [install.sh](../../install.sh)
 ```
