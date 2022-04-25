@@ -44,8 +44,6 @@ topology:
     r2:
       kind: linux
       image: 2stacks/vyos:latest
-      binds:
-        - daemons:/etc/frr/daemons
 
   links:
     - endpoints: ["h1:eth1", "clab-br1:eth13"]
