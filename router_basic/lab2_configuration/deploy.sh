@@ -43,8 +43,9 @@ topology:
         - daemons:/etc/frr/daemons
     r2:
       kind: linux
-      image: 2stacks/vyos:latest
-
+      image: frrouting/frr:v7.5.0
+      binds:
+        - daemons:/etc/frr/daemons
   links:
     - endpoints: ["h1:eth1", "clab-br1:eth13"]
     - endpoints: ["h2:eth1", "clab-br1:eth14"]
@@ -75,3 +76,9 @@ $d exec -it $h1 ip addr add $a1 $b1
 $d exec -it $h2 ip addr add $a2 $b2
 $d exec -it $h3 ip addr add $a3 $b1
 $d exec -it $h4 ip addr add $a4 $b2
+
+# Configure default gateways on hosts
+$d exec -it $h1 route add default gw 192.168.1.1 eth1
+$d exec -it $h2 route add default gw 192.168.1.1 eth1
+$d exec -it $h3 route add default gw 192.168.2.1 eth1
+$d exec -it $h4 route add default gw 192.168.2.1 eth1
