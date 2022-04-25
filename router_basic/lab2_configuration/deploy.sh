@@ -18,25 +18,19 @@ sudo iptables -I FORWARD -i $br2 -j ACCEPT
 # Create yml file and write to lab1.yml
 cat << EOF > $f
 name: lab1
-topology:
-  defaults:
-    kind: linux
-  kinds:
-    linux:
-      image: docker.io/akpinar/alpine 
   nodes:
     h1:
       kind: linux
-      mgmt_ipv4: 172.20.0.21
+      image: ghcr.io/hellt/network-multitool
     h2:
-      kind: linux      
-      mgmt_ipv4: 172.20.0.22
+      kind: linux
+      image: ghcr.io/hellt/network-multitool
     h3:
       kind: linux
-      mgmt_ipv4: 172.20.0.23
+      image: ghcr.io/hellt/network-multitool
     h4:
       kind: linux
-      mgmt_ipv4: 172.20.0.24    
+      image: ghcr.io/hellt/network-multitool 
     clab-br1: 
       kind: bridge
     clab-br2: 
@@ -57,10 +51,9 @@ topology:
     - endpoints: ["h2:eth1", "clab-br1:eth14"]
     - endpoints: ["h3:eth1", "clab-br2:eth15"]
     - endpoints: ["h4:eth1", "clab-br2:eth16"]
-mgmt: 
-  network: srl-mgmt
-  ipv4_subnet: 172.20.0.0/24
-  ipv6_subnet: 2001:172:20::/80  
+    - endpoints: ["r1:eth1", "clab-br1:eth10"]
+    - endpoints: ["r2:eth1", "clab-br2:eth11"]
+    - endpoints: ["r1:eth0", "r2:eth0"]
 EOF
 
 # Deploy the clab topology
@@ -71,8 +64,8 @@ d="sudo docker"
 l=$(cat $f|grep name: | cut -d " " -f2)
 a1=192.168.1.10/24
 a2=192.168.1.200/24
-a3=192.168.1.15/24
-a4=192.168.1.215/24
+a3=192.168.2.15/24
+a4=192.168.2.215/24
 b1="dev eth1"
 b2="dev eth1"
 h1="clab-$l-h1"
