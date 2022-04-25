@@ -54,7 +54,7 @@ topology:
     - endpoints: ["h4:eth1", "clab-br2:eth16"]
     - endpoints: ["r1:eth1", "clab-br1:eth10"]
     - endpoints: ["r2:eth1", "clab-br2:eth11"]
-    - endpoints: ["r1:eth0", "r2:eth0"]
+    - endpoints: ["r1:eth2", "r2:eth2"]
 EOF
 
 # Deploy the clab topology
