@@ -42,7 +42,7 @@ name: lab1
         - daemons:/etc/frr/daemons
     r2:
       kind: linux
-      image: frrouting/frr:v7.5.0
+      image: 2stacks/vyos:latest
       binds:
         - daemons:/etc/frr/daemons
 
