@@ -3,6 +3,7 @@ br1="clab-br1"
 br2="clab-br2"
 f=lab1.yml
 h='wbitt/network-multitool:alpine-extra'
+frr='frrouting/frr:v7.5.0'
 
 # Create and enable clab_br1
 sudo brctl delbr $br1
@@ -39,12 +40,12 @@ topology:
       kind: bridge
     r1:
       kind: linux
-      image: frrouting/frr:v7.5.0
+      image: $frr
       binds:
         - daemons:/etc/frr/daemons
     r2:
       kind: linux
-      image: frrouting/frr:v7.5.0
+      image: $frr
       binds:
         - daemons:/etc/frr/daemons
   links:
