@@ -8,7 +8,7 @@ This lab deploys a simple network with two Ethernet switches (clab-br1 and clab-
 
 The cloud shows there are details we know exist but are not attempting to illustrate. In this case, there is some type of routng and Network Address Translation (NAT) that happens in the cloud. 
 
-<img src="../images/router_basic_practice.png" width="600" height="600">
+<img src="../images/router_basic_practice.png" width="900" height="600">
 <sub><i>Figure 1. Network Topology</i></sub>
 <p></p>
 <p></p>
