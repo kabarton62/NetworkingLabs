@@ -56,6 +56,10 @@ topology:
     - endpoints: ["r1:eth1", "clab-br1:eth10"]
     - endpoints: ["r2:eth1", "clab-br2:eth11"]
     - endpoints: ["r1:eth2", "r2:eth2"]
+mgmt: 
+  network: mgmt
+  ipv4_subnet: 172.20.0.0/24
+  ipv6_subnet: 2001:172:20::/80  
 EOF
 
 # Deploy the clab topology
@@ -74,6 +78,8 @@ h1="clab-$l-h1"
 h2="clab-$l-h2"
 h3="clab-$l-h3"
 h4="clab-$l-h4"
+gw=172.20.0.1
+
 $d exec -it $h1 ip addr add $a1 $b1
 $d exec -it $h2 ip addr add $a2 $b2
 $d exec -it $h3 ip addr add $a3 $b1
@@ -84,3 +90,9 @@ $d exec -it $h1 route add default gw 192.168.1.1 eth1
 $d exec -it $h2 route add default gw 192.168.1.1 eth1
 $d exec -it $h3 route add default gw 192.168.2.1 eth1
 $d exec -it $h4 route add default gw 192.168.2.1 eth1
+
+# Delete Docker default gateways
+$d exec -it $h1 route delete default gw $gw eth0
+$d exec -it $h2 route delete default gw $gw eth0
+$d exec -it $h3 route delete default gw $gw eth0
+$d exec -it $h4 route delete default gw $gw eth0
