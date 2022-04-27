@@ -181,7 +181,7 @@ traceroute to 192.168.3.1 (192.168.3.1), 30 hops max, 46 byte packets
 
 Using the network diagram and experience gained by configuring r1, configure interfaces eth1 and eth2 on r2. Demonstrate the ability to ping from h3/h4 to r2 eth1 and eth2. **Capture a screenshot showing successful pings from h3 to r2 eth1 and eth2.**
 
-## Challenge 9: Configuring Static Routes on r1 and r2
+## Challenge 9: Configuring Static Routes on r2
 Interfaces on routers r1 and r2 are configured and tests demonstrate that hosts h1 through h4 can communicate with both interfaces eth1 and eth2 on their default gateways. We can also demonstrate that the link between r1 and r2 is operational by pinging from r1 to 192.168.3.2 (r2) and from r2 to 192.168.3.1 (r1), as shown here.
 ```
 r2# ping 192.168.3.1
@@ -258,6 +258,9 @@ We see three directly connected networks. These are the local networks 192.168.1
 
 Recall though, the problem is that pings from h1 to 192.168.3.2 fail. The problem is on r2, not r1. Just like r1 does not have a route to 192.168.2.0/24, r2 does not have a route to 192.168.1.0/24. The packet will be forwarded from r1 to r2, but when r2 attempts to respond, it finds there is no route to 192.168.1.0/24, and would therefore send the response out its default route. We can prove this theory by configuring a **static route** to 192.168.1.0/24 on r2. Let's try.
 
+Syntax to add a static route: **ip route <destination network> <next-hop>**
+Syntax to add static route to 192.168.1.0/24 with next-hop 192.168.3.1: **ip route 192.168.1.0/24 192.168.3.1**
+
 **On r2:**
 ```
 r2# conf t
@@ -291,3 +294,8 @@ PING 192.168.3.2 (192.168.3.2) 56(84) bytes of data.
 2 packets transmitted, 2 received, 0% packet loss, time 1012ms
 rtt min/avg/max/mdev = 0.106/0.139/0.173/0.033 ms
 ```
+## Challenge 10: Configuring Static Routes on r1
+A static route to 192.168.1.0/24 has been added to r2. Now, add a static route to 192.168.2.0/24 on r1. **Capture a screen shot demonstrating successful pings from h1 to h3.**
+
+## Stretch
+## Challenge 11: Save Running configuration
