@@ -182,3 +182,112 @@ traceroute to 192.168.3.1 (192.168.3.1), 30 hops max, 46 byte packets
 Using the network diagram and experience gained by configuring r1, configure interfaces eth1 and eth2 on r2. Demonstrate the ability to ping from h3/h4 to r2 eth1 and eth2. **Capture a screenshot showing successful pings from h3 to r2 eth1 and eth2.**
 
 ## Challenge 9: Configuring Static Routes on r1 and r2
+Interfaces on routers r1 and r2 are configured and tests demonstrate that hosts h1 through h4 can communicate with both interfaces eth1 and eth2 on their default gateways. We can also demonstrate that the link between r1 and r2 is operational by pinging from r1 to 192.168.3.2 (r2) and from r2 to 192.168.3.1 (r1), as shown here.
+```
+r2# ping 192.168.3.1
+PING 192.168.3.1 (192.168.3.1): 56 data bytes
+64 bytes from 192.168.3.1: seq=0 ttl=64 time=0.936 ms
+64 bytes from 192.168.3.1: seq=1 ttl=64 time=0.104 ms
+```
+
+However, a ping from any host across the link between r1 and r2 fails. For example, h1 can ping to 192.168.3.1 succeeds but a ping to 192.168.3.2 fails. This result is observed even when we know the link between r1 and r2 is up and functional. The failure is a *routing problem*. Routers r1 and r2 do not know routes to any network other than local networks. First, let's demonstrate the routing problem.
+
+**Successful pings from h1 to r1 and a failed ping from h1 to r2.**
+```
+bash-5.1# hostname
+h1
+bash-5.1# ping 192.168.1.1
+PING 192.168.1.1 (192.168.1.1) 56(84) bytes of data.
+64 bytes from 192.168.1.1: icmp_seq=1 ttl=64 time=0.270 ms
+64 bytes from 192.168.1.1: icmp_seq=2 ttl=64 time=0.192 ms
+^C
+--- 192.168.1.1 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1023ms
+rtt min/avg/max/mdev = 0.192/0.231/0.270/0.039 ms
+bash-5.1# ping 192.168.3.1
+PING 192.168.3.1 (192.168.3.1) 56(84) bytes of data.
+64 bytes from 192.168.3.1: icmp_seq=1 ttl=64 time=0.162 ms
+64 bytes from 192.168.3.1: icmp_seq=2 ttl=64 time=0.078 ms
+^C
+--- 192.168.3.1 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1018ms
+rtt min/avg/max/mdev = 0.078/0.120/0.162/0.042 ms
+bash-5.1# ping 192.168.3.2
+PING 192.168.3.2 (192.168.3.2) 56(84) bytes of data.
+^C
+--- 192.168.3.2 ping statistics ---
+4 packets transmitted, 0 received, 100% packet loss, time 3073ms
+
+```
+**Successful pings from r1 to r2, demonstrating the link is UP**
+```
+r1# ping 192.168.3.1
+PING 192.168.3.1 (192.168.3.1): 56 data bytes
+64 bytes from 192.168.3.1: seq=0 ttl=64 time=0.110 ms
+^C
+--- 192.168.3.1 ping statistics ---
+1 packets transmitted, 1 packets received, 0% packet loss
+round-trip min/avg/max = 0.110/0.110/0.110 ms
+
+r1# ping 192.168.3.2     
+PING 192.168.3.2 (192.168.3.2): 56 data bytes
+64 bytes from 192.168.3.2: seq=0 ttl=64 time=0.192 ms
+64 bytes from 192.168.3.2: seq=1 ttl=64 time=0.110 ms
+64 bytes from 192.168.3.2: seq=2 ttl=64 time=0.114 ms
+^C
+--- 192.168.3.2 ping statistics ---
+3 packets transmitted, 3 packets received, 0% packet loss
+round-trip min/avg/max = 0.110/0.138/0.192 ms
+
+```
+Next, examine routes on r1 using the command **show ip route**.
+```
+r1# show ip route
+Codes: K - kernel route, C - connected, S - static, R - RIP,
+       O - OSPF, I - IS-IS, B - BGP, E - EIGRP, N - NHRP,
+       T - Table, v - VNC, V - VNC-Direct, A - Babel, D - SHARP,
+       F - PBR, f - OpenFabric,
+       > - selected route, * - FIB route, q - queued, r - rejected, b - backup
+
+K>* 0.0.0.0/0 [0/0] via 172.20.0.1, eth0, 20:40:48
+C>* 172.20.0.0/24 is directly connected, eth0, 20:40:48
+C>* 192.168.1.0/24 is directly connected, eth1, 20:09:28
+C>* 192.168.3.0/30 is directly connected, eth2, 00:58:19
+```
+We see three directly connected networks. These are the local networks 192.168.1.0/24 and 192.168.3.0/30 that we configured. Network 172.20.0.0/24 is Docker's management network, but is also the default route to the Internet. However, note that their is no route to 192.168.2.0/24. As a result, any packet received that is destined to 192.168.2.0/24 will be forwarded out the default route (if configured) or dropped. 
+
+Recall though, the problem is that pings from h1 to 192.168.3.2 fail. The problem is on r2, not r1. Just like r1 does not have a route to 192.168.2.0/24, r2 does not have a route to 192.168.1.0/24. The packet will be forwarded from r1 to r2, but when r2 attempts to respond, it finds there is no route to 192.168.1.0/24, and would therefore send the response out its default route. We can prove this theory by configuring a **static route** to 192.168.1.0/24 on r2. Let's try.
+
+**On r2:**
+```
+r2# conf t
+r2(config)# ip route 192.168.1.0/24 192.168.3.1
+r2(config)# exit
+
+r2# show ip route
+Codes: K - kernel route, C - connected, S - static, R - RIP,
+       O - OSPF, I - IS-IS, B - BGP, E - EIGRP, N - NHRP,
+       T - Table, v - VNC, V - VNC-Direct, A - Babel, D - SHARP,
+       F - PBR, f - OpenFabric,
+       > - selected route, * - FIB route, q - queued, r - rejected, b - backup
+
+K>* 0.0.0.0/0 [0/0] via 172.20.0.1, eth0, 20:52:58
+C>* 172.20.0.0/24 is directly connected, eth0, 20:52:58
+S>* 192.168.1.0/24 [1/0] via 192.168.3.1, eth2, weight 1, 00:00:15
+C>* 192.168.2.0/24 is directly connected, eth1, 00:34:22
+C>* 192.168.3.0/30 is directly connected, eth2, 00:34:04
+```
+
+**Test communication to 192.168.3.2 from h1**
+```
+bash-5.1# hostname
+h1
+bash-5.1# ping 192.168.3.2
+PING 192.168.3.2 (192.168.3.2) 56(84) bytes of data.
+64 bytes from 192.168.3.2: icmp_seq=1 ttl=63 time=0.173 ms
+64 bytes from 192.168.3.2: icmp_seq=2 ttl=63 time=0.106 ms
+^C
+--- 192.168.3.2 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1012ms
+rtt min/avg/max/mdev = 0.106/0.139/0.173/0.033 ms
+```
