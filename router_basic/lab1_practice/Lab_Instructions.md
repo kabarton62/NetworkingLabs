@@ -19,6 +19,7 @@ Launch the topology by running the script deploy.sh and **capture a screenshot o
   $ bash deploy.sh
 ```
 --- 
+## Testing Network Function
 ### Challenge 3: Examining host configuration
 
 The host and router nodes in this lab do not have an SSH server running. *Docker exec* will be used to gain shell access to the nodes in this lab.
@@ -52,6 +53,7 @@ bash-5.1# ping 192.168.2.215
 Pings were successful from h1 to h2, but failed to h3 and h4. Although we know r1 is not configured, try to ping 192.168.1.1 and note the response. Are the responses different from the failed pings to h3/h4 and r1?
 
 ---
+## Configuring FRRouting
 ### Challenge 5: Configure Default Gateway Interfaces
 Interface eth1 on r1 and r2 are used as the default gateways to networks 192.168.1.0/24 and 192.168.2.0/24. However, those interfaces are not configured. This challenge introduces you interface configuration on FRRouting routers. Routers r1 and r2 are Linux containers. FRRouting runs inside those containers. The containers do not have an SSH server installed or running, so use **docker exec** to obtain a shell in r1. 
 ```
@@ -135,6 +137,8 @@ traceroute to 8.8.8.8 (8.8.8.8), 30 hops max, 46 byte packets
  2  *  *  *
  3  *  *  *
 ```
+
+---
 ### Challenge 7: Configure and Test r1 eth2
 
 The link between r1 and r2 terminates on interface eth2 of each router. The subnet 192.168.3.0/30 is reserved for the link between r1 and r2. The subnet has two assignable IP addresses, 192.168.3.1 and 192.168.3.2. Configure r1 eth2 with 192.168.3.1, as shown in the network diagram.
@@ -177,11 +181,14 @@ bash-5.1# traceroute 192.168.3.1
 traceroute to 192.168.3.1 (192.168.3.1), 30 hops max, 46 byte packets
  1  192.168.3.1 (192.168.3.1)  0.010 ms  0.009 ms  0.006 ms
 ```
-## Challenge 8: Configure and Test r2
+
+---
+### Challenge 8: Configure and Test r2
 
 Using the network diagram and experience gained by configuring r1, configure interfaces eth1 and eth2 on r2. Demonstrate the ability to ping from h3/h4 to r2 eth1 and eth2. **Capture a screenshot showing successful pings from h3 to r2 eth1 and eth2.**
 
-## Challenge 9: Configuring Static Routes on r2
+---
+### Challenge 9: Configuring Static Routes on r2
 Interfaces on routers r1 and r2 are configured and tests demonstrate that hosts h1 through h4 can communicate with both interfaces eth1 and eth2 on their default gateways. We can also demonstrate that the link between r1 and r2 is operational by pinging from r1 to 192.168.3.2 (r2) and from r2 to 192.168.3.1 (r1), as shown here.
 ```
 r2# ping 192.168.3.1
@@ -294,8 +301,68 @@ PING 192.168.3.2 (192.168.3.2) 56(84) bytes of data.
 2 packets transmitted, 2 received, 0% packet loss, time 1012ms
 rtt min/avg/max/mdev = 0.106/0.139/0.173/0.033 ms
 ```
-## Challenge 10: Configuring Static Routes on r1
+
+---
+### Challenge 10: Configuring Static Routes on r1
 A static route to 192.168.1.0/24 has been added to r2. Now, add a static route to 192.168.2.0/24 on r1. **Capture a screen shot demonstrating successful pings from h1 to h3.**
 
 ## Stretch
-## Challenge 11: Save Running configuration
+### Challenge 11: Save Running Configuration
+Changes made to FRRouting configuration are stored in memory as running-configuaration. The running-configuration can be saved to configuration files with the command **write memory**. Alternatively, the command **copy running-config startup-config** accomplishes the same thing. The current running-configuration will be written to two files, /etc/frr/staticd.conf and /etc/frr/zebra.conf. Static routes are written to /etc/frr/staticd.conf, interface configurations are written to /etc/frr/zebra.conf. Save the running-configuration on **r1** using **copy running-config startup-config**.
+```
+r1# copy running-config startup-config 
+Note: this version of vtysh never writes vtysh.conf
+Building Configuration...
+Configuration saved to /etc/frr/zebra.conf
+Configuration saved to /etc/frr/ospfd.conf
+Configuration saved to /etc/frr/ospf6d.conf
+Configuration saved to /etc/frr/ldpd.conf
+Configuration saved to /etc/frr/bgpd.conf
+Configuration saved to /etc/frr/isisd.conf
+Configuration saved to /etc/frr/pimd.conf
+Configuration saved to /etc/frr/nhrpd.conf
+Configuration saved to /etc/frr/staticd.conf
+Configuration saved to /etc/frr/bfdd.conf
+```
+Save the running config on **r2** using **write memory**.
+```
+r2# write memory 
+Note: this version of vtysh never writes vtysh.conf
+Building Configuration...
+Configuration saved to /etc/frr/zebra.conf
+Configuration saved to /etc/frr/ospfd.conf
+Configuration saved to /etc/frr/ospf6d.conf
+Configuration saved to /etc/frr/ldpd.conf
+Configuration saved to /etc/frr/bgpd.conf
+Configuration saved to /etc/frr/isisd.conf
+Configuration saved to /etc/frr/pimd.conf
+Configuration saved to /etc/frr/nhrpd.conf
+Configuration saved to /etc/frr/staticd.conf
+Configuration saved to /etc/frr/bfdd.conf
+```
+Print the running-config on r1 and r2 using the command **show running-config**. **Copy and paste the running-configuarations for r1 and r2 and save them to a file.**
+
+Exit vtysh enable mode on r1 and r2. Read files /etc/frr/staticd and /etc/frr/zebra.conf on r1 and r2. **Copy the contents of these configuration files and save them to a file.**
+```
+bash-5.0# hostname
+r1
+bash-5.0# cat /etc/frr/staticd.conf
+!
+! Zebra configuration saved from vty
+!   2022/04/28 20:11:19
+!
+frr version 7.5_git
+frr defaults traditional
+!
+line vty
+!
+bash-5.0# cat /etc/frr/zebra.conf
+!
+! Zebra configuration saved from vty
+!   2022/04/28 20:11:19
+!
+frr version 7.5_git
+frr defaults traditional
+!
+hostname r1
+```
