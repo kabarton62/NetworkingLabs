@@ -340,7 +340,31 @@ Configuration saved to /etc/frr/nhrpd.conf
 Configuration saved to /etc/frr/staticd.conf
 Configuration saved to /etc/frr/bfdd.conf
 ```
-Print the running-config on r1 and r2 using the command **show running-config**. **Copy and paste the running-configuarations for r1 and r2 and save them to a file.**
+Print the running-config on r1 and r2 using the command **show running-config**. 
+```
+r1# show running-config 
+Building configuration...
+
+Current configuration:
+!
+frr version 7.5_git
+frr defaults traditional
+hostname r1
+no ipv6 forwarding
+!
+ip route 192.168.2.0/24 192.168.3.2
+!
+interface eth1
+ ip address 192.168.1.1/24
+!
+interface eth2
+ ip address 192.168.3.1/24
+!
+line vty
+!
+end
+```
+**Copy and paste the running-configuarations for r1 and r2 and save them to a file.**
 
 Exit vtysh enable mode on r1 and r2. Read files /etc/frr/staticd and /etc/frr/zebra.conf on r1 and r2. **Copy the contents of these configuration files and save them to a file.**
 ```
