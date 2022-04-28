@@ -9,3 +9,5 @@ eth_switch labs use Linux bridges to simulate basic switch function. Frames are 
 ---
 ### router_basic labs:
 router_basic labs add Free Range Routing (FRRouting) routers to route traffic between two local networks. The switching technology introduced in eth_switch labs is used in router_basic to create the local networks, but two routers are added to the network to connect the two local networks. The practice lab demonstrates basic interface and static route configurations needed to make the topology work. 
+
+---
