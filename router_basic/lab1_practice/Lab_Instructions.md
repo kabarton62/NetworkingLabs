@@ -305,6 +305,8 @@ rtt min/avg/max/mdev = 0.106/0.139/0.173/0.033 ms
 ---
 ### Challenge 10: Configuring Static Routes on r1
 A static route to 192.168.1.0/24 has been added to r2. Now, add a static route to 192.168.2.0/24 on r1. **Capture a screen shot demonstrating successful pings from h1 to h3.**
+  
+---  
 
 ## Stretch
 ### Challenge 11: Save Running Configuration
