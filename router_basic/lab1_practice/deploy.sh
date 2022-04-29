@@ -3,7 +3,7 @@ br1="clab-br1"
 br2="clab-br2"
 f=lab1.yml
 h='wbitt/network-multitool:alpine-extra'
-frr='frrouting/frr:v7.5.0'
+router='kbartontx/vyos:1.4'
 
 # Create and enable clab_br1
 sudo brctl delbr $br1
@@ -40,14 +40,11 @@ topology:
       kind: bridge
     r1:
       kind: linux
-      image: $frr
-      binds:
-        - daemons:/etc/frr/daemons
+      image: $router
     r2:
       kind: linux
-      image: $frr
-      binds:
-        - daemons:/etc/frr/daemons
+      image: $router
+
   links:
     - endpoints: ["h1:eth1", "clab-br1:eth13"]
     - endpoints: ["h2:eth1", "clab-br1:eth14"]
