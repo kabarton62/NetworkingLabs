@@ -8,4 +8,4 @@ This lab uses common network utilities, such as **ping, traceroute, route, ifcon
 Lab 2 Configuration builds upon the skills practiced in Lab 1 Practice. Given a basic network topology and a network with hosts, routers, switches and connections, the lab challenges the user to configure the routers to enable all hosts to communicate. 
 
 ## FRRouting Documentation
-These labs use the Free Range Routing (FRRouting) protocol suite in the router Docker containers. A FRRouting User Guide can be found [here](http://docs.frrouting.org/en/latest/). Basic commands needed for these labs are included in the practice lab instructions but refer to the User Guide for additional assistance. 
+These labs use Vyos router Docker containers. A Vyos User Guide can be found [here](https://docs.vyos.io/en/latest/configuration/index.html). Basic commands needed for these labs are included in the practice lab instructions but refer to Vyos documentation for additional assistance. 
