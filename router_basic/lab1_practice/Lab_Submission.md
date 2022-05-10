@@ -6,4 +6,4 @@ Submit the following:
 2. Challenge 3 screenshot showing shell on h1.
 3. Challenge 8 screenshot showing results of pings from h3 to r2.
 4. Challenge 10 screeshot showing successful pings from h1 to h3.
-5. Challenge 11 files with the running-configuration, and copies of /etc/frr/staticd and /etc/frr/zebra.conf for r1 and r2.
+5. Challenge 11 files with the running-configuration.
