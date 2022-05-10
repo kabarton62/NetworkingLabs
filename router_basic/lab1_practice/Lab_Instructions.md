@@ -22,7 +22,7 @@ Launch the topology by running the script deploy.sh and **capture a screenshot o
 ## Testing Network Function
 ### Challenge 3: Examining host configuration
 
-The host and router nodes in this lab do not have an SSH server running. *Docker exec* will be used to gain shell access to the nodes in this lab.
+The host and router nodes in this lab do not have an SSH server running at start-up. *Docker exec* will be used to gain shell access to the nodes in this lab.
 ```
 docker exec syntax:
  sudo docker exec -it <CONTAINER-NAME or CONTAINER-ID> bash
@@ -50,68 +50,141 @@ bash-5.1# ping 192.168.1.200
 bash-5.1# ping 192.168.2.15
 bash-5.1# ping 192.168.2.215
 ```
-Pings were successful from h1 to h2, but failed to h3 and h4. Although we know r1 is not configured, try to ping 192.168.1.1 and note the response. Are the responses different from the failed pings to h3/h4 and r1?
+Pings were successful from h1 to h2, but failed from h1 to h3 and h4. Although we know r1 is not configured, try to ping 192.168.1.1 and note the response. Are the responses different from the failed pings to h3/h4 and r1?
 
 ---
-## Configuring FRRouting
+## Configuring Vyos
 ### Challenge 5: Configure Default Gateway Interfaces
-Interface eth1 on r1 and r2 are used as the default gateways to networks 192.168.1.0/24 and 192.168.2.0/24. However, those interfaces are not configured. This challenge introduces you interface configuration on FRRouting routers. Routers r1 and r2 are Linux containers. FRRouting runs inside those containers. The containers do not have an SSH server installed or running, so use **docker exec** to obtain a shell in r1. 
+Interface eth1 on r1 and r2 are used as the default gateways to networks 192.168.1.0/24 and 192.168.2.0/24. However, those interfaces are not configured. This challenge introduces you interface configuration on Vyos routers. Routers r1 and r2 are Linux containers. Vyos runs inside those containers. The containers do not have an SSH server running, so use **docker exec** to obtain a shell in r1. The user vyos must be used to configure the routers. The following command switches to user vyos at login.
 ```
-$ sudo docker exec -it clab-lab1-r1 bash
-bash-5.0# 
-```
-With a shell in r1, use the command **vtysh** to get a shell in FRRouting. This will enter VTY View & Enable Mode (VTY view/enable).
-```
-bash-5.0# vtysh
-% Can't open configuration file /etc/frr/vtysh.conf due to 'No such file or directory'.
-
-Hello, this is FRRouting (version 7.5_git).
-Copyright 1996-2005 Kunihiro Ishiguro, et al.
-
-r1# 
+$ sudo docker exec -it clab-lab1-r1 su vyos
+vyos@vyos:~$ 
 ```
 Examine the running configuration.
 ```
-r1# show running
-Building configuration...
-Current configuration:
-!
-frr version 7.5_git
-frr defaults traditional
-hostname r1
-no ipv6 forwarding
-!
-line vty
-!
-end
+vyos@vyos:/$ show conf
+interfaces {
+    loopback lo {
+    }
+}
+system {
+    config-management {
+        commit-revisions 100
+    }
+    console {
+        device ttyS0 {
+            speed 115200
+        }
+    }
+    host-name r1
+    login {
+        user vyos {
+            authentication {
+                encrypted-password ****************
+                plaintext-password ****************
+            }
+        }
+    }
+    ntp {
+        server time1.vyos.net {
+        }
+        server time2.vyos.net {
+        }
+        server time3.vyos.net {
+        }
+    }
+    syslog {
+        global {
+            facility all {
+                level info
+            }
+            facility protocols {
+                level debug
+            }
+        }
+    }
+}
 ```
-Note that there currently are no interfaces configured. So, configure eth1 (the default gateway). To configure an interface, go to configure mode (**configure terminal**). Note, FRRouting supports truncated commands (conf t in place of configure terminal), the select an interface to configure (**interface eth1** or int eth1).
+Next, examine interfacs.
+```
+vyos@vyos:/$ show interfaces 
+Codes: S - State, L - Link, u - Up, D - Down, A - Admin Down
+Interface        IP Address                        S/L  Description
+---------        ----------                        ---  -----------
+eth0             172.20.0.7/24                     u/u  
+                 2001:172:20::7/80                      
+eth1             -                                 u/u  
+eth2             -                                 u/u  
+lo               127.0.0.1/8                       u/u  
+                 ::1/128                                
+```
+Note that currently interfaces eth1 and eth2 are not configured. So, configure eth1 (the default gateway). To configure an interface, go to configure mode (**configure**). Note, Vyos supports truncated commands (*conf* in place of *configure*).
 
-Use the **ip address** command to configure the interface. For example, **ip add 192.168.1.1/24**.
+Use the **set interface eth <interface> address <IP address/netmask>** command to configure the interface. For example, **set interface ethernet eth1 address 192.168.1.1/24**. Commit changes with the **commit** command and save running configurations to the start-up configuration with the **save** command.
 ```
-r1# conf t
-r1(config)# int eth1
-r1(config-if)# ip add 192.168.1.1/24
+vyos@vyos:/$ conf
+vyos@vyos# set interface ethernet eth1 address 192.168.1.1/24
+[edit]
+vyos@vyos# commit
+[ interfaces ethernet eth1 ]
+sudo: unable to resolve host vyos: Temporary failure in name resolution
+Warning: could not set speed/duplex settings: operation not permitted!
+[edit]
+vyos@vyos# save
+sudo: unable to resolve host vyos: Temporary failure in name resolution
+Saving configuration to '/config/config.boot'...
+Done
+[edit]
+vyos@vyos# 
 ```
-Use the **exit** command twice to return to VTY view/enable mode and run the **show run** command again.
+Use the **exit** command to return to operational mode and run the **show configuration** command again.
 ```
-r1(config-if)# exit
-r1(config)# exit
-r1# show run
-Building configuration...
-Current configuration:
-!
-frr version 7.5_git
-frr defaults traditional
-hostname r1
-no ipv6 forwarding
-!
-interface eth1
- ip address 192.168.1.1/24
-!
-line vty
-!
-end
+vyos@vyos# exit
+vyos@vyos:/$ show conf
+interfaces {
+    ethernet eth1 {
+        address 192.168.1.1/24
+    }
+    loopback lo {
+    }
+}
+system {
+    config-management {
+        commit-revisions 100
+    }
+    console {
+        device ttyS0 {
+            speed 115200
+        }
+    }
+    host-name r1
+    login {
+        user vyos {
+            authentication {
+                encrypted-password ****************
+                plaintext-password ****************
+            }
+        }
+    }
+    ntp {
+        server time1.vyos.net {
+        }
+        server time2.vyos.net {
+        }
+        server time3.vyos.net {
+        }
+    }
+    syslog {
+        global {
+            facility all {
+                level info
+            }
+            facility protocols {
+                level debug
+            }
+        }
+    }
+}
 ```
 Note interface eth1 has the IP address and subnet mask configured. Test network operation again.
 
@@ -120,7 +193,6 @@ Note interface eth1 has the IP address and subnet mask configured. Test network 
 
 Now that interface eth1 on r1 is configured, hosts h1 and h2 should be able to communicate with that interface. Traffic to any destination outside of the local network for h1 and h2 (192.168.1.0/24) should be forwarded to the default gateway. Ping will demonstrate the default gateway is up and traceroute will demonstrate that traffic to external networks is forwarded from the host to the default gateway. These tests are demonstrated below. Pings to the default gateway are successful and traceroute to an external destination uses 192.168.1.1 as the first hop. Not surprisingly, subsequent hops do not respond. 
 
-Router r1 currently only has one interface configured and no routes configured or learned. As a result, r1 simply drops the all packets to 8.8.8.8. The packets are reaching r1, but are immediately dropped by r1.
 ```
 bash-5.1# ping 192.168.1.1
 PING 192.168.1.1 (192.168.1.1) 56(84) bytes of data.
@@ -137,6 +209,21 @@ traceroute to 8.8.8.8 (8.8.8.8), 30 hops max, 46 byte packets
  2  *  *  *
  3  *  *  *
 ```
+Pings from r1 to an external host (i.e., 8.8.8.8) are successful, but pings from h1 to an external host (i.e., 8.8.8.8) fail. This failure is a little complex to understand at this point. The **show ip route** command on r1 shows a default route to the management network. Router r1 is forwarding packets from h1 to 8.8.8.8 out interface eth0, but the host's external network is not in *promiscuous mode*, and therefore does not forward the packets. We could solve this problem by configuring SNAT on eth0, but for now we will leave this alone and continue configuring r1 and r2.
+
+```
+vyos@vyos:/$ show ip route
+Codes: K - kernel route, C - connected, S - static, R - RIP,
+       O - OSPF, I - IS-IS, B - BGP, E - EIGRP, N - NHRP,
+       T - Table, v - VNC, V - VNC-Direct, A - Babel, F - PBR,
+       f - OpenFabric,
+       > - selected route, * - FIB route, q - queued, r - rejected, b - backup
+       t - trapped, o - offload failure
+
+K>* 0.0.0.0/0 [0/0] via 172.20.0.1, eth0, 00:14:45
+C>* 172.20.0.0/24 is directly connected, eth0, 00:14:45
+C>* 192.168.1.0/24 is directly connected, eth1, 00:05:26
+```
 
 ---
 ### Challenge 7: Configure and Test r1 eth2
@@ -145,32 +232,32 @@ The link between r1 and r2 terminates on interface eth2 of each router. The subn
 
 Configuring r1 eth2:
 ```
-bash-5.0# vtysh
-% Can't open configuration file /etc/frr/vtysh.conf due to 'No such file or directory'.
+vyos@vyos:~$ conf
+[edit]
+vyos@vyos# set int eth eth2 addr 192.168.3.1/30
+[edit]
+vyos@vyos# commit
+[ interfaces ethernet eth2 ]
+sudo: unable to resolve host vyos: Temporary failure in name resolution
+Warning: could not set speed/duplex settings: operation not permitted!
 
-Hello, this is FRRouting (version 7.5_git).
-Copyright 1996-2005 Kunihiro Ishiguro, et al.
-
-r1# conf t
-r1(config)# int eth2
-r1(config-if)# ip address 192.168.3.1/30
-r1(config-if)# exit
-r1(config)# exit
-r1# exit
+[edit]
+vyos@vyos# save
+sudo: unable to resolve host vyos: Temporary failure in name resolution
+Saving configuration to '/config/config.boot'...
+Done
+[edit]
 ```
 Testing r1 eth2 from h1:
 ```
-bash-5.1# hostname
-h1
 bash-5.1# ping 192.168.3.1
 PING 192.168.3.1 (192.168.3.1) 56(84) bytes of data.
-64 bytes from 192.168.3.1: icmp_seq=1 ttl=64 time=0.182 ms
-64 bytes from 192.168.3.1: icmp_seq=2 ttl=64 time=0.116 ms
-64 bytes from 192.168.3.1: icmp_seq=3 ttl=64 time=0.123 ms
+64 bytes from 192.168.3.1: icmp_seq=1 ttl=64 time=0.432 ms
+64 bytes from 192.168.3.1: icmp_seq=2 ttl=64 time=0.252 ms
 ^C
 --- 192.168.3.1 ping statistics ---
-3 packets transmitted, 3 received, 0% packet loss, time 2043ms
-rtt min/avg/max/mdev = 0.116/0.140/0.182/0.029 ms
+2 packets transmitted, 2 received, 0% packet loss, time 1021ms
+rtt min/avg/max/mdev = 0.252/0.342/0.432/0.090 ms
 ```
 
 Next, run traceroute to r1 eth2, but first a word about traceroute operation. Traceroute uses echo requests with TTL values initially set at 1 and incrementing by 1 to identify hops. Each hop (router) that receives a packet decrements the TTL by 1 and forwards the packet to the destination. When TTL decrements to zero (0), the hop that decremented TTL to zero drops the packet and returns an ICMP type 11-Time Exceeded error to the source of the dropped packet. The node that receives the Time Exceeded error examines records the sender of the error as a hop, increments the TTL by 1 and sends the next echo request. The process continues until the echo request reaches the target host in the traceroute.
@@ -249,19 +336,20 @@ round-trip min/avg/max = 0.110/0.138/0.192 ms
 ```
 Next, examine routes on r1 using the command **show ip route**.
 ```
-r1# show ip route
+vyos@vyos:~$ show ip route
 Codes: K - kernel route, C - connected, S - static, R - RIP,
        O - OSPF, I - IS-IS, B - BGP, E - EIGRP, N - NHRP,
-       T - Table, v - VNC, V - VNC-Direct, A - Babel, D - SHARP,
-       F - PBR, f - OpenFabric,
+       T - Table, v - VNC, V - VNC-Direct, A - Babel, F - PBR,
+       f - OpenFabric,
        > - selected route, * - FIB route, q - queued, r - rejected, b - backup
+       t - trapped, o - offload failure
 
-K>* 0.0.0.0/0 [0/0] via 172.20.0.1, eth0, 20:40:48
-C>* 172.20.0.0/24 is directly connected, eth0, 20:40:48
-C>* 192.168.1.0/24 is directly connected, eth1, 20:09:28
-C>* 192.168.3.0/30 is directly connected, eth2, 00:58:19
+K>* 0.0.0.0/0 [0/0] via 172.20.0.1, eth0, 01w4d02h
+C>* 172.20.0.0/24 is directly connected, eth0, 01w4d02h
+C>* 192.168.1.0/24 is directly connected, eth1, 00:00:18
+C>* 192.168.3.0/30 is directly connected, eth2, 00:02:35
 ```
-We see three directly connected networks. These are the local networks 192.168.1.0/24 and 192.168.3.0/30 that we configured. Network 172.20.0.0/24 is Docker's management network, but is also the default route to the Internet. However, note that their is no route to 192.168.2.0/24. As a result, any packet received that is destined to 192.168.2.0/24 will be forwarded out the default route (if configured) or dropped. 
+We see three directly connected networks. These are the local networks 192.168.1.0/24 and 192.168.3.0/30 that we configured. Network 172.20.0.0/24 is Docker's management network, but is also the default route to the Internet. However, note that there is no route to 192.168.2.0/24. As a result, any packet received that is destined to 192.168.2.0/24 will be forwarded out the default route (if configured) or dropped. 
 
 Recall though, the problem is that pings from h1 to 192.168.3.2 fail. The problem is on r2, not r1. Just like r1 does not have a route to 192.168.2.0/24, r2 does not have a route to 192.168.1.0/24. The packet will be forwarded from r1 to r2, but when r2 attempts to respond, it finds there is no route to 192.168.1.0/24, and would therefore send the response out its default route. We can prove this theory by configuring a **static route** to 192.168.1.0/24 on r2. Let's try.
 
@@ -270,22 +358,31 @@ Syntax to add static route to 192.168.1.0/24 with next-hop 192.168.3.1: **ip rou
 
 **On r2:**
 ```
-r2# conf t
-r2(config)# ip route 192.168.1.0/24 192.168.3.1
-r2(config)# exit
+vyos@vyos:~$ conf
+[edit]
+vyos@vyos# set protocol static route 192.168.1.0/24 next-hop 192.168.3.1
+[edit]
+vyos@vyos# commit
+[edit]
+vyos@vyos# save
+Saving configuration to '/config/config.boot'...
+Done
 
-r2# show ip route
+vyos@vyos# exit
+exit
+vyos@vyos:~$ show ip route
 Codes: K - kernel route, C - connected, S - static, R - RIP,
        O - OSPF, I - IS-IS, B - BGP, E - EIGRP, N - NHRP,
-       T - Table, v - VNC, V - VNC-Direct, A - Babel, D - SHARP,
-       F - PBR, f - OpenFabric,
+       T - Table, v - VNC, V - VNC-Direct, A - Babel, F - PBR,
+       f - OpenFabric,
        > - selected route, * - FIB route, q - queued, r - rejected, b - backup
+       t - trapped, o - offload failure
 
-K>* 0.0.0.0/0 [0/0] via 172.20.0.1, eth0, 20:52:58
-C>* 172.20.0.0/24 is directly connected, eth0, 20:52:58
-S>* 192.168.1.0/24 [1/0] via 192.168.3.1, eth2, weight 1, 00:00:15
-C>* 192.168.2.0/24 is directly connected, eth1, 00:34:22
-C>* 192.168.3.0/30 is directly connected, eth2, 00:34:04
+K>* 0.0.0.0/0 [0/0] via 172.20.0.1, eth0, 01w4d02h
+C>* 172.20.0.0/24 is directly connected, eth0, 01w4d02h
+S>* 192.168.1.0/24 [1/0] via 192.168.3.1, eth2, weight 1, 00:00:43
+C>* 192.168.2.0/24 is directly connected, eth1, 00:03:06
+C>* 192.168.3.0/30 is directly connected, eth2, 00:05:23
 ```
 
 **Test communication to 192.168.3.2 from h1**
@@ -305,90 +402,69 @@ rtt min/avg/max/mdev = 0.106/0.139/0.173/0.033 ms
 ---
 ### Challenge 10: Configuring Static Routes on r1
 A static route to 192.168.1.0/24 has been added to r2. Now, add a static route to 192.168.2.0/24 on r1. **Capture a screen shot demonstrating successful pings from h1 to h3.**
-  
----  
+
+---
 
 ## Stretch
-### Challenge 11: Save Running Configuration
-Changes made to FRRouting configuration are stored in memory as running-configuaration. The running-configuration can be saved to configuration files with the command **write memory**. Alternatively, the command **copy running-config startup-config** accomplishes the same thing. The current running-configuration will be written to two files, /etc/frr/staticd.conf and /etc/frr/zebra.conf. Static routes are written to /etc/frr/staticd.conf, interface configurations are written to /etc/frr/zebra.conf. Save the running-configuration on **r1** using **copy running-config startup-config**.
+### Challenge 11: Examine Configuration
+Examine the running configuration with the **show configuration** command.
 ```
-r1# copy running-config startup-config 
-Note: this version of vtysh never writes vtysh.conf
-Building Configuration...
-Configuration saved to /etc/frr/zebra.conf
-Configuration saved to /etc/frr/ospfd.conf
-Configuration saved to /etc/frr/ospf6d.conf
-Configuration saved to /etc/frr/ldpd.conf
-Configuration saved to /etc/frr/bgpd.conf
-Configuration saved to /etc/frr/isisd.conf
-Configuration saved to /etc/frr/pimd.conf
-Configuration saved to /etc/frr/nhrpd.conf
-Configuration saved to /etc/frr/staticd.conf
-Configuration saved to /etc/frr/bfdd.conf
+vyos@vyos:~$ show configuration
+interfaces {
+    ethernet eth1 {
+        address 192.168.2.1/24
+    }
+    ethernet eth2 {
+        address 192.168.3.2/30
+    }
+    loopback lo {
+    }
+}
+protocols {
+    static {
+        route 192.168.1.0/24 {
+            next-hop 192.168.3.1 {
+            }
+        }
+    }
+}
+system {
+    config-management {
+        commit-revisions 100
+    }
+    console {
+        device ttyS0 {
+            speed 115200
+        }
+    }
+:
 ```
-Save the running config on **r2** using **write memory**.
+The running configuration is created by loading a configuration at boot and applying committed changes. The boot configuration is stored in file **config.boot**. Use the find command to locate config.boot. Note, the string 2>/dev/null is appended to the find command **find / -name config.boot** to *suppress permission* denied errors. 
 ```
-r2# write memory 
-Note: this version of vtysh never writes vtysh.conf
-Building Configuration...
-Configuration saved to /etc/frr/zebra.conf
-Configuration saved to /etc/frr/ospfd.conf
-Configuration saved to /etc/frr/ospf6d.conf
-Configuration saved to /etc/frr/ldpd.conf
-Configuration saved to /etc/frr/bgpd.conf
-Configuration saved to /etc/frr/isisd.conf
-Configuration saved to /etc/frr/pimd.conf
-Configuration saved to /etc/frr/nhrpd.conf
-Configuration saved to /etc/frr/staticd.conf
-Configuration saved to /etc/frr/bfdd.conf
+vyos@vyos:~$ find / -name config.boot 2>/dev/null
+/opt/vyatta/etc/config/archive/config.boot
+/opt/vyatta/etc/config/config.boot
 ```
-Print the running-config on r1 and r2 using the command **show running-config**. 
+The file we are interested in is /opt/vyatta/etc/config/config.boot. We can read /opt/vyatta/etc/config/config.boot with the **cat** command. See the truncated contents of config.boot.
 ```
-r1# show running-config 
-Building configuration...
-
-Current configuration:
-!
-frr version 7.5_git
-frr defaults traditional
-hostname r1
-no ipv6 forwarding
-!
-ip route 192.168.2.0/24 192.168.3.2
-!
-interface eth1
- ip address 192.168.1.1/24
-!
-interface eth2
- ip address 192.168.3.1/24
-!
-line vty
-!
-end
+vyos@vyos:~$ cat /opt/vyatta/etc/config/config.boot
+interfaces {
+    ethernet eth1 {
+        address 192.168.2.1/24
+    }
+    ethernet eth2 {
+        address 192.168.3.2/30
+    }
+    loopback lo {
+    }
+}
+protocols {
+    static {
+        route 192.168.1.0/24 {
+            next-hop 192.168.3.1 {
+            }
+        }
+    }
+}
 ```
 **Copy and paste the running-configuarations for r1 and r2 and save them to a file.**
-
-Exit vtysh enable mode on r1 and r2. Read files /etc/frr/staticd and /etc/frr/zebra.conf on r1 and r2. **Copy the contents of these configuration files and save them to a file.**
-```
-bash-5.0# hostname
-r1
-bash-5.0# cat /etc/frr/staticd.conf
-!
-! Zebra configuration saved from vty
-!   2022/04/28 20:11:19
-!
-frr version 7.5_git
-frr defaults traditional
-!
-line vty
-!
-bash-5.0# cat /etc/frr/zebra.conf
-!
-! Zebra configuration saved from vty
-!   2022/04/28 20:11:19
-!
-frr version 7.5_git
-frr defaults traditional
-!
-hostname r1
-```
