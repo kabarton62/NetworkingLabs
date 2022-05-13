@@ -107,7 +107,7 @@ All node interfaces should be able to communicate at this point. Complete the fo
 
 ---
 ## Understanding the Network
-### Challenge 6: Examine Routes 
+### Challenge 7: Examine Routes 
 You created a network diagram at the beginning of the lab. Use that diagram to predict the routes between the nodes in Table 6, Predicted Hops between Nodes. **Complete Table 7, Predicted Routes. Include router interfaces on router hops**.
 
 |Source|Destination|Hops (Example for h1 -> h2: h1, r1:eth1, r2:eth2, h2)|
@@ -120,7 +120,7 @@ You created a network diagram at the beginning of the lab. Use that diagram to p
 
 **Table 7, Predicted Routes**
 
-### Challenge 7: Test Routes with TRACEROUTE
+### Challenge 8: Test Routes with TRACEROUTE
 You attempted to predict routes between nodes. Now, use **traceroute** to test network function. Traceroute between the nodes and report the hops in the same format as in the previous challenge. **Report observed routes in Table 8, Observed Routes**.
 
 |Source|Destination|Hops (Example for h1 -> h2: h1, r1:eth1, r2:eth2, h2)|
@@ -133,8 +133,8 @@ You attempted to predict routes between nodes. Now, use **traceroute** to test n
 
 **Table 8, Observed Routes**
 
-### Challenge 8: Compare Predicted Routes to Observed Routes
+### Challenge 9: Compare Predicted Routes to Observed Routes
 Compare your predicted routes between the nodes in Challenge 6 to the observed routes in Challenge 7. Did the predicted and observed routes match? If not, attempt to explain the difference. If so, discuss how you were able to predict the correct correct routes.
 
-### Challenge 9: Report Router Configuration
+### Challenge 10: Report Router Configuration
 If configurations have not been saved on r1, r2, and r3, save the configuration on all routers. Show configuration on all routers, copy and paste those configurations into separate documents. Name the documents with the router configurations **r1.conf, r2.conf, and r3.conf**.
