@@ -16,64 +16,118 @@ The network diagram must include:
 
 |Node|Interface|IP Address/Mask|
 |---|---|---|
-|h1|eth1|192.168.10.15/24|
-|h2|eth1|192.168.20.15/24|
-|h3|eth1|192.168.30.15/24|
-|r1|eth1|192.168.10.1/24|
+|h1|eth1|Discover IP & subnet from host|
+|h2|eth1|Discover IP & subnet from host|
+|h3|eth1|Discover IP & subnet from host|
+|r1|eth1|First assignable IP address from h1/eth1|
+|r1|eth2|First assignable IP address 10.0.0.0/30|
+|r1|eth3|An assignable IP address 10.0.0.8/30|
+|r2|eth1|First assignable IP address from h2/eth1|
+|r2|eth2|Second assignable IP address 10.0.0.0/30|
+|r2|eth3|An assignable IP address 10.0.0.4/30|
+|r3|eth1|First assignable IP address from h3/eth1|
+|r3|eth2|An assignable IP address 10.0.0.8/30|
+|r3|eth3|An assignable IP address 10.0.0.4/30|
 
 **Table 1, Node Details**
 
 ---
 
-|Links|
-|---|
-|h1:eth1 -> r1:eth1|
-|h2:eth1 -> r2:eth1|
-|h3:eth1 -> r3:eth1|
-|r1:eth2 -> r2:eth2|
-|r1:eth3 -> r3:eth2|
-|r2:eth3 -> r3:eth3|
+|Link Name|Endpoints|
+|---|---|
+|Lan 1|h1:eth1 -> r1:eth1|
+|Lan 2|h2:eth1 -> r2:eth1|
+|Lan 3|h3:eth1 -> r3:eth1|
+|Link1|r1:eth2 -> r2:eth2|
+|Link2|r1:eth3 -> r3:eth2|
+|Link3|r2:eth3 -> r3:eth3|
 
 **Table 2, Links**
 
----
-
-
-IP addresses and default gateways are configured on h1 through h4 when the network is deployed. At the time the network is deployed, routers r1 and r2 are not configured. The interfaces on r1 and r2 are not configured with IP addresses and there are no routes configured.
-
-<img src="../images/router_basic_practice.png" width="900" height="600">
-<sub><i>Figure 1. Network Topology</i></sub>
-<p></p>
-<p></p>
-
 --- 
 ## Operating the Lab Network
-### Challenge 2: Deploy the Lab Network
+### Challenge 2: Deploy the Network
 Launch the topology by running the script deploy.sh and **capture a screenshot of the results**.
 ```
   $ bash deploy.sh
 ```
 --- 
-## Testing Network Function
-### Challenge 3: Examining host configuration
+## Configure the Network
+### Challenge 3: Collect & Report Host Configuration Data
 
-The host and router nodes in this lab do not have an SSH server running at start-up. *Docker exec* will be used to gain shell access to the nodes in this lab.
-```
-docker exec syntax:
- sudo docker exec -it <CONTAINER-NAME or CONTAINER-ID> bash
+Examine hosts h1 through h3. Complete Table 3, Host Configuration.
 
-Example (getting shell in host h1):
- $ sudo docker exec -it clab-lab1-h1 bash
-```
-Get a shell on h1 and run the following commands. **Capture a screenshot of the results**. 
+|Host|IP Address|Subnet Mask|First Assignable IP|Last Assignable IP|
+|---|---|---|---|---|
+|H1|||||
+|H2|||||
+|H3|||||
 
-Examine the results of the **route** command. 
-```
-bash-5.1# ifconfig eth1
-bash-5.1# route
-```
-Note interface eth1 has IP address 192.168.1.10 and Mask 255.255.255.0. This can also be annotated as 192.168.1.10/24. 
+**Table 3, Host Configuration**
 
-Note the *default route to Gateway 192.168.1.1*. As shown in the network topology, IP address 192.168.1.1 is r1 eth1. The destination IP address in a route is referred to as the **next-hop**, meaning that traffic forwarded to that route is sent to the next-hop router, in this case 192.168.1.1. A **route** is the series of hops (routers) used to forward a packet from the source to the destination.
+---
+### Challenge 4: Configure Node Interfaces and Test Link Operation
+"Node" refers to hosts h1 through h3 and routers r1 through r3. Based on the information provided in Table 1 and collected for Table 3, configure IP address and subnet mask on all node interfaces. If node interfaces are correctly configured, pings across the links described in Table 2 will be successful. Test each link. Troubleshoot and resolve any failed links. Complete Table 4, Link Test Results to report successful link tests.
 
---- 
+|Link Name|Source Node|IP on Relevant Source Node Interface|Ping Command used to Test Link|Response Time|
+|---|---|---|---|---|
+|Lan 1|||||
+|Lan 2|||||
+|Lan 3|||||
+|Link1|||||
+|Link2|||||
+|Link3|||||
+
+**Table 4, Link Test Results**
+
+### Challenge 5: Configure Static routes 
+Because the network does not use routing protocols to dynamically learn routes, static routes are required to enable communications between all node interfaces. In this case, one default route will be configured on each router. Configure the default routes as described in Table 5, Default Routes.
+
+|Node|Default Route Next-hop|
+|r1|r3:eth2|
+|r2|r1:eth2|
+|r3|r2:eth3|
+
+### Challenge 6: Test Network Operation
+All node interfaces should be able to communicate at this point. Complete the following **ping** tests to demonstrate network operation. Report results in Table 5, Network Test Results. All pings should be successful. Troubleshoot and correct any failed ping tests.
+
+|Source Node|Destination Node:Interface|Ping Command used to Run Test|Response Time|
+|---|---|---|---|
+|h1|h2:eth1|||
+|h1|h3:eth1|||
+|h2|r1:eth3|||
+|h2|r3:eth2|||
+|h3|r1:eth3|||
+|h3|r2:eth2|||
+
+**Table 5, Network Test Results**
+
+---
+## Understanding the Network
+### Challenge 6: Examine Routes 
+You created a network diagram at the beginning of the lab. Use that diagram to predict the routes between the nodes in Table 6, Predicted Hops between Nodes. Complete Table 6. Include router interfaces on router hops.
+
+|Source|Destination|Hops (Example for h1 -> h2: h1, r1:eth1, r2:eth2, h2)|
+|---|---|---|
+|h1|h2||
+|h1|h3||
+|h2|h1||
+|h2|h3||
+|h3|r1:eth3||
+
+### Challenge 7: Test Routes with TRACEROUTE
+You attempted to predict routes between nodes. Now, use **traceroute** to test network function. Traceroute between the nodes and report the hops in the same format as in the previous challenge.
+
+|Source|Destination|Hops (Example for h1 -> h2: h1, r1:eth1, r2:eth2, h2)|
+|---|---|---|
+|h1|h2||
+|h1|h3||
+|h2|h1||
+|h2|h3||
+|h3|r1:eth3||
+
+### Challenge 8: Compare Predicted Routes to Observed Routes
+Compare your predicted routes between the nodes in Challenge 6 to the observed routes in Challenge 7. Did the predicted and observed routes match? If not, attempt to explain the difference. If so, discuss how you were able to predict the correct correct routes.
+
+### Challenge 9: Report Router Configuration
+If configurations have not been saved on r1, r2, and r3, save the configuration on all routers. Show configuration on all routers, copy and paste those configurations into separate documents. Name the documents with the router configurations **r1.conf, r2.conf, and r3.conf**.
