@@ -84,12 +84,15 @@ Examine hosts h1 through h3. Complete Table 3, Host Configuration.
 Because the network does not use routing protocols to dynamically learn routes, static routes are required to enable communications between all node interfaces. In this case, one default route will be configured on each router. Configure the default routes as described in Table 5, Default Routes.
 
 |Node|Default Route Next-hop|
+|---|---|
 |r1|r3:eth2|
 |r2|r1:eth2|
 |r3|r2:eth3|
 
+**Table 5, Default Routes**
+
 ### Challenge 6: Test Network Operation
-All node interfaces should be able to communicate at this point. Complete the following **ping** tests to demonstrate network operation. Report results in Table 5, Network Test Results. All pings should be successful. Troubleshoot and correct any failed ping tests.
+All node interfaces should be able to communicate at this point. Complete the following **ping** tests to demonstrate network operation. Report results in Table 6, Network Test Results. All pings should be successful. Troubleshoot and correct any failed ping tests.
 
 |Source Node|Destination Node:Interface|Ping Command used to Run Test|Response Time|
 |---|---|---|---|
@@ -100,12 +103,12 @@ All node interfaces should be able to communicate at this point. Complete the fo
 |h3|r1:eth3|||
 |h3|r2:eth2|||
 
-**Table 5, Network Test Results**
+**Table 6, Network Test Results**
 
 ---
 ## Understanding the Network
 ### Challenge 6: Examine Routes 
-You created a network diagram at the beginning of the lab. Use that diagram to predict the routes between the nodes in Table 6, Predicted Hops between Nodes. Complete Table 6. Include router interfaces on router hops.
+You created a network diagram at the beginning of the lab. Use that diagram to predict the routes between the nodes in Table 6, Predicted Hops between Nodes. **Complete Table 7, Predicted Routes. Include router interfaces on router hops**.
 
 |Source|Destination|Hops (Example for h1 -> h2: h1, r1:eth1, r2:eth2, h2)|
 |---|---|---|
@@ -114,9 +117,11 @@ You created a network diagram at the beginning of the lab. Use that diagram to p
 |h2|h1||
 |h2|h3||
 |h3|r1:eth3||
+
+**Table 7, Predicted Routes**
 
 ### Challenge 7: Test Routes with TRACEROUTE
-You attempted to predict routes between nodes. Now, use **traceroute** to test network function. Traceroute between the nodes and report the hops in the same format as in the previous challenge.
+You attempted to predict routes between nodes. Now, use **traceroute** to test network function. Traceroute between the nodes and report the hops in the same format as in the previous challenge. **Report observed routes in Table 8, Observed Routes**.
 
 |Source|Destination|Hops (Example for h1 -> h2: h1, r1:eth1, r2:eth2, h2)|
 |---|---|---|
@@ -125,6 +130,8 @@ You attempted to predict routes between nodes. Now, use **traceroute** to test n
 |h2|h1||
 |h2|h3||
 |h3|r1:eth3||
+
+**Table 8, Observed Routes**
 
 ### Challenge 8: Compare Predicted Routes to Observed Routes
 Compare your predicted routes between the nodes in Challenge 6 to the observed routes in Challenge 7. Did the predicted and observed routes match? If not, attempt to explain the difference. If so, discuss how you were able to predict the correct correct routes.
