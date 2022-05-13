@@ -1,7 +1,8 @@
 #!/bin/bash
 br1="clab-br1"
 br2="clab-br2"
-f=lab1.yml
+l=lab1
+f=$l.yml
 h='wbitt/network-multitool:alpine-extra'
 router='kbartontx/vyos:1.4'
 
@@ -19,7 +20,7 @@ sudo iptables -I FORWARD -i $br2 -j ACCEPT
 
 # Create yml file and write to lab1.yml
 cat << EOF > $f
-name: lab1
+name: $l
 topology:
   nodes:
     h1:
@@ -64,7 +65,6 @@ sudo clab deploy --topo $f
 
 # Configure IPs on hosts
 d="sudo docker"
-l=$(cat $f|grep name: | cut -d " " -f2)
 a1=192.168.1.10/24
 a2=192.168.1.200/24
 a3=192.168.2.15/24
