@@ -19,13 +19,13 @@ The network diagram must include:
 |h1|eth1|Discover IP & subnet from host|
 |h2|eth1|Discover IP & subnet from host|
 |h3|eth1|Discover IP & subnet from host|
-|r1|eth1|First assignable IP address from h1/eth1|
+|r1|eth1|First assignable IP address from h1:eth1|
 |r1|eth2|First assignable IP address 10.0.0.0/30|
 |r1|eth3|An assignable IP address 10.0.0.8/30|
-|r2|eth1|First assignable IP address from h2/eth1|
+|r2|eth1|First assignable IP address from h2:eth1|
 |r2|eth2|Second assignable IP address 10.0.0.0/30|
 |r2|eth3|An assignable IP address 10.0.0.4/30|
-|r3|eth1|First assignable IP address from h3/eth1|
+|r3|eth1|First assignable IP address from h3:eth1|
 |r3|eth2|An assignable IP address 10.0.0.8/30|
 |r3|eth3|An assignable IP address 10.0.0.4/30|
 
