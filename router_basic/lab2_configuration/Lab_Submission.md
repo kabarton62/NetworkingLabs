@@ -2,8 +2,12 @@
 ## Configuring Vyos routers 
 --- 
 Submit the following:
-1. Challenge 2 screenshot showing the successful execution of deploy.sh
-2. Challenge 3 screenshot showing shell on h1.
-3. Challenge 8 screenshot showing results of pings from h3 to r2.
-4. Challenge 10 screeshot showing successful pings from h1 to h3.
-5. Challenge 11 files with the running-configuration.
+1. Challenge 1 network diagram
+2. Challenge 2 screenshot showing results of deploy.sh.
+3. Challenge 3 completed Table 3, Host Configuration.
+4. Challenge 4 completed Table 4, Link Test Results.
+5. Challenge 6 completed Table 6, Network Test Results.
+6. Challenge 7 completed Table 7, Predicted Routes.
+7. Challenge 8 completed Table 8, Observed Routes.
+8. Challenge 9 comparing predicted routes to observed routes.
+9. Challenge 10 router configuration files r1.conf, r2.conf and r3.conf.
