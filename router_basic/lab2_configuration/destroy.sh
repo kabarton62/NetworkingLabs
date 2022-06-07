@@ -1,5 +1,5 @@
 #!/bin/bash
-l=lab1
+l=lab2
 f=$l.yml
 
 # Deploy the clab topology
