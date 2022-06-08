@@ -1,0 +1,15 @@
+name: images
+topology:
+  nodes:
+    node1:
+      # image from docker hub registry with implicit `latest` tag
+      kind: linux
+      image: alpine
+    node2:
+      # image from docker hub with explicit tag
+      kind: linux
+      image: wbitt/network-multitool:alpine-extra
+    node3:
+      # image from github registry
+      kind: linux
+      image: ghcr.io/hellt/network-multitool
