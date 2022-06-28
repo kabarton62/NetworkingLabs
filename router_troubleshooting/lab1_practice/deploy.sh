@@ -61,7 +61,7 @@ sudo clab deploy --topo $f
 
 # Configure IPs on hosts
 d="sudo docker"
-a1=192.168.1.5/25
+a1=192.168.1.5/24
 a2=192.168.1.215/24
 a3=172.16.1.5/24
 b1="dev eth1"
@@ -76,8 +76,8 @@ $d exec -it $h2 ip addr add $a2 $b2
 $d exec -it $h3 ip addr add $a3 $b1
 
 # Configure default gateways on hosts
-$d exec -it $h1 route add default gw 192.168.1.1 eth1
-$d exec -it $h2 route add default gw 192.168.1.1 eth1
+$d exec -it $h1 route add default gw 192.168.1.254 eth1
+$d exec -it $h2 route add default gw 192.168.1.254 eth1
 $d exec -it $h3 route add default gw 172.16.1.1 eth1
 
 # Delete Docker default gateways
