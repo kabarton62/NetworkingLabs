@@ -91,3 +91,9 @@ $d exec -it $h3 route delete default gw $gw eth0
 # Copy router config files
 $d cp r1.config.boot $r1:$conf
 $d cp r2.config.boot $r2:$conf
+
+printf "Wait 60 seconds to reboot routers\n"
+sleep 30
+
+printf "30 seconds left ...\n"
+sleep 30
