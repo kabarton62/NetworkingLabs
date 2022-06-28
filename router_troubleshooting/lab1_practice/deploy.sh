@@ -69,6 +69,9 @@ b2="dev eth1"
 h1="clab-$l-h101"
 h2="clab-$l-h102"
 h3="clab-$l-h201"
+r1="clab-$l-r1"
+r2="clab-$l-r2"
+conf="/opt/vyatta/etc/config/config.boot"
 gw=172.20.0.1
 
 $d exec -it $h1 ip addr add $a1 $b1
@@ -84,3 +87,7 @@ $d exec -it $h3 route add default gw 172.16.1.1 eth1
 $d exec -it $h1 route delete default gw $gw eth0
 $d exec -it $h2 route delete default gw $gw eth0
 $d exec -it $h3 route delete default gw $gw eth0
+
+# Copy router config files
+$d exec cp r1.config.boot $r1:$conf
+$d exec cp r2.config.boot $r2:$conf
