@@ -89,5 +89,5 @@ $d exec -it $h2 route delete default gw $gw eth0
 $d exec -it $h3 route delete default gw $gw eth0
 
 # Copy router config files
-$d exec cp r1.config.boot $r1:$conf
-$d exec cp r2.config.boot $r2:$conf
+$d cp r1.config.boot $r1:$conf
+$d cp r2.config.boot $r2:$conf
