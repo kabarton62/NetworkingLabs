@@ -142,7 +142,7 @@ set interface eth eth1 address 192.168.1.254/24
 commit
 save
 ```
-Now, test the connection between r1/eth1 and h1.
+Now, test the connection between r1/eth1 and h1. **Capture a screenshot demonstrating successful pings from r1 to h101**
 ```
 vyos@vyos:/$ ping 192.168.1.5
 PING 192.168.1.5 (192.168.1.5) 56(84) bytes of data.
@@ -154,3 +154,104 @@ PING 192.168.1.5 (192.168.1.5) 56(84) bytes of data.
 3 packets transmitted, 3 received, 0% packet loss, time 2030ms
 rtt min/avg/max/mdev = 0.085/0.120/0.190/0.049 ms
 ```
+### Challenge 6: Test and troubleshoot communications from h101 to h201
+We solved one problem, so ping from h101 to h201 again to see if the network is functional.
+```
+bash-5.1# hostname
+h101
+bash-5.1# ping 172.16.1.5
+PING 172.16.1.5 (172.16.1.5) 56(84) bytes of data.
+From 192.168.1.254 icmp_seq=1 Destination Host Unreachable
+From 192.168.1.254 icmp_seq=2 Destination Host Unreachable
+From 192.168.1.254 icmp_seq=3 Destination Host Unreachable
+^C
+--- 172.16.1.5 ping statistics ---
+6 packets transmitted, 0 received, +3 errors, 100% packet loss, time 5127ms
+```
+Pings from h101 to h201 still fail. Start troubleshooting by examining routes on r1.
+```
+vyos@vyos:/$ show ip route
+Codes: K - kernel route, C - connected, S - static, R - RIP,
+       O - OSPF, I - IS-IS, B - BGP, E - EIGRP, N - NHRP,
+       T - Table, v - VNC, V - VNC-Direct, A - Babel, F - PBR,
+       f - OpenFabric,
+       > - selected route, * - FIB route, q - queued, r - rejected, b - backup
+       t - trapped, o - offload failure
+
+K>* 0.0.0.0/0 [0/0] via 172.20.0.1, eth0, 01:07:42
+S>* 172.16.1.0/24 [1/0] via 172.20.1.6, eth2, weight 1, 01:07:31
+C>* 172.20.0.0/24 is directly connected, eth0, 01:07:42
+C>* 172.20.1.4/30 is directly connected, eth2, 01:07:35
+C>* 192.168.1.0/24 is directly connected, eth1, 00:12:57
+```
+That is good news, r1 has a route to 172.16.1.0/24 via 172.20.1.6 on eth2. That reflects what would be expected from the network diagram in Figure 1. Router r1 has a route to the destination network, so let's test the link between r1 and r2 by pinging from r1 to the next-hop 172.20.1.6.
+```
+vyos@vyos:/$ ping 172.20.1.6
+PING 172.20.1.6 (172.20.1.6) 56(84) bytes of data.
+From 172.20.1.5 icmp_seq=1 Destination Host Unreachable
+From 172.20.1.5 icmp_seq=2 Destination Host Unreachable
+From 172.20.1.5 icmp_seq=3 Destination Host Unreachable
+^C
+--- 172.20.1.6 ping statistics ---
+4 packets transmitted, 0 received, +3 errors, 100% packet loss, time 3072ms
+```
+Interesting. Recall from the previous challenge that r1/eth2 has IP address 172.20.1.5/30. Therefore, it seems that r1 is configured with the correct IP address and has a route to the only other assignable IP address in 172.20.1.4/30. The problem may be on r2, so let's examine r2.
+
+Examine router interface configurations on r2.
+```
+vyos@vyos:/$ show int
+Codes: S - State, L - Link, u - Up, D - Down, A - Admin Down
+Interface        IP Address                        S/L  Description
+---------        ----------                        ---  -----------
+eth0             172.20.0.3/24                     u/u  
+                 2001:172:20::3/80                      
+eth1             172.16.1.1/24                     u/u  
+eth2             172.20.1.5/30                     u/u  
+lo               127.0.0.1/8                       u/u  
+                 ::1/128                                
+```
+And, there we see the problem. Interfaces on both sides of the link between r1 and r2 have the same IP address. On your own, correct the IP address on r2. After the interface r2/eth2 IP address is correctly configured, test the link by pinging from r2 to r1/eth2. **Capture a screenshot demonstrating the link between r1 and r2 is functional** 
+
+### Challenge 7: Test and troubleshoot connection from h101 to h201
+At this point we have corrected two problems. The first was the wrong subnet mask configured on r1/eth1, the second was the wrong IP address on r2/eth2. With those problems corrected, we should be able to ping from h101 to h201 if there are no more problems. However, pings from h101 to h201 still fail.
+```
+bash-5.1# hostname
+h101
+bash-5.1# ping 172.16.1.5
+PING 172.16.1.5 (172.16.1.5) 56(84) bytes of data.
+^C
+--- 172.16.1.5 ping statistics ---
+3 packets transmitted, 0 received, 100% packet loss, time 2044ms
+```
+Interesting. We know the link from r1 to r2 is functional, so ping from h101 to both sides of the link between r1 and r2 (r1/eth2 and r2/eth2).
+```
+bash-5.1# ping 172.20.1.5
+PING 172.20.1.5 (172.20.1.5) 56(84) bytes of data.
+64 bytes from 172.20.1.5: icmp_seq=1 ttl=64 time=0.104 ms
+64 bytes from 172.20.1.5: icmp_seq=2 ttl=64 time=0.088 ms
+^C
+--- 172.20.1.5 ping statistics ---
+2 packets transmitted, 2 received, 0% packet loss, time 1023ms
+rtt min/avg/max/mdev = 0.088/0.096/0.104/0.008 ms
+bash-5.1# ping 172.20.1.6
+PING 172.20.1.6 (172.20.1.6) 56(84) bytes of data.
+^C
+--- 172.20.1.6 ping statistics ---
+3 packets transmitted, 0 received, 100% packet loss, time 2042ms
+```
+So, although the link between r1 and r2 is functional, we are unable to ping from h101 to r2/eth2. Therefore, let's take a closer look at r2. We've already corrected an interface configuration error on r2/eth2, so verify that r2/eth1 has the correct configuration and examine routes to 192.168.1.0/24.
+```
+vyos@vyos:/$ show int
+Codes: S - State, L - Link, u - Up, D - Down, A - Admin Down
+Interface        IP Address                        S/L  Description
+---------        ----------                        ---  -----------
+eth0             172.20.0.3/24                     u/u  
+                 2001:172:20::3/80                      
+eth1             172.16.1.1/24                     u/u  
+eth2             172.20.1.6/30                     u/u  
+lo               127.0.0.1/8                       u/u  
+                 ::1/128                                
+vyos@vyos:/$ show ip route 192.168.1.0/24
+% Network not in table
+```
+Interface r2/eth1 has the correct IP address and subnet mask configured. However, we see that r2 does not have a route to 192.168.1.0/24. Add a static route to 192.168.1.0/24 on r2 and demonstrate that the network functions by pinging from h101 to h201. **Capture a screenshot of the successful pings from h101 to h201**
