@@ -35,7 +35,7 @@ docker exec syntax:
 Example (getting shell in host h101):
  $ sudo docker exec -it clab-lab1-h101 bash
 ```
-Get a shell on h1 and run the following commands. **Capture a screenshot of the results**. 
+Get a shell on h101 and run the following commands. **Capture a screenshot of the results**. 
 
 Attempt to ping h201. 
 ```
