@@ -19,7 +19,7 @@ IP addresses and default gateways are configured on h101, h102 and h201 when the
 --- 
 ## Operating the Lab Network
 ### Challenge 2: Deploy the Lab Network
-Launch the topology by running the script deploy.sh and **capture a screenshot of the results**.
+Launch the topology by running the script deploy.sh.
 ```
   $ bash deploy.sh
 ```
@@ -27,7 +27,7 @@ Launch the topology by running the script deploy.sh and **capture a screenshot o
 ## Testing Network Function
 ### Challenge 3: Test network operation
 
-The host and router nodes in this lab do not have an SSH server running at start-up. *Docker exec* will be used to gain shell access to the nodes in this lab.
+*Docker exec* will be used to gain shell access to the nodes in this lab.
 ```
 docker exec syntax:
  sudo docker exec -it <CONTAINER-NAME or CONTAINER-ID> bash
@@ -43,19 +43,19 @@ bash-5.1# ping 172.16.1.5
 ```
 Note the results. All packets are lost. 
 
-Multiple problems could be the root cause(s) for this network failure.
+Multiple problems could be the root causes for this network failure. Begin to troubleshoot and continue troubleshooting until all problems are discovered and solved.
 
 --- 
 ### Challenge 4: Test the local network 192.168.1.0/24 and Default Gateway r1/eth1
 
-Pings from h101 to h201 failed. The first step is to determine if the problem is in the local network our outside of the local network. Successfully pinging the Default Gateway would demonstrate:
+Pings from h101 to h201 failed. The first step is to determine if the problem is in the local network 192.168.1.0/24 or outside of the local network. Successfully pinging the Default Gateway would demonstrate:
 
 1. Layer 2 and Layer 1 (L2 & L1) between h101 and r1/eth1 are functional
 2. Layer 3 (L3) on r1/eth1 is functional
-3. L3 and below (L2 & L1) on h101
+3. L3 and below (L2 & L1) on h101 are functional
 
 ---
-Pings from h101 to r1/eth1 fail.
+However, pings from h101 to r1/eth1 fail.
 ```
 bash-5.1# hostname
 h101
@@ -68,7 +68,7 @@ From 192.168.1.5 icmp_seq=3 Destination Host Unreachable
 --- 192.168.1.1 ping statistics ---
 4 packets transmitted, 0 received, +3 errors, 100% packet loss, time 3054ms
 ```
-Let's look at one more thing: pinging from h101 to h102.
+Let's look at one more thing: ping from h101 to h102.
 ```
 bash-5.1# hostname
 h101
@@ -107,7 +107,7 @@ PING 192.168.1.215 (192.168.1.215) 56(84) bytes of data.
 3 packets transmitted, 3 received, 0% packet loss, time 2049ms
 rtt min/avg/max/mdev = 0.084/0.125/0.202/0.054 ms
 ```
-The results show that r1 can ping h102 but not h101. This is an interesting result that seems to make no sense, but we can draw at least one important conlusion. L2 and L1 are functional between r1 and 192.168.1.0/24. Therefore, the problem is a L3 problem. Let's dig a little deeper into r1 configuration.
+The results show that r1 can ping h102 but not h101. This is an interesting result that seems to make no sense, but we can draw at least one important conlusion. L2 and L1 are functional between r1 and 192.168.1.0/24. Therefore, the problem is a L3 problem. Let's dig a little deeper into r1's configuration.
 ```
 vyos@vyos:/$ show interfaces 
 Codes: S - State, L - Link, u - Up, D - Down, A - Admin Down
@@ -120,7 +120,7 @@ eth2             172.20.1.5/30                     u/u
 lo               127.0.0.1/8                       u/u  
                  ::1/128                                
 ```
-Here, we see the problem. Interface eth1 is mis-configured. The interface is configured with the correct IP address (192.168.1.254) but the wrong subnet mask (/25 vs /24). We can look at the known routes for h101 and h102 using the **show ip route IP Address** command.
+Here, we see the problem. Interface eth1 is misconfigured. The interface is configured with the correct IP address (192.168.1.254) but the wrong subnet mask (/25 vs /24). We can verify this problem by looking at the known routes to h101 and h102 using the **show ip route IP Address** command.
   
 ```
 vyos@vyos:/$ show ip route 192.168.1.5
