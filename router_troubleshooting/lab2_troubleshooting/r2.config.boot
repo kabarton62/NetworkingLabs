@@ -3,9 +3,17 @@ interfaces {
         address 172.16.1.1/24
     }
     ethernet eth2 {
-        address 172.20.1.5/30
+        address 172.20.1.10/29
     }
     loopback lo {
+    }
+}
+protocols {
+    static {
+        route 0.0.0.0/0 {
+            next-hop 172.20.1.11 {
+            }
+        }
     }
 }
 system {
