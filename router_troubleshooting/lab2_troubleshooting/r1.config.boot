@@ -1,9 +1,9 @@
 interfaces {
     ethernet eth1 {
-        address 192.168.1.254/25
+        address 192.168.1.1/24
     }
     ethernet eth2 {
-        address 172.20.1.5/30
+        address 172.20.1.9/29
     }
     loopback lo {
     }
@@ -11,10 +11,14 @@ interfaces {
 protocols {
     static {
         route 172.16.1.0/24 {
-            next-hop 172.20.1.6 {
+            next-hop 172.20.1.11 {
             }
         }
-    }
+         route 10.0.0.0/24 {
+            next-hop 172.20.1.11 {
+            }
+        }
+   }
 }
 system {
     config-management {
