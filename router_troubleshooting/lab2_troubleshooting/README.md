@@ -1,4 +1,4 @@
-# <img src="https://www.tamusa.edu/brandguide/jpeglogos/tamusa_final_logo_bw1.jpg" width="100" height="50"> Lab 1 Practice
+# <img src="https://www.tamusa.edu/brandguide/jpeglogos/tamusa_final_logo_bw1.jpg" width="100" height="50"> Lab 2 Troubleshooting
 ## Troubleshooting routing
 This lab uses a three-router topology built with Vyos router containers and four hosts. Routers and hosts have basic configurations. The network design is functional, but there are configuration errors on the routers. Troubleshoot and correct the router configuration errors. All hosts will be able to communicate 
 ### **Prerequisites**
