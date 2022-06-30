@@ -1,14 +1,21 @@
 interfaces {
     ethernet eth1 {
-        address 172.16.1.1/24
+        address 10.0.0.1/24
     }
     ethernet eth2 {
-        address 172.20.1.5/30
+        address 172.20.1.11/29
     }
     loopback lo {
     }
 }
-system {
+protocols {
+    static {
+        route 0.0.0.0/0 {
+            next-hop 172.20.0.1 {
+            }
+        }
+    }
+}system {
     config-management {
         commit-revisions 100
     }
