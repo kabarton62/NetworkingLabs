@@ -14,7 +14,7 @@ protocols {
             next-hop 172.20.1.11 {
             }
         }
-         route 10.0.0.0/24 {
+         route 0.0.0.0/0 {
             next-hop 172.20.1.11 {
             }
         }
