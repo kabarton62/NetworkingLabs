@@ -15,7 +15,8 @@ protocols {
             }
         }
     }
-}system {
+}
+system {
     config-management {
         commit-revisions 100
     }
