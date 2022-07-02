@@ -2,8 +2,8 @@
 ## Practicing router/routing troubleshooting
 --- 
 Submit the following:
-1. Challenge 3 for each problem discovered:
-   - Symptoms related to configuration error. Explain how you identified that there was a problem.
+1. Challenge 3, for each problem discovered:
+   - Report symptoms related to each discovered configuration error. Explain how you identified that there was a problem.
    - Report the faulty configuration setting.
    - Report how you corrected the faulty configuration setting, to include procedures and commands.
    - Screenshot that proves the problem was resolved. 
