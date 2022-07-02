@@ -2,7 +2,9 @@
 ## Practicing router/routing troubleshooting
 --- 
 Submit the following:
-1. Challenge 3 screenshot showing results of ping attempts from h101 to h201.
-2. Challenge 5 screenshot showing successful pings from r1 to h101, demonstrating r1/eth1 errors are corrected.
-3. Challenge 6 screenshot showing successful pings from r1 to r2/eth2, demonstrating r2/eth2 errors are corrected.
-4. Challenge 7 screeshot showing successful pings from h101 to h201.
+1. Challenge 3 for each problem discovered:
+   - Symptoms related to configuration error. Explain how you identified that there was a problem.
+   - Report the faulty configuration setting.
+   - Report how you corrected the faulty configuration setting, to include procedures and commands.
+   - Screenshot that proves the problem was resolved. 
+3. Challenge 5 screenshot(s) proving the network is functional and that all hosts can communicate.
