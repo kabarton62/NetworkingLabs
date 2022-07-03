@@ -15,5 +15,5 @@ sudo ip link set $br1 down
 sudo ip link set $br2 down
 sudo ip link set $br3 down
 sudo brctl delbr $br1
-sudo brctl delbr $br3
+sudo brctl delbr $br2
 sudo brctl delbr $br3
