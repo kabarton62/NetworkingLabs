@@ -90,6 +90,7 @@ h3="clab-$l-h201"
 h4="clab-$l-h301"
 r1="clab-$l-r1"
 r2="clab-$l-r2"
+r3="clab-$l-r3"
 conf="/opt/vyatta/etc/config/config.boot"
 gw=172.20.0.1
 
