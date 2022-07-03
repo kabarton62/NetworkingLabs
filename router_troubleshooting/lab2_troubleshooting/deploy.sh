@@ -54,9 +54,6 @@ topology:
     r2:
       kind: linux
       image: $router
-    r2:
-      kind: linux
-      image: $router
     r3:
       kind: linux
       image: $router
