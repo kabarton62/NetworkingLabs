@@ -25,7 +25,7 @@ sudo brctl addbr $br3
 sudo ip link set $br3 up
 sudo iptables -I FORWARD -i $br3 -j ACCEPT
 
-# Create yml file and write to lab1.yml
+# Create yml file
 cat << EOF > $f
 name: $l
 topology:
