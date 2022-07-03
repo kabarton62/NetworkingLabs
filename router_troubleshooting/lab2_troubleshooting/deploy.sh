@@ -59,9 +59,9 @@ topology:
       image: $router
 
   links:
-    - endpoints: ["h101:eth1", "clab-br1:eth13"]
-    - endpoints: ["h102:eth1", "clab-br1:eth14"]
-    - endpoints: ["h201:eth1", "clab-br2:eth15"]
+    - endpoints: ["h101:eth1", "clab-br1:eth15"]
+    - endpoints: ["h102:eth1", "clab-br1:eth16"]
+    - endpoints: ["h201:eth1", "clab-br2:eth17"]
     - endpoints: ["h301:eth1", "r3:eth1"]
     - endpoints: ["r1:eth1", "clab-br1:eth10"]
     - endpoints: ["r2:eth1", "clab-br2:eth11"]
