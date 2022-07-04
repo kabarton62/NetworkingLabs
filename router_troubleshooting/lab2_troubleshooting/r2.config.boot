@@ -10,7 +10,11 @@ interfaces {
 }
 protocols {
     static {
-        route 0.0.0.0/0 {
+        route 10.0.0.0/24 {
+            next-hop 172.20.1.11 {
+            }
+        }
+        route 192.168.1.0/24 {
             next-hop 172.20.1.11 {
             }
         }
