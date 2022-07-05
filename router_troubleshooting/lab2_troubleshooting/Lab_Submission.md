@@ -8,3 +8,4 @@ Submit the following:
    - Report how you corrected the faulty configuration setting, to include procedures and commands.
    - Screenshot that proves the problem was resolved. 
 3. Challenge 5 screenshot(s) proving the network is functional and that all hosts can communicate.
+4. Challenge 6 router configuration files r1.conf, r2.conf and r3.conf.
