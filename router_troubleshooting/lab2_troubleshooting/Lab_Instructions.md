@@ -7,7 +7,7 @@ This lab deploys a simple network with routers (r1, r2 and r3), Ethernet switche
 IP addresses and default gateways are configured on the hosts when the network is deployed. Routers are also configured at the time the network is deployed. However, the routers have configuration errors when the network is initially deployed. The total number of errors is not disclosed. Continue troubleshooting until you are confident that all problems are solved. All problems are solved when all hosts can communicate.
 
 <p align="center">
-<img src="../images/L2-troubleshooting.png" width="300" height="500">
+<img src="../images/L2-troubleshooting.png" width="500" height="500">
 </p>
 <p align="center">
 <sub><i>Figure 1. Network Topology</i></sub>
