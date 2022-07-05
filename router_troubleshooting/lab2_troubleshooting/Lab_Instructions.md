@@ -49,3 +49,7 @@ It is possible that you might further break the network while troubleshooting. I
 ### Challenge 4: Proof that all errors are corrected
 
 Demonstrate that all problems are resolved. **Capture screenshots that prove all problems are resloved. This may take multiple tests. Students need to select and run the tests that demonstrate the network is functioning correctly.**
+
+### Challenge 6: Show router configurations
+
+Show running configuration for routers r1, r2 and r3. **Save a copy of each router configuration as r1.conf, r2.conf and r3.conf.**
