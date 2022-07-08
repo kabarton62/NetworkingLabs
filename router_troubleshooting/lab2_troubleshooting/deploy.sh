@@ -100,8 +100,8 @@ $d exec -it $h3 ip addr add $a3 $eth1
 $d exec -it $h4 ip addr add $a4 $eth1
 
 # Configure default gateways on hosts
-$d exec -it $h1 route add default gw 192.168.1.254 eth1
-$d exec -it $h2 route add default gw 192.168.1.254 eth1
+$d exec -it $h1 route add default gw 192.168.1.1 eth1
+$d exec -it $h2 route add default gw 192.168.1.1 eth1
 $d exec -it $h3 route add default gw 172.16.1.1 eth1
 $d exec -it $h4 route add default gw 10.0.0.1 eth1
 
