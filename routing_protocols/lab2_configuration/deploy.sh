@@ -53,6 +53,24 @@ topology:
     r2:
       kind: linux
       image: $router
+    r3:
+      kind: linux
+      image: $router
+    r4:
+      kind: linux
+      image: $router
+    r5:
+      kind: linux
+      image: $router
+    r6:
+      kind: linux
+      image: $router
+    r7:
+      kind: linux
+      image: $router
+    r8:
+      kind: linux
+      image: $router
     clab-br1: 
       kind: bridge
     clab-br2: 
