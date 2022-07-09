@@ -1,5 +1,5 @@
 # <img src="https://www.tamusa.edu/brandguide/jpeglogos/tamusa_final_logo_bw1.jpg" width="100" height="50"> Lab Instructions
-## Network Topology and Reading deploy.sh
+## Network Topology
 ### Challenge 1: Network Topology
 
 This lab deploys a simple network with two routers (r1 and r2), two Ethernet switches (clab-br1 and clab-br2) and three Linux hosts (h101, h102 and h201). Hosts h101 and h102 are in the same network (192.168.1.0/24), and r1 eth1 is the **default gateway** for that network. Host h201 is in 172.16.1.0/24 and r2 eth1 is the default gateway for h201. Routers r1 and r2 are connected via an Ethernet link. The link connects to interface eth2 on each router.
