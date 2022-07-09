@@ -1,5 +1,5 @@
 # <img src="https://www.tamusa.edu/brandguide/jpeglogos/tamusa_final_logo_bw1.jpg" width="100" height="50"> Routing Labs
-## Routing Protocol Practice
+## Routing Protocol Configuration
 This lab includes three networks (North, Central and South). Router and host interfaces are configured with the correct IP addresses and subnet masks, but the routers do not have routes configured or known, other than Kernel and directly connected routes. As a result, communications between nodes are very limited. Introducing routing protocols will enable the routers to dynamically learn routes and enable full communications between all nodes.
 
 Users will configure routing protocols and demonstrate successful communication between all nodes in the North, Central and South networks.
