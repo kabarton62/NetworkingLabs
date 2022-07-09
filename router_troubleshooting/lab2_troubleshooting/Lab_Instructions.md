@@ -1,5 +1,5 @@
 # <img src="https://www.tamusa.edu/brandguide/jpeglogos/tamusa_final_logo_bw1.jpg" width="100" height="50"> Lab Instructions
-## Network Topology and Reading deploy.sh
+## Network Topology
 ### Challenge 1: Network Topology
 
 This lab deploys a simple network with routers (r1, r2 and r3), Ethernet switches, and Linux hosts.
