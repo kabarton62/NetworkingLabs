@@ -7,7 +7,7 @@ This lab deploys a simple network with two routers (r1 and r2), two Ethernet swi
 IP addresses and default gateways are configured on h101, h102 and h201 when the network is deployed. Routers r1 and r2 are also configured at the time the network is deployed. However, r1 and r2 have configuration errors when the network is initially deployed.
 
 <p align="center">
-<img src="../images/protocols-practice2.png" width="300" height="500">
+<img src="../images/protocols-practice2.png" width="450" height="700">
 </p>
 <p align="center">
 <sub><i>Figure 1. Network Topology</i></sub>
