@@ -72,7 +72,7 @@ Vyos **show ip route** command shows:
 - Which routes are selected (**>**)
 
 Inspect routes on R3. 
-1. **Report the routes learned by RIP.**
+**Report the routes learned by RIP.**
 
 Inspect routes on R1.
 1. **Predict if R1 could successfully ping R3:eth1.**
@@ -101,5 +101,14 @@ set protocols ospf log-adjacency-changes
 **Configure OSPF on routers in Central and South networks.**
 - **Add router interfaces in Central network to OSPF area 1**
 - **Add router interfaces in South network to OSPF area 2.**
+- **NOTE: R6 is an ABR. Interfaces eth1 and eth2 are in OSPF area 1, interfaces eth3 and eth3 are in OSPF area 2.
 
 ### Challenge 7: Inspect Routing in Central and South Networks.
+Inspect routes on R5 and R8. 
+**Report the routes learned by OSPF.**
+
+Inspect routes on R1.
+1. **Predict if R3 could successfully ping R8:eth1.**
+2. **Explain why you think R3 could or could not ping R3:eth1.**
+3. **Predict if R1 could successfully ping R4:eth1.**
+4. **Explain why you think R1 could or could not ping R4:eth1.**
