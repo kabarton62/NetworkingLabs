@@ -62,7 +62,7 @@ Networks on other interfaces can be explicitly added with the **rip network** co
 ```
 set protocols rip network 10.100.1.0/24
 ```
-**Configure RIP on links between all routers in the North network (N-Link1 and N-Link2). R3:eth3 is included in the North network, R3:eth1 and :eth2 are not in the North network. R3:eth1 and :eth2 are in the Central network.**
+**Configure RIP on links between all routers in the North network (N-Link1 and N-Link2). R3:eth3 is included in the North network, R3:eth1 and R3:eth2 are not in the North network. R3:eth1 and :eth2 are in the Central network.**
 **Add N-LAN1 and N-LAN2 networks to the rip table using the *rip network* command**
 
 ### Challenge 5: Inspect North Network Routing.
@@ -86,4 +86,20 @@ OSPF stores routing information in three tables:
 - Topology table
 - Routing table
 
-In very large networks, the detailed information stored by each router can consume enough resources on the routers to impact OSPF protocol performance. Therefore, OSPF includes a mechanism to segment large networks into *Areas*.
+In very large networks, the detailed information stored by each router can consume enough resources on the routers to impact OSPF protocol performance. Therefore, OSPF includes a mechanism to segment large networks into *Areas*. Areas are used to segment autonomous networks while still being able to shares routes between the networks through Area Border Routers (ABRs). An ABR is any OSPF router that has more than one OSPF area configured.
+
+Some key terms and concepts in OSPF.
+**OSPF Neighbors:** OSPF neighbors are adjacent routers (routers that share a link). Fully adjacent neighbors are routers that are a) have the same subnet configured, b) area ID, c) hellow and dead interval timers, and d) same authentication if used. Fully adjacent neighbors share link state tables.
+**Router ID:** Every OSPF router in a network must have a unique router ID. Duplicate router IDs create link state model instabilities and subsequently create routing problems. An OSPF router ID looks similar to an IPv4 IP address, so it is possible to use an IP address configured on each router as the router ID. This practice avoids duplicate router IDs.
+
+Configuring OSPF on Vyos normally requires three commands. First, assign the router ID. Second, assign router interfaces to an OSPF area. Third, enable logging (optional). Additional information on Vyos OSPF can be found [here](https://support.vyos.io/en/kb/articles/how-to-configure-ospf-virtual-links-2)
+```
+set protocols ospf parameters router-id '192.168.0.1'
+set protocols ospf area 1 network '192.168.0.0/30'
+set protocols ospf log-adjacency-changes
+```
+**Configure OSPF on routers in Central and South networks.**
+- **Add router interfaces in Central network to OSPF area 1**
+- **Add router interfaces in South network to OSPF area 2.**
+
+### Challenge 7: Inspect Routing in Central and South Networks.
