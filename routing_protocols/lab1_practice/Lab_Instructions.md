@@ -2,9 +2,9 @@
 ## Network Topology
 ### Challenge 1: Network Topology
 
-This lab deploys a simple network with two routers (r1 and r2), two Ethernet switches (clab-br1 and clab-br2) and three Linux hosts (h101, h102 and h201). Hosts h101 and h102 are in the same network (192.168.1.0/24), and r1 eth1 is the **default gateway** for that network. Host h201 is in 172.16.1.0/24 and r2 eth1 is the default gateway for h201. Routers r1 and r2 are connected via an Ethernet link. The link connects to interface eth2 on each router.
+This lab deploys eight routers organized into three networks (North, Central and South). 
 
-IP addresses and default gateways are configured on h101, h102 and h201 when the network is deployed. Routers r1 and r2 are also configured at the time the network is deployed. However, r1 and r2 have configuration errors when the network is initially deployed.
+IP addresses are correctly configured on the router interfaces and host H1 has the an IP address and default gateway correctly configured. However, the routers only know the default Kernel routes and directly connected routes. No other routes are configured or known.
 
 <p align="center">
 <img src="../images/protocols-practice2.png" width="450" height="700">
