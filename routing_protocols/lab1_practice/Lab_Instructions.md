@@ -116,3 +116,23 @@ Inspect routes on R1.
 4. **Explain why you think R1 could or could not ping R4:eth1.**
 
 ### Challenge 8: Route redistribution
+Compare the routes on R3 to those known on any other router. Note that R3 knows routes to every network in the topology, but R1 and R2 only know routes learned by RIP and R4 through R8 only know routes learned by OSPF. Routes learned by one protocol need to be **redistributed** to the other protocols. For example, routes learned by RIP need to be redistributed to OSPF, and routes learned by OSPF need to be redistributed to RIP. 
+
+Configure route redistribution on the router(s) that learn routes by more than one routing protocol. In this case, that is R3.
+
+**Redistribute RIP routes to OSPF:**
+```
+set protocols rip redistribute ospf
+```
+
+**Redistribute OSPF routes to RIP:**
+```
+set protocols ospf redistribute rip
+```
+
+After configuring redistribution between RIP and OSPF, you should see *almost* all networks learned on every router. However, you will see that 10.0.0.4/30 is not learned in Central and South networks. Examine the method used to learn that route on R3, note that 10.0.0.4/30 is learned only by **Connected**. Although 10.0.0.4/30 is configured by RIP, R3 did not learn that network by RIP. 
+
+**Using the skills you learned to redistribute RIP routes to OSPF, redistribute 10.0.0.4/30 (connected vs rip) to OSPF.**
+
+#### Challenge 9: Prove all routes are known throughout the network
+**Capture a screenshot of successful pings from R1 to S-LAN1 and R1 to S-LAN2.
