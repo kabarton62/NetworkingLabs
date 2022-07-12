@@ -81,12 +81,14 @@ Inspect routes on R1.
 ### Challenge 6: Configure OSPF on the Central and South networks
 OSPF is a Link-State routing protocol. Link-state routing protocols construct a mathematical model of known networks and the links between nodes. Preferred routes are chosen by the lowest cost routes. Cost in link-state routing protocols generally reflects network performance or capacity, meaning that networks with the greatest network speed have the lowest cost. Routes with the lowest combined cost would be the preferred route to a destination network.
 
-OSPF stores routing information in three tables:
+OSPF stores routing information in Link State Databases, consisting of three tables:
 - Neighbor table
 - Topology table
 - Routing table
 
-In very large networks, the detailed information stored by each router can consume enough resources on the routers to impact OSPF protocol performance. Therefore, OSPF includes a mechanism to segment large networks into *Areas*. Areas are used to segment autonomous networks while still being able to shares routes between the networks through Area Border Routers (ABRs). An ABR is any OSPF router that has more than one OSPF area configured.
+In very large networks, the detailed information stored by each router can consume enough resources on the routers to impact OSPF protocol, or even node, performance. Therefore, OSPF includes a mechanism to segment large networks into **Areas**. Areas are used to segment OSPF domains in autonomous networks while still being able to shares routes between through Area Border Routers (ABRs). An ABR is any OSPF router that has more than one OSPF area configured. Area 0 is used to identify the *backbone*. 
+
+The backbone (Area 0) is responsible for storing network topology for the OSPF domain and sharing summary route data with non-backbone areas. Every ABR router should have at least one connection to the backbone. Virtual links can be used to share routes between non-backbone areas that do not have a physical connection to the backbone, but we will not practice that method.
 
 Some key terms and concepts in OSPF.
 **OSPF Neighbors:** OSPF neighbors are adjacent routers (routers that share a link). Fully adjacent neighbors are routers that are a) have the same subnet configured, b) area ID, c) hellow and dead interval timers, and d) same authentication if used. Fully adjacent neighbors share link state tables.
@@ -99,9 +101,9 @@ set protocols ospf area 1 network '192.168.0.0/30'
 set protocols ospf log-adjacency-changes
 ```
 **Configure OSPF on routers in Central and South networks.**
-- **Add router interfaces in Central network to OSPF area 1**
-- **Add router interfaces in South network to OSPF area 2.**
-- **NOTE: R6 is an ABR. Interfaces eth1 and eth2 are in OSPF area 1, interfaces eth3 and eth3 are in OSPF area 2.
+- **Add router interfaces in Central network to OSPF area 0**
+- **Add router interfaces in South network to OSPF area 1.**
+- **NOTE: R6 is an ABR. Interfaces eth1 and eth2 are in OSPF area 0, interfaces eth3 and eth3 are in OSPF area 1.
 
 ### Challenge 7: Inspect Routing in Central and South Networks.
 Inspect routes on R5 and R8. 
@@ -112,3 +114,5 @@ Inspect routes on R1.
 2. **Explain why you think R3 could or could not ping R3:eth1.**
 3. **Predict if R1 could successfully ping R4:eth1.**
 4. **Explain why you think R1 could or could not ping R4:eth1.**
+
+### Challenge 8: Route redistribution
