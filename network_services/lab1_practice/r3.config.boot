@@ -2,8 +2,8 @@ interfaces {
     ethernet eth1 {
         address 10.200.1.1/24
     }
-    ethernet eth2 {
-        address 172.29.0.5/30
+    ethernet eth3 {
+        address 10.0.0.6/30
     }
     loopback lo {
     }
