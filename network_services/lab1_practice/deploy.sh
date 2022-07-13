@@ -4,8 +4,8 @@ l=lab1
 f=$l.yml
 h='wbitt/network-multitool:alpine-extra'
 router='kbartontx/vyos:1.4'
-dhcp='ataraday/dhclient:bionic'
-dns='ubuntu/bind9:latest'
+dhcp='kbartontx/dhclient:latest'
+dns='kbarton/bind9:latest'
 
 # Create and enable clab_br1
 sudo brctl delbr $br1
