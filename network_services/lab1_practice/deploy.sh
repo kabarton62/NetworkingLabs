@@ -78,6 +78,12 @@ gw=172.20.0.1
 $d exec -it $dns1 ip addr add $a1 $b1
 $d exec -it $dns2 ip addr add $a2 $b1
 
+# Install net-tools on dhcp and dns hosts
+$d exec -it $h1 apt update && apt install net-tools
+$d exec -it $h2 apt update && apt install net-tools
+$d exec -it $dns1 apt update && apt install net-tools
+$d exec -it $dns2 apt update && apt install net-tools
+
 # Configure default gateways on hosts
 # $d exec -it $h1 route add default gw 172.31.1.1 eth1
 $d exec -it $dns1 route add default gw 10.200.1.1 eth1
@@ -92,14 +98,14 @@ $d cp r1.config.boot $r1:$conf
 $d cp r2.config.boot $r2:$conf
 $d cp r3.config.boot $r3:$conf
 
-printf "Wait 120 seconds to reboot routers\n"
-sleep 30
+#printf "Wait 120 seconds to reboot routers\n"
+#sleep 30
 
-printf "90 seconds left ...\n"
-sleep 30
+#printf "90 seconds left ...\n"
+#sleep 30
 
-printf "60 seconds left ... I know, but please wait\n"
-sleep 30
+#printf "60 seconds left ... I know, but please wait\n"
+#sleep 30
 
-printf "30 seconds left ... almost done, I promise\n"
-sleep 30
+#printf "30 seconds left ... almost done, I promise\n"
+#sleep 30
