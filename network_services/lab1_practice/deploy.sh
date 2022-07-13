@@ -87,6 +87,10 @@ $d exec -it $dns2 route add default gw 10.200.1.1 eth1
 $d exec -it $h1 route delete default gw $gw eth0
 $d exec -it $h2 route delete default gw $gw eth0
 
+# Create /config directory on r1 and r2 to start dhcp servers
+$d exec -it $r1 mkdir /config
+$d exec -it $r2 mkdir /config
+
 # Copy router config files
 $d cp r1.config.boot $r1:$conf
 $d cp r2.config.boot $r2:$conf
