@@ -11,6 +11,15 @@ interfaces {
     loopback lo {
     }
 }
+protocols {
+    rip {
+        interface eth2 {
+        }
+        interface eth3 {
+        }
+        network 10.150.1.0/24
+    }
+}
 system {
     config-management {
         commit-revisions 100
