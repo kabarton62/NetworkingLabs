@@ -92,14 +92,14 @@ $d cp r1.config.boot $r1:$conf
 $d cp r2.config.boot $r2:$conf
 $d cp r3.config.boot $r3:$conf
 
-#printf "Wait 120 seconds to reboot routers\n"
-#sleep 30
+printf "Wait 120 seconds to reboot routers\n"
+sleep 30
 
-#printf "90 seconds left ...\n"
-#sleep 30
+printf "90 seconds left ...\n"
+sleep 30
 
-#printf "60 seconds left ... I know, but please wait\n"
-#sleep 30
+printf "60 seconds left ... I know, but please wait\n"
+sleep 30
 
-#printf "30 seconds left ... almost done, I promise\n"
-#sleep 30
+printf "30 seconds left ... almost done, I promise\n"
+sleep 30
