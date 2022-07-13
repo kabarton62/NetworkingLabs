@@ -8,6 +8,13 @@ interfaces {
     loopback lo {
     }
 }
+protocols {
+    rip {
+        interface eth2 {
+        }
+        network 10.100.1.0/24
+    }
+}
 system {
     config-management {
         commit-revisions 100
