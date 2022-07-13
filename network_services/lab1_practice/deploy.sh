@@ -4,6 +4,7 @@ l=lab1
 f=$l.yml
 h='wbitt/network-multitool:alpine-extra'
 router='kbartontx/vyos:1.4'
+dhcp='ataraday/dhclient:bionic'
 dns='ubuntu/bind9:latest'
 
 # Create and enable clab_br1
@@ -19,10 +20,10 @@ topology:
   nodes:
     h1:
       kind: linux
-      image: $h
+      image: $dhcp
     h2:
       kind: linux
-      image: $h
+      image: $dhcp
     dns1:
       kind: linux
       image: $dns
