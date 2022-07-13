@@ -5,7 +5,7 @@ f=$l.yml
 h='wbitt/network-multitool:alpine-extra'
 router='kbartontx/vyos:1.4'
 dhcp='kbartontx/dhclient:latest'
-dns='kbarton/bind9:latest'
+dns='kbartontx/bind9:latest'
 
 # Create and enable clab_br1
 sudo brctl delbr $br1
@@ -77,12 +77,6 @@ gw=172.20.0.1
 
 $d exec -it $dns1 ip addr add $a1 $b1
 $d exec -it $dns2 ip addr add $a2 $b1
-
-# Install net-tools on dhcp and dns hosts
-$d exec -it $h1 apt update && apt install net-tools
-$d exec -it $h2 apt update && apt install net-tools
-$d exec -it $dns1 apt update && apt install net-tools
-$d exec -it $dns2 apt update && apt install net-tools
 
 # Configure default gateways on hosts
 # $d exec -it $h1 route add default gw 172.31.1.1 eth1
