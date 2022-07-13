@@ -10,7 +10,7 @@ interfaces {
 }
 protocols {
     rip {
-        interface eth2 {
+        interface eth3 {
         }
         network 10.200.1.0/24
     }
