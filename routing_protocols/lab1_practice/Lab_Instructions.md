@@ -4,7 +4,7 @@
 
 This lab deploys eight routers organized into three networks (North, Central and South). 
 
-IP addresses are correctly configured on the router interfaces and host H1 has the an IP address and default gateway correctly configured. However, the routers only know the default Kernel routes and directly connected routes. No other routes are configured or known.
+IP addresses are correctly configured on the router interfaces and host H1 has the IP address and default gateway correctly configured. However, the routers only know the default Kernel routes and directly connected routes. No other routes are configured or known.
 
 <p align="center">
 <img src="../images/protocols-practice2.png" width="450" height="700">
