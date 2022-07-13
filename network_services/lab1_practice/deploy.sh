@@ -61,37 +61,35 @@ sudo clab deploy --topo $f
 
 # Configure IPs on hosts
 d="sudo docker"
-a1=172.31.1.2/24
+a1=10.200.1.11/24
+a2=10.200.1.12/24
 b1="dev eth1"
 h1="clab-$l-h1"
+h2="clab-$l-h2"
+dns1="clab-$l-dns1"
+dns2="clab-$l-dns2"
 r1="clab-$l-r1"
 r2="clab-$l-r2"
 r3="clab-$l-r3"
-r4="clab-$l-r4"
-r5="clab-$l-r5"
-r6="clab-$l-r6"
-r7="clab-$l-r7"
-r8="clab-$l-r8"
 conf="/opt/vyatta/etc/config/config.boot"
 gw=172.20.0.1
 
-$d exec -it $h1 ip addr add $a1 $b1
+$d exec -it $dns1 ip addr add $a1 $b1
+$d exec -it $dns2 ip addr add $a2 $b1
 
 # Configure default gateways on hosts
-$d exec -it $h1 route add default gw 172.31.1.1 eth1
+# $d exec -it $h1 route add default gw 172.31.1.1 eth1
+$d exec -it $dns1 route add default gw 10.200.1.1 eth1
+$d exec -it $dns2 route add default gw 10.200.1.1 eth1
 
 # Delete Docker default gateways
 $d exec -it $h1 route delete default gw $gw eth0
+$d exec -it $h2 route delete default gw $gw eth0
 
 # Copy router config files
 $d cp r1.config.boot $r1:$conf
 $d cp r2.config.boot $r2:$conf
 $d cp r3.config.boot $r3:$conf
-$d cp r4.config.boot $r4:$conf
-$d cp r5.config.boot $r5:$conf
-$d cp r6.config.boot $r6:$conf
-$d cp r7.config.boot $r7:$conf
-$d cp r8.config.boot $r8:$conf
 
 printf "Wait 120 seconds to reboot routers\n"
 sleep 30
