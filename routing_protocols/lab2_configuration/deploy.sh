@@ -127,7 +127,7 @@ gw=172.20.0.1
 $d exec -it $h1 ip addr add $a1 $b1
 
 # Configure default gateways on hosts
-$d exec -it $h1 route add default gw 172.31.1.1 eth1
+$d exec -it $h1 route add default gw 172.16.2.1 eth1
 
 # Delete Docker default gateways
 $d exec -it $h1 route delete default gw $gw eth0
