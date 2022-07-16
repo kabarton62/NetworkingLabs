@@ -51,8 +51,8 @@ topology:
     - endpoints: ["r2:eth1", "h2:eth1"]
     - endpoints: ["dns1:eth1", "clab-br1:eth10"]
     - endpoints: ["dns2:eth1", "clab-br1:eth11"]
-    - endpoints: ["web:eth1", "clab-br1:eth11"]
-    - endpoints: ["r3:eth1", "clab-br1:eth12"]
+    - endpoints: ["web:eth1", "clab-br1:eth12"]
+    - endpoints: ["r3:eth1", "clab-br1:eth13"]
     - endpoints: ["r1:eth2", "r2:eth2"]
     - endpoints: ["r2:eth3", "r3:eth3"]
 
