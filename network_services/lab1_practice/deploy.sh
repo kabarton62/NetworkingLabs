@@ -6,7 +6,7 @@ h='wbitt/network-multitool:alpine-extra'
 router='kbartontx/vyos:1.4'
 dhcp='kbartontx/dhclient:latest'
 dns='kbartontx/bind9:latest'
-web='httpd:2.4'
+web='kbartontx/web:latest'
 
 # Create and enable clab_br1
 sudo brctl delbr $br1
