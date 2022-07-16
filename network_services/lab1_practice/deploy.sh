@@ -6,7 +6,7 @@ h='wbitt/network-multitool:alpine-extra'
 router='kbartontx/vyos:1.4'
 dhcp='kbartontx/dhclient:latest'
 dns='kbartontx/bind9:latest'
-web='kbartontx/web:latest'
+web='kbartontx/python3:latest'
 
 # Create and enable clab_br1
 sudo brctl delbr $br1
@@ -106,6 +106,10 @@ $d exec -it $r2 mkdir /config
 $d cp r1.config.boot $r1:$conf
 $d cp r2.config.boot $r2:$conf
 $d cp r3.config.boot $r3:$conf
+
+# Start web server
+$d copy index.html $w:index.html
+$d exec -it $w python3 -m http.server 80 &> /dev/null & pid=$!
 
 printf "Wait 120 seconds to reboot routers\n"
 sleep 30
