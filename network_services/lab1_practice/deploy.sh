@@ -83,6 +83,7 @@ conf="/opt/vyatta/etc/config/config.boot"
 gw=172.20.0.1
 
 # Install net-tools on web
+sleep 10
 $d exec -it $w apt update
 $d exec -it $w apt install net-tools -y
 
