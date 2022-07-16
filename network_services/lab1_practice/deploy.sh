@@ -82,6 +82,11 @@ r3="clab-$l-r3"
 conf="/opt/vyatta/etc/config/config.boot"
 gw=172.20.0.1
 
+# Install curl on h1 and h2 and net-tools on web
+$d exec -it $h1 apt install curl -y
+$d exec -it $h2 apt install curl -y
+$d exec -it $w apt install net-tools -y
+
 $d exec -it $dns1 ip addr add $a1 $b1
 $d exec -it $dns2 ip addr add $a2 $b1
 $d exec -it $w ip addr add $a3 $b1
@@ -91,14 +96,6 @@ $d exec -it $w ip addr add $a3 $b1
 $d exec -it $dns1 route add default gw 10.200.1.1 eth1
 $d exec -it $dns2 route add default gw 10.200.1.1 eth1
 $d exec -it $w route add default gw 10.200.1.1 eth1
-
-# Install curl on h1 and h2 and net-tools on web
-$d exec -it $h1 apt update
-$d exec -it $h2 apt update
-$d exec -it $w apt update
-$d exec -it $h1 apt install curl -y
-$d exec -it $h2 apt install curl -y
-$d exec -it $w apt install net-tools -y
 
 # Delete Docker default gateways
 $d exec -it $h1 route delete default gw $gw eth0
