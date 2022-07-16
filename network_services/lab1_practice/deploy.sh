@@ -100,8 +100,8 @@ $d exec -it $w route delete default gw $gw eth0
 # Install curl on h1 and h2
 $d exec -it $h1 apt update
 $d exec -it $h2 apt update
-$d exec -it $h1 apt install curl
-$d exec -it $h2 apt install curl
+$d exec -it $h1 apt install curl -y
+$d exec -it $h2 apt install curl -y
 
 # Create /config directory on r1 and r2 to start dhcp servers
 $d exec -it $r1 mkdir /config
