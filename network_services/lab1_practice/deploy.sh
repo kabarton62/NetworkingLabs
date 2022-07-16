@@ -51,6 +51,7 @@ topology:
     - endpoints: ["r2:eth1", "h2:eth1"]
     - endpoints: ["dns1:eth1", "clab-br1:eth10"]
     - endpoints: ["dns2:eth1", "clab-br1:eth11"]
+    - endpoints: ["webcd ~:eth1", "clab-br1:eth11"]
     - endpoints: ["r3:eth1", "clab-br1:eth12"]
     - endpoints: ["r1:eth2", "r2:eth2"]
     - endpoints: ["r2:eth3", "r3:eth3"]
@@ -96,6 +97,11 @@ $d exec -it $h1 route delete default gw $gw eth0
 $d exec -it $h2 route delete default gw $gw eth0
 $d exec -it $web route delete default gw $gw eth0
 
+# Install curl on h1 and h2
+$d exec -it $h1 apt update
+$d exec -it $h2 apt update
+$d exec -it $h1 apt install curl
+$d exec -it $h2 apt install curl
 # Create /config directory on r1 and r2 to start dhcp servers
 $d exec -it $r1 mkdir /config
 $d exec -it $r2 mkdir /config
