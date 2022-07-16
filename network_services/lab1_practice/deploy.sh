@@ -82,11 +82,7 @@ r3="clab-$l-r3"
 conf="/opt/vyatta/etc/config/config.boot"
 gw=172.20.0.1
 
-# Install net-tools on web
-sleep 10
-$d exec -it $w apt update
-$d exec -it $w apt install net-tools -y
-
+# Configure static IP addresses
 $d exec -it $dns1 ip addr add $a1 $b1
 $d exec -it $dns2 ip addr add $a2 $b1
 $d exec -it $w ip addr add $a3 $b1
