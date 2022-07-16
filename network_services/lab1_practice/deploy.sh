@@ -72,6 +72,7 @@ a3=10.200.1.20/24
 b1="dev eth1"
 h1="clab-$l-h1"
 h2="clab-$l-h2"
+w="clab-$l-web"
 dns1="clab-$l-dns1"
 dns2="clab-$l-dns2"
 r1="clab-$l-r1"
