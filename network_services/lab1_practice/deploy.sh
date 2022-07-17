@@ -108,7 +108,7 @@ $d cp r2.config.boot $r2:$conf
 $d cp r3.config.boot $r3:$conf
 
 # Start web server
-$d copy index.html $w:index.html
+$d cp index.html $w:index.html
 $d exec -it $w python3 -m http.server 80 &> /dev/null & pid=$!
 
 printf "Wait 120 seconds to reboot routers\n"
