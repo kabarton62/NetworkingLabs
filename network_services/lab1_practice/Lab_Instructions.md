@@ -7,7 +7,7 @@ This lab deploys eight routers organized into three networks (North, Central and
 IP addresses are correctly configured on the router interfaces and host H1 has the IP address and default gateway correctly configured. However, the routers only know the default Kernel routes and directly connected routes. No other routes are configured or known.
 
 <p align="center">
-<img src="../images/netServices-pract.png" width="450" height="700">
+<img src="../images/netServices-pract.png" width="600" height="600">
 </p>
 <p align="center">
 <sub><i>Figure 1. Network Topology</i></sub>
