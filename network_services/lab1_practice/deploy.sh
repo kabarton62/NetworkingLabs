@@ -111,10 +111,6 @@ $d cp r3.config.boot $r3:$conf
 $d cp index.html $w:index.html
 $d cp httpd.sh $w:httpd.sh
 $d exec -it $w chmod u+x httpd.sh
-$d exec -it $w echo "starting httpd"
-$d exec -it $w sleep 2
-$d exec -it $w /httpd.sh
-$d exec -it $w echo "httpd started"
 
 printf "Wait 120 seconds to reboot routers\n"
 sleep 30
@@ -127,3 +123,7 @@ sleep 30
 
 printf "30 seconds left ... almost done, I promise\n"
 sleep 30
+
+echo "Last step. Get a shell on $w and execute /httpd.sh"
+echo "sudo docker exec -it $w bash"
+echo "root@web:/# ./httpd.sh"
