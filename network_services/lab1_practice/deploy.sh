@@ -110,9 +110,10 @@ $d cp r3.config.boot $r3:$conf
 # Start web server
 $d cp index.html $w:index.html
 $d cp httpd.sh $w:httpd.sh
+$d exec -it $w chmod u+x httpd.sh
 $d exec -it $w echo "starting httpd"
 $d exec -it $w sleep 2
-$d exec -it $w bash /httpd.sh
+$d exec -it $w /httpd.sh
 $d exec -it $w echo "httpd started"
 
 printf "Wait 120 seconds to reboot routers\n"
