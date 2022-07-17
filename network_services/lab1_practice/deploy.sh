@@ -124,6 +124,10 @@ sleep 30
 printf "30 seconds left ... almost done, I promise\n"
 sleep 30
 
+echo ""
 echo "Last step. Get a shell on $w and execute /httpd.sh"
+echo ""
+echo "EXAMPLE:"
+echo ""
 echo "sudo docker exec -it $w bash"
 echo "root@web:/# ./httpd.sh"
