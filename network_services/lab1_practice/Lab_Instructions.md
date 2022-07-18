@@ -63,7 +63,7 @@ Normally DHCP requests happen automatically when a DHCP client is added to a net
 
 Use dhclient to force a DHCP lease resnew.
 ```
-dhclient -4 -r eth1
+dhclient eth1
 ifconfig eth1
 ```
 
