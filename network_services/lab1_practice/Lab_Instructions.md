@@ -1,10 +1,14 @@
 # <img src="https://www.tamusa.edu/brandguide/jpeglogos/tamusa_final_logo_bw1.jpg" width="100" height="50"> Lab Instructions
-## Network Topology
+## Network Services
 ### Challenge 1: Network Topology
 
-This lab deploys eight routers organized into three networks (North, Central and South). 
+This labs deploys a simple network with routers, DHCP clients, two DNS servers and a web server. IP addresses are configured on the servers and routers. Those IP addresses are not provided in the network Diagram so users must extract those IP addresses from the nodes. 
 
-IP addresses are correctly configured on the router interfaces and host H1 has the IP address and default gateway correctly configured. However, the routers only know the default Kernel routes and directly connected routes. No other routes are configured or known.
+Users will configure DHCP service and NAT on eth1 interfaces on R1 and R2. Users must manually request a DHCP lease on hosts H1 and H2 after configuring DHCP service and NAT on routers R1 and R2. 
+
+Users will also configure a DNS zone on DNS1 and configure DNS2 to pull that zone from DNS1 through a zone transfer.
+
+Users will finally configure DNS service on R1 and R2 and direct DNS forwarding to DNS1 and DNS2.
 
 <p align="center">
 <img src="../images/netServices-pract.png" width="500" height="450">
