@@ -28,29 +28,33 @@ Launch the topology by running the script deploy.sh.
   $ bash deploy.sh
 ```
 --- 
-## Testing Network Function
-### Challenge 3: Test network operation
+## Challenge 3: Configuring DHCP Service
+### Configure a DHCP pool on router LAN interfaces (eth1)
 
-*Docker exec* will be used to gain shell access to the nodes in this lab.
+DHCP dnymically configures network services on DHCP clients. A DHCP client requests a *lease* from the DHCP server. The DHCP responds with an IP address and subnet mask, Default Gateway, name servers (DNS servers), lease time and other details. The DHCP client then uses that lease for network communications. Routers R1 and R2 each have a LAN directly connected to eth1. A DHCP pool provides the IP address range and other configuration details the DHCP server will use to issue leases to DHCP clients.
+
+**Configure DHCP pools on R1 and R2 eth1 interfaces**. Use the following configuration deails:
+
+Start IP address (the first IP address in the pool): x.x.x.51
+Stop IP address (the last IP address in the pool): x.x.x.150
+Lease Expiration of 84600 seconds (24 hours)
+Name Server: R1/eth1 address on R1 and R2/eth1 IP address on R2
+Gateway: R1/eth1 address on R1 and R2/eth1 IP address on R2
+
+### Manually force a DHCP request from a client
+
+Normally DHCP requests happen automatically when a DHCP client is added to a network, but in this case we will manually force a DHCP request with the **dhclient** command.
+
+Assume R1 is configured with the DHCP server, 
 ```
-docker exec syntax:
- sudo docker exec -it <CONTAINER-NAME or CONTAINER-ID> bash
-
-Example (getting shell in host h1):
- $ sudo docker exec -it clab-lab1-h1 bash
+set service dhcp-server shared-network-name LAN authoritative
+set service dhcp-server shared-network-name LAN subnet 10.10.10.0/24 default-router 10.10.10.1
+set service dhcp-server shared-network-name LAN subnet 10.10.10.0/24 lease 84600
+set service dhcp-server shared-network-name LAN subnet 10.10.10.0/24 name-server 10.10.10.1
+set service dhcp-server shared-network-name LAN subnet 10.10.10.0/24 range 0 start 10.10.10.51
+set service dhcp-server shared-network-name LAN subnet 10.10.10.0/24 range 0 start 10.10.10.150
 ```
-Get a shell on H1 and run the following commands. 
 
-Attempt to ping the following and note the results:
-- r5:eth1
-- r5:eth2
-- r5:eth3
-- r4:eth3
-- r6:eth2
-
-1. **Report the results from attempted pings from h1 to r4, r5 and r6 interfaces.** 
-2. **Describe which pings failed and which succeeded.**
-3. **Explain why some pings failed and others succeeded.**
 
 --- 
 ### Challenge 4: Configure RIP on North network
@@ -65,7 +69,7 @@ set protocols rip interface eth2
 Networks on other interfaces can be explicitly added with the **rip network** command.
 ```
 set protocols rip network 10.100.1.0/24
-```
+`
 **Configure RIP on links between all routers in the North network (N-Link1 and N-Link2). R3:eth3 is included in the North network, R3:eth1 and R3:eth2 are not in the North network. R3:eth1 and :eth2 are in the Central network.**
 **Add N-LAN1 and N-LAN2 networks to the rip table using the *rip network* command**
 
