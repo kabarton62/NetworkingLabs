@@ -63,9 +63,31 @@ Normally DHCP requests happen automatically when a DHCP client is added to a net
 
 Use dhclient to force a DHCP lease resnew.
 ```
+# Request DHCP lease with dhclient
 dhclient eth1
+
+#Verify IP addressed assigned
 ifconfig eth1
 ```
-
+**Capture a screenshot of the results of ifconfig on H1 demonstrating that H1 as an IP address assigned to eth1.**
 
 --- 
+## Challenge 4, Examine DHCP leases on Vyos
+Get a shell on R1. From **operation mode**, examine the DHCP server to verify that H1's lease can be observed.
+
+```
+show dhcp server leases
+  IP address    Hardware address    State    Lease start          Lease expiration     Remaining    Pool    Hostname
+  ------------  ------------------  -------  -------------------  -------------------  -----------  ------  ----------
+  10.100.1.51   aa:c1:ab:3e:17:f2   active   2022/07/19 18:00:39  2022/07/20 17:30:39  21:48:58     LAN     h1
+  
+show dhcp server statistics
+  Pool      Size    Leases    Available  Usage
+  ------  ------  --------  -----------  -------
+  LAN        100         1           99  1%
+```
+**Capture a screenshot showing dhcp server statistics and leases on R1.**
+
+## Challenge 5, DHCP server configuration on R2
+Configure DHCP service on R2 and force H2 to pull a DHCP lease. **Capture a screenshot on R2 that demonstrates H2 pulled a DHCP lease from R2.**
+
