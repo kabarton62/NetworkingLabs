@@ -54,7 +54,7 @@ set service dhcp-server shared-network-name LAN subnet 10.10.10.0/24 default-rou
 set service dhcp-server shared-network-name LAN subnet 10.10.10.0/24 lease 84600
 set service dhcp-server shared-network-name LAN subnet 10.10.10.0/24 name-server 10.10.10.1
 set service dhcp-server shared-network-name LAN subnet 10.10.10.0/24 range 0 start 10.10.10.51
-set service dhcp-server shared-network-name LAN subnet 10.10.10.0/24 range 0 start 10.10.10.150
+set service dhcp-server shared-network-name LAN subnet 10.10.10.0/24 range 0 stop 10.10.10.150
 ```
 
 ### Manually force a DHCP request from a client
