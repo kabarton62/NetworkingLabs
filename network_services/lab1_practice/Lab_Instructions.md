@@ -81,7 +81,8 @@ show dhcp server leases
   IP address    Hardware address    State    Lease start          Lease expiration     Remaining    Pool    Hostname
   ------------  ------------------  -------  -------------------  -------------------  -----------  ------  ----------
   10.100.1.51   aa:c1:ab:3e:17:f2   active   2022/07/19 18:00:39  2022/07/20 17:30:39  21:48:58     LAN     h1
-  
+
+
 show dhcp server statistics
 
   Pool      Size    Leases    Available  Usage
