@@ -42,7 +42,7 @@ This skill was practiced in the practice lab. Correctly configure DHCP service o
 **Capture a screenshot(s) showing dhcp server statistics and leases on R1 and R2.**
 
 ## Challenge 4, Source NAT configuration
-Configure Source NAT (SNAT) on R1. SNAT is the most common form of NAT. SNAT enables multiple internal or private hosts to access the Internet by sharing a single public IP address of a (S)NAT router. What we commonly refer to as NAT is actually SNAT and uses address translation (NAT), port translation (PAT) and address masquerading. The following commands assume the internal range is 192.168.1.0/24 and the external (public) IP is 150.10.1.1 on eth0, and show SNAT configuration on Vyos under those conditions.
+Configure Source NAT (SNAT) on R1. NAT traffic from R1/eth1 to R1/eth2. SNAT is the most common form of NAT. SNAT enables multiple internal or private hosts to access the Internet by sharing a single public IP address of a (S)NAT router. What we commonly refer to as NAT is actually SNAT and uses address translation (NAT), port translation (PAT) and address masquerading. The following commands assume the internal range is 192.168.1.0/24 and the external (public) IP is 150.10.1.1 on eth0, and show SNAT configuration on Vyos under those conditions.
 
 ```
 set nat source rule 10 outbound-interface eth0
