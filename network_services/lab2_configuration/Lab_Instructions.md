@@ -69,15 +69,3 @@ tcpdump -i eth1 -p icmp
 9. Observe the **source IP address** on the **ICMP echo request** packets. Those are packets transmitted by H1.
 10. **Capture a screenshot of the packet capture on R3.**
 11. **Explain the difference between source IP addresses of packets captured from H1 and H2.**
-
-## Challenge 6, DNS forwarding
-DNS forwarding configures a DNS server to forward requests it cannot resolve to an upstream DNS server.
-
-**Configure DNS forwarding on R1 and R2 to DNS server 8.8.8.8.
-
-The basic commands to configure DNS forwarding on Vyos are:
-```
-set service dns forwarding system
-set service dns forwarding dhcp <interface>
-set service dns forwarding name-server <address> 
-```
