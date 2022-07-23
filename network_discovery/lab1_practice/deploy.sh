@@ -22,7 +22,8 @@ topology:
     h1:
       kind: linux
       image: $h
-      publish: tcp/2222
+      publish: 
+      - tcp/2222
     h2:
       kind: linux
       image: $dhcp
