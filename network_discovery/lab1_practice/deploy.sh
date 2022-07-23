@@ -2,7 +2,7 @@
 br1="clab-br1"
 l=lab1
 f=$l.yml
-h='wbitt/network-multitool:alpine-extra'
+h='kbartontx/ubuntu-18.04-cwnt:latest'
 router='kbartontx/vyos:1.4'
 dhcp='kbartontx/dhclient:latest'
 dns='kbartontx/bind9:latest'
