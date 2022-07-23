@@ -46,7 +46,7 @@ topology:
     clab-br1: 
       kind: bridge
   links:
-    - endpoints: ["r1:eth1", "h1:eth1"]
+    - endpoints: ["r1:eth1", "h1:eth2"]
     - endpoints: ["r2:eth1", "h2:eth1"]
     - endpoints: ["dns1:eth1", "clab-br1:eth10"]
     - endpoints: ["dns2:eth1", "clab-br1:eth11"]
