@@ -56,10 +56,10 @@ topology:
     - endpoints: ["r3:eth1", "clab-br1:eth13"]
     - endpoints: ["r1:eth2", "r2:eth2"]
     - endpoints: ["r2:eth3", "r3:eth3"]
-mgmt: 
-  network: mgmt
-  ipv4_subnet: 172.20.0.0/24
-  ipv6_subnet: 2001:172:20::/80  
+#mgmt: 
+#  network: mgmt
+#  ipv4_subnet: 172.20.0.0/24
+#  ipv6_subnet: 2001:172:20::/80  
 EOF
 
 # Deploy the clab topology
