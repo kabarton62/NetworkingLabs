@@ -107,10 +107,14 @@ $d cp r1.config.boot $r1:$conf
 $d cp r2.config.boot $r2:$conf
 $d cp r3.config.boot $r3:$conf
 
-# Start web server
-$d cp index.html $w:index.html
-$d cp httpd.sh $w:httpd.sh
-$d exec -it $w chmod u+x httpd.sh
+# Prohibit password login for ssh
+$d exec -it $h1 sed -i 's/#PasswordAuthentication no/PasswordAuthentication no/g' /etc/ssh/sshd_config && \
+    sed -i 's/#UsePAM yes/UsePAM yes/g' /etc/ssh/sshd_config && \
+    sed -i 's/#PrintMotd yes/PrintMotd yes/g' /etc/ssh/sshd_config
+
+# Create ssh host keys and start ssh server
+$d exec -it $h1 ssh-keygen -A
+$d exec -it $h1 /etc/init.d/ssh
 
 printf "Wait 120 seconds to reboot routers\n"
 sleep 30
