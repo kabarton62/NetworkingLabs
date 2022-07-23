@@ -2,7 +2,7 @@
 br1="clab-br1"
 l=lab1
 f=$l.yml
-h='phusion/baseimage:jammy-1.0.0'
+h='kbartontx/network-tools:latest'
 router='kbartontx/vyos:1.4'
 dhcp='kbartontx/dhclient:latest'
 dns='kbartontx/bind9:latest'
