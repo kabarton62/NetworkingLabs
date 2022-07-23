@@ -2,7 +2,7 @@
 br1="clab-br1"
 l=lab1
 f=$l.yml
-h='kbartontx/ubuntu-18.04-cwnt:latest'
+h='phusion/baseimage:jammy-1.0.0'
 router='kbartontx/vyos:1.4'
 dhcp='kbartontx/dhclient:latest'
 dns='kbartontx/bind9:latest'
@@ -21,7 +21,7 @@ topology:
   nodes:
     h1:
       kind: linux
-      image: $dhcp
+      image: $h
     h2:
       kind: linux
       image: $dhcp
@@ -68,6 +68,7 @@ d="sudo docker"
 a1=10.200.1.11/24
 a2=10.200.1.12/24
 a3=10.200.1.20/24
+a4=10.100.1.65/24
 b1="dev eth1"
 h1="clab-$l-h1"
 h2="clab-$l-h2"
@@ -84,15 +85,16 @@ gw=172.20.0.1
 $d exec -it $dns1 ip addr add $a1 $b1
 $d exec -it $dns2 ip addr add $a2 $b1
 $d exec -it $w ip addr add $a3 $b1
+$d exec -it $h1 ip addr add $a4 $b1
 
 # Configure default gateways on hosts
-# $d exec -it $h1 route add default gw 172.31.1.1 eth1
+$d exec -it $h1 route add default gw 10.100.1.1 eth1
 $d exec -it $dns1 route add default gw 10.200.1.1 eth1
 $d exec -it $dns2 route add default gw 10.200.1.1 eth1
 $d exec -it $w route add default gw 10.200.1.1 eth1
 
 # Delete Docker default gateways
-$d exec -it $h1 route delete default gw $gw eth0
+# $d exec -it $h1 route delete default gw $gw eth0
 $d exec -it $h2 route delete default gw $gw eth0
 $d exec -it $w route delete default gw $gw eth0
 
