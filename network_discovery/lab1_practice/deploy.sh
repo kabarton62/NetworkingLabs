@@ -87,10 +87,10 @@ gw=172.20.0.1
 $d exec -it $dns1 ip addr add $a1 $b1
 $d exec -it $dns2 ip addr add $a2 $b1
 $d exec -it $w ip addr add $a3 $b1
-$d exec -it $h1 ip addr add $a4 $b1
+$d exec -it $h1 ip addr add $a4 dev eth2
 
 # Configure default gateways on hosts
-$d exec -it $h1 route add default gw 10.100.1.1 eth1
+$d exec -it $h1 route add default gw 10.100.1.1 eth2
 $d exec -it $dns1 route add default gw 10.200.1.1 eth1
 $d exec -it $dns2 route add default gw 10.200.1.1 eth1
 $d exec -it $w route add default gw 10.200.1.1 eth1
