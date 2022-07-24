@@ -104,7 +104,9 @@ $d exec -it $t1 route add default gw 10.150.1.1 eth1
 $d cp r1.config.boot $davi:$conf
 $d cp r2.config.boot $marf:$conf
 $d cp r3.config.boot $alpi:$conf
-$d cp h1.hosts $h1:/etc/hosts
+$d cp h1.hosts $h1:/h1.hosts
+$d cp hosts.sh $h1:/hosts.sh
+$d exec -it $h1 bash hosts.sh
 
 printf "Wait 120 seconds to reboot routers\n"
 sleep 30
