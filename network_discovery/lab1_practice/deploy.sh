@@ -8,7 +8,7 @@ z35='kbartontx/bind9:latest'
 web='kbartontx/apache2.4.49:cve-2021-41773'
 wes='silvade/ngnix-static:latest'
 duc='panubo/vsftpd:buster'
-flx='semoss/docker-tomcat:latest'
+flx='kbartontx/deb-tomc:latest'
 
 # Create and enable clab_br1
 sudo brctl delbr $br1
