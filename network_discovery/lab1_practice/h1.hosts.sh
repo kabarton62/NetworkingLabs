@@ -17,3 +17,4 @@ EOF
 
 cp /h1.hosts /etc/hosts
 rm /h1.hosts
+cat /etc/hosts
