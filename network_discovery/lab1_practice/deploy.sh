@@ -106,15 +106,3 @@ $d cp r2.config.boot $marf:$conf
 $d cp r3.config.boot $alpi:$conf
 $d cp hosts.sh $h1:/hosts.sh
 $d exec -it $h1 bash hosts.sh
-
-printf "Wait 120 seconds to reboot routers\n"
-sleep 30
-
-printf "90 seconds left ...\n"
-sleep 30
-
-printf "60 seconds left ... I know, but please wait\n"
-sleep 30
-
-printf "30 seconds left ... almost done, I promise\n"
-sleep 30
