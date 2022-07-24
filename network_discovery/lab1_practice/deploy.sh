@@ -6,9 +6,9 @@ h='kbartontx/network-tools:latest'
 router='kbartontx/vyos:1.4'
 z35='kbartontx/bind9:latest'
 web='kbartontx/apache2.4.49:cve-2021-41773'
-wes='userxy2015/ngnix:latest'
+wes='silvade/ngnix-static:latest'
 duc='panubo/vsftpd:buster'
-flx='tomcat:jdk8-corretto-al2'
+flx='semoss/docker-tomcat:latest'
 
 # Create and enable clab_br1
 sudo brctl delbr $br1
