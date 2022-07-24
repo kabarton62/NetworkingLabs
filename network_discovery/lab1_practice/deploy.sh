@@ -52,7 +52,7 @@ topology:
   links:
     - endpoints: ["r1:eth1", "h1:eth2"]
     - endpoints: ["r2:eth1", "t1:eth1"]
-    - endpoints: ["z35:eth1", "clab-br1:eth10"]
+    - endpoints: ["zan:eth1", "clab-br1:eth10"]
     - endpoints: ["zue:eth1", "clab-br1:eth11"]
     - endpoints: ["zin:eth1", "clab-br1:eth12"]
     - endpoints: ["r3:eth1", "clab-br1:eth13"]
