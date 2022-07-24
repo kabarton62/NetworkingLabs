@@ -1,6 +1,20 @@
 # <img src="https://www.tamusa.edu/brandguide/jpeglogos/tamusa_final_logo_bw1.jpg" width="100" height="50"> Lab Instructions
 ## Network Discovery
-### Challenge 1: Host Discovery
+
+## Operating the Lab Network
+### Challenge 1: Deploy the Lab Network
+Launch the topology by running the script deploy.sh and manually launch the http service on the web server.
+```
+  $ bash deploy.sh
+  $ sudo docker exec -it clab-lab1-web /httpd.sh
+
+Confirm that you can browse to the web server
+  
+  $ sudo docker exec -it clab-lab1-web ifconfig eth0
+  $ curl http://<web eth0 ip address>
+```
+--- 
+### Challenge 2: Host Discovery
 
 This labs deploys a network with routers, servers, and one client (H1). H1 includes a suite of networking tools that users can deploy to discover the servers and network topology. Table 1, Hostnames provides a place to documment server information.
 
@@ -13,7 +27,7 @@ This labs deploys a network with routers, servers, and one client (H1). H1 inclu
 
 **Table 1, Hostnames**
 
-Name servers are not configured on H1, so *dig* and *nslookup* commands cannot not resolve the hostnames from Table 1. However, ping will successfuly resolve those hostnames.
+Name servers are not configured on H1, so **dig** and **nslookup** commands cannot not resolve the hostnames from Table 1. However, **ping** will successfuly resolve those hostnames.
 
 **Use ping to resolve IP addresses for the hosts in Table 1. Record the IP addresses for each host.**
 
@@ -21,21 +35,9 @@ Name servers are not configured on H1, so *dig* and *nslookup* commands cannot n
 root@h1:/# ping duck.vitty.us
   PING duck.vitty.us (X.X.X.X) 56(84) bytes of data.
   64 bytes from duck.vitty.us (X.X.X.X): icmp_seq=2 ttl=62 time=0.157 ms
---- 
-
-## Operating the Lab Network
-### Challenge 2: Deploy the Lab Network
-Launch the topology by running the script deploy.sh and manually launch the http service on the web server.
-```
-  $ bash deploy.sh
-  $ sudo docker exec -it clab-lab1-web /httpd.sh
-
-Confirm that you can browse to the web server
-  
-  $ sudo docker exec -it clab-lab1-web ifconfig eth0
-  $ curl http://<web eth0 ip address>
 ```
 --- 
+
 ## Challenge 3: Configuring DHCP Service
 ### Configure a DHCP pool on router LAN interfaces (eth1)
 
