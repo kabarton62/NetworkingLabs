@@ -1,26 +1,27 @@
 # <img src="https://www.tamusa.edu/brandguide/jpeglogos/tamusa_final_logo_bw1.jpg" width="100" height="50"> Lab Instructions
-## Network Services
-### Challenge 1: Network Topology
+## Network Discovery
+### Challenge 1: Host Discovery
 
-This labs deploys a simple network with routers, DHCP clients, two DNS servers and a web server. IP addresses are configured on the servers and routers. Those IP addresses are not provided in the network Diagram so users must extract those IP addresses from the nodes. 
+This labs deploys a network with routers, servers, and one client (H1). H1 includes a suite of networking tools that users can deploy to discover the servers and network topology. Table 1, Hostnames provides a place to documment server information.
 
-Users will configure DHCP service and NAT on eth1 interfaces on R1 and R2. Users must manually request a DHCP lease on hosts H1 and H2 after configuring DHCP service and NAT on routers R1 and R2. 
+|Hostname|IP Address|
+|---|---|
+|duck.vitty.us||
+|lizard.vitty.us||
+|snake.vitty.us||
+|frog.vitty.us||
+**Table 1, Hostnames**
 
-Users will also configure a DNS zone on DNS1 and configure DNS2 to pull that zone from DNS1 through a zone transfer.
+Name servers are not configured on H1, so *dig* and *nslookup* commands cannot not resolve the hostnames from Table 1. However, ping will successfuly resolve those hostnames.
 
-Users will finally configure DNS service on R1 and R2 and direct DNS forwarding to DNS1 and DNS2.
+**Use ping to resolve IP addresses for the hosts in Table 1. Record the IP addresses for each host.**
 
-<p align="center">
-<img src="../images/netServices-pract.png" width="500" height="450">
-</p>
-<p align="center">
-<sub><i>Figure 1. Network Topology</i></sub>
-</p>
-
-<p></p>
-<p></p>
-
+```
+root@h1:/# ping duck.vitty.us
+  PING duck.vitty.us (X.X.X.X) 56(84) bytes of data.
+  64 bytes from duck.vitty.us (X.X.X.X): icmp_seq=2 ttl=62 time=0.157 ms
 --- 
+
 ## Operating the Lab Network
 ### Challenge 2: Deploy the Lab Network
 Launch the topology by running the script deploy.sh and manually launch the http service on the web server.
