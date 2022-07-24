@@ -10,6 +10,7 @@ This labs deploys a network with routers, servers, and one client (H1). H1 inclu
 |lizard.vitty.us||
 |snake.vitty.us||
 |frog.vitty.us||
+
 **Table 1, Hostnames**
 
 Name servers are not configured on H1, so *dig* and *nslookup* commands cannot not resolve the hostnames from Table 1. However, ping will successfuly resolve those hostnames.
