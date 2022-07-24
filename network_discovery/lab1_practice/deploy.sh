@@ -98,6 +98,7 @@ $d exec -it $h1 route add default gw 10.100.1.1 eth2
 $d exec -it $n route add default gw 10.200.1.1 eth1
 $d exec -it $f route add default gw 10.200.1.1 eth1
 $d exec -it $w route add default gw 10.200.1.1 eth1
+$d exec -it $t1 route add default gw 10.200.1.1 eth1
 
 # Copy router config files
 $d cp r1.config.boot $davi:$conf
