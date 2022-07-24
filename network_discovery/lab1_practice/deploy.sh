@@ -78,7 +78,7 @@ b1="dev eth1"
 h1="clab-$l-h1"
 t1="clab-$l-h2"
 w="clab-$l-zue"
-d="clab-$l-zan"
+n="clab-$l-zan"
 f="clab-$l-zin"
 r1="clab-$l-r1"
 r2="clab-$l-r2"
@@ -88,14 +88,14 @@ gw=172.20.0.1
 
 # Configure static IP addresses
 $d exec -it $f ip addr add $a1 $b1
-$d exec -it $d ip addr add $a2 $b1
+$d exec -it $n ip addr add $a2 $b1
 $d exec -it $w ip addr add $a3 $b1
 $d exec -it $h1 ip addr add $a4 dev eth2
 $d exec -it $t1 ip addr add $a5 $b1
 
 # Configure default gateways on hosts
 $d exec -it $h1 route add default gw 10.100.1.1 eth2
-$d exec -it $d route add default gw 10.200.1.1 eth1
+$d exec -it $n route add default gw 10.200.1.1 eth1
 $d exec -it $f route add default gw 10.200.1.1 eth1
 $d exec -it $w route add default gw 10.200.1.1 eth1
 
