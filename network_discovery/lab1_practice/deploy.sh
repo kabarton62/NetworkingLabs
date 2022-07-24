@@ -7,7 +7,7 @@ router='kbartontx/vyos:1.4'
 z35='kbartontx/bind9:latest'
 web='kbartontx/apache2.4.49:cve-2021-41773'
 wes='silvade/ngnix-static:latest'
-duc='panubo/vsftpd:buster'
+duc='kbartontx/vs-ft-pd:latest'
 flx='kbartontx/deb-tomc:latest'
 
 # Create and enable clab_br1
