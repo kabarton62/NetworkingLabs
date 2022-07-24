@@ -4,9 +4,11 @@ l=lab1
 f=$l.yml
 h='kbartontx/network-tools:latest'
 router='kbartontx/vyos:1.4'
-dhcp='kbartontx/dhclient:latest'
-dns='kbartontx/bind9:latest'
+z35='kbartontx/bind9:latest'
 web='kbartontx/apache2.4.49:cve-2021-41773'
+wes='userxy2015/ngnix:latest'
+duc='panubo/vsftpd:buster'
+flx='tomcat:jdk8-corretto-al2'
 
 # Create and enable clab_br1
 sudo brctl delbr $br1
@@ -24,18 +26,18 @@ topology:
       image: $h
       publish: 
       - tcp/2222
-    h2:
+    t1:
       kind: linux
-      image: $dhcp
-    dns1:
+      image: $flx
+    zin:
       kind: linux
-      image: $dns
-    dns2:
+      image: $duc
+    zan:
       kind: linux
-      image: $dns
-    web:
+      image: $z35
+    zue:
       kind: linux
-      image: $web
+      image: $wes
     r1:
       kind: linux
       image: $router
@@ -49,10 +51,10 @@ topology:
       kind: bridge
   links:
     - endpoints: ["r1:eth1", "h1:eth2"]
-    - endpoints: ["r2:eth1", "h2:eth1"]
-    - endpoints: ["dns1:eth1", "clab-br1:eth10"]
-    - endpoints: ["dns2:eth1", "clab-br1:eth11"]
-    - endpoints: ["web:eth1", "clab-br1:eth12"]
+    - endpoints: ["r2:eth1", "t1:eth1"]
+    - endpoints: ["z35:eth1", "clab-br1:eth10"]
+    - endpoints: ["zue:eth1", "clab-br1:eth11"]
+    - endpoints: ["zin:eth1", "clab-br1:eth12"]
     - endpoints: ["r3:eth1", "clab-br1:eth13"]
     - endpoints: ["r1:eth2", "r2:eth2"]
     - endpoints: ["r2:eth3", "r3:eth3"]
@@ -67,16 +69,17 @@ sudo clab deploy --topo $f
 
 # Configure IPs on hosts
 d="sudo docker"
-a1=10.200.1.11/24
-a2=10.200.1.12/24
-a3=10.200.1.20/24
+a1=10.200.1.16/24
+a2=10.200.1.22/24
+a3=10.200.1.88/24
 a4=10.100.1.65/24
+a5=10.150.1.99/24
 b1="dev eth1"
 h1="clab-$l-h1"
 h2="clab-$l-h2"
 w="clab-$l-web"
-dns1="clab-$l-dns1"
-dns2="clab-$l-dns2"
+d="clab-$l-dns1"
+f="clab-$l-ftp"
 r1="clab-$l-r1"
 r2="clab-$l-r2"
 r3="clab-$l-r3"
