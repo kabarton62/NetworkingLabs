@@ -38,26 +38,26 @@ topology:
     zue:
       kind: linux
       image: $wes
-    r1:
+    dav:
       kind: linux
       image: $router
-    r2:
+    mar:
       kind: linux
       image: $router
-    r3:
+    alp:
       kind: linux
       image: $router
     clab-br1: 
       kind: bridge
   links:
-    - endpoints: ["r1:eth1", "h1:eth2"]
-    - endpoints: ["r2:eth1", "t1:eth1"]
+    - endpoints: ["dav:eth1", "h1:eth2"]
+    - endpoints: ["mar:eth1", "t1:eth1"]
     - endpoints: ["zan:eth1", "clab-br1:eth10"]
     - endpoints: ["zue:eth1", "clab-br1:eth11"]
     - endpoints: ["zin:eth1", "clab-br1:eth12"]
-    - endpoints: ["r3:eth1", "clab-br1:eth13"]
-    - endpoints: ["r1:eth2", "r2:eth2"]
-    - endpoints: ["r2:eth3", "r3:eth3"]
+    - endpoints: ["alp:eth1", "clab-br1:eth13"]
+    - endpoints: ["dav:eth2", "mar:eth2"]
+    - endpoints: ["mar:eth3", "alp:eth3"]
 mgmt: 
   network: mgmt
   ipv4_subnet: 172.20.0.0/24
@@ -80,9 +80,9 @@ t1="clab-$l-t1"
 w="clab-$l-zue"
 n="clab-$l-zan"
 f="clab-$l-zin"
-r1="clab-$l-r1"
-r2="clab-$l-r2"
-r3="clab-$l-r3"
+davi="clab-$l-dav"
+marf="clab-$l-mar"
+alpi="clab-$l-alp"
 conf="/opt/vyatta/etc/config/config.boot"
 gw=172.20.0.1
 
@@ -100,9 +100,9 @@ $d exec -it $f route add default gw 10.200.1.1 eth1
 $d exec -it $w route add default gw 10.200.1.1 eth1
 
 # Copy router config files
-$d cp r1.config.boot $r1:$conf
-$d cp r2.config.boot $r2:$conf
-$d cp r3.config.boot $r3:$conf
+$d cp r1.config.boot $davi:$conf
+$d cp r2.config.boot $marf:$conf
+$d cp r3.config.boot $alpi:$conf
 
 printf "Wait 120 seconds to reboot routers\n"
 sleep 30
