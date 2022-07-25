@@ -2,9 +2,11 @@
 ## Practicing router/routing troubleshooting
 --- 
 Submit the following:
-1. Challenge 3:
-- Screenshot of IP addressed assigned to H1/eth1.
-2. Challenge 4:
-- Screenshot of R1 DHCP server statistics and leases proving a DHCP lease was provided to H1.
-3. Challenge 5:
-- Screenshot of R2 DHCP server statistics and leases proving a DHCP lease was provided to H2.
+1. Challenge 2:
+- IP addresses for the hosts in Table 1.
+2. Challenge 3:
+- Service versions for open ports on the hosts in the vitty.us domain.
+3. Challenge 4:
+- Default Gateway of each target network in Table 2.
+4. Challenge 5:
+- Detailed network diagram.
