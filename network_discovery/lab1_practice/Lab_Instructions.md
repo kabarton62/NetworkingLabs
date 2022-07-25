@@ -164,5 +164,5 @@ The nmap results are truncated to just show the traceroute results. Note that th
 
 **Table 2, Default Gateways**
 
-## Challenge 6, Network diagram
+### Challenge 6, Network diagram
 **Using the information collected, diagram the network from H1 to all hosts in vitty.us. Include IP addresses as fully as possible on the router interfaces.**
