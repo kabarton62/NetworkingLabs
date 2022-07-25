@@ -18,7 +18,7 @@ Confirm that you can browse to the web server
 
 This labs deploys a network with routers, servers, and one client (H1). H1 includes a suite of networking tools that users can deploy to discover the servers and network topology. Table 1, Hostnames provides a place to documment server information.
 
-|Hostname|IP Address|
+|Hostname|    IP Address    |
 |---|---|
 |duck.vitty.us||
 |lizard.vitty.us||
@@ -29,51 +29,49 @@ This labs deploys a network with routers, servers, and one client (H1). H1 inclu
 
 Name servers are not configured on H1, so **dig** and **nslookup** commands cannot not resolve the hostnames from Table 1. However, **ping** will successfuly resolve those hostnames.
 
-**Use ping to resolve IP addresses for the hosts in Table 1. Record the IP addresses for each host.**
+In the following example, the IP address for varmint.myhome.com is 105.90.1.77.
 
 ```
-root@h1:/# ping duck.vitty.us
-  PING duck.vitty.us (X.X.X.X) 56(84) bytes of data.
-  64 bytes from duck.vitty.us (X.X.X.X): icmp_seq=2 ttl=62 time=0.157 ms
+root@h1:/# ping varmint.myhome.com
+  PING varmint.myhome.com (105.90.1.77) 56(84) bytes of data.
+  64 bytes from varmint.myhome.com (105.90.1.77): icmp_seq=2 ttl=62 time=0.157 ms
 ```
+**Use ping to resolve IP addresses for the hosts in Table 1. Record the IP addresses for each host.** 
+
 --- 
 
-## Challenge 3: Configuring DHCP Service
-### Configure a DHCP pool on router LAN interfaces (eth1)
+## Challenge 3: nmap: Port Scanning
 
-DHCP dnymically configures network services on DHCP clients. A DHCP client requests a *lease* from the DHCP server. The DHCP responds with an IP address and subnet mask, Default Gateway, name servers (DNS servers), lease time and other details. The DHCP client then uses that lease for network communications. Routers R1 and R2 each have a LAN directly connected to eth1. A DHCP pool provides the IP address range and other configuration details the DHCP server will use to issue leases to DHCP clients.
+Before we jump into nmap, you might be curious how **ping** discovered the IP addresses of the target hosts if DNS is not configured. After all, DNS is the service used to resolve hostnames to IP addresses and DNS services were not configured in this network. The answer lies in the fact that DNS is not the only mechanism used for name resolution.
 
-**Configure DHCP pools on R1 and R2 eth1 interfaces**. Use the following configuration deails:
+Operating systems such as Windows, MacOS and Linux include a file to resolve local IP addresses. By default, /etc/hosts includes IP addresses for the host machine, but additional hostnames can be added to the file. Hosts check /etc/hosts first to resolve addresses. If an answer is not found in /etc/hosts, the host queries DNS for name resolution.
 
-Start IP address (the first IP address in the pool): x.x.x.51
-Stop IP address (the last IP address in the pool): x.x.x.150
-Lease Expiration of 84600 seconds (24 hours)
-Name Server: R1/eth1 address on R1 and R2/eth1 IP address on R2
-Gateway: R1/eth1 address on R1 and R2/eth1 IP address on R2
+Curios where the hostnames in Challenge 2 were resolved? Inspect /etc/hosts on H1.
 
-Example, assuming R1 had IP address 10.10.10.1/24:
+Now, let's talk to **nmap**. Nmap scans single hosts, groups of hosts, or subnets, to discover the state of TCP and UDP ports. Advanced functions of nmap can be used to identify operating systems, service versions, increase scan stealth, and use Nmap Scripting Engine (NSE) to scan for various service or configuration vulnerabilities.
+
+### Default scan
+
+Nmap's default scan employs a half-open SYN scan (SYN, SYN/ACK ... but omits the client ACK), 1,000 common TCP ports (no UDP ports; not the first 1,000 ports, but the most common 1,000 ports), and excludes service version or operating system detection. Executing a default scan is simple: just run nmap without additional options. For example, the following command runs a default nmap scan against 192.168.1.0/24:
 ```
-set service dhcp-server shared-network-name LAN authoritative
-set service dhcp-server shared-network-name LAN subnet 10.10.10.0/24 default-router 10.10.10.1
-set service dhcp-server shared-network-name LAN subnet 10.10.10.0/24 lease 84600
-set service dhcp-server shared-network-name LAN subnet 10.10.10.0/24 name-server 10.10.10.1
-set service dhcp-server shared-network-name LAN subnet 10.10.10.0/24 range 0 start 10.10.10.51
-set service dhcp-server shared-network-name LAN subnet 10.10.10.0/24 range 0 stop 10.10.10.150
+nmap 192.168.1.0/24
+```
+In Challenge 2, you discovered 5 hosts in vitty.us domain. **Add that list of IP addresses to a file, such ip-list.txt, and run a default scan against those IP addresses from H1.** The -iL option directs nmap to scan a list of IP addresses from a file.
+
+Do you want a shortcut to get that IP list? Recall that those IP addresses came from /etc/hosts. The **grep** and **cut** commands can extract those IP addresses from /etc/hosts. Filter the list for lines that include the domain vitty.us (grep vitty) then **cut** those lines to extract just the IP addresses. The **cut** command use a space as a delimiter (-d " ") and takes the first field (-f 1), the writes the output to a file (> ip-list).
+```
+cat /etc/hosts | grep vitty | cut -d " " -f 1 > ip-list.txt
+```
+Now, run a default scan against the IP addresses in ip-list.txt.
+
+Want to see the results as they are discovered? Include the **-v** option.
+```
+nmap -iL ip-list.txt
+nmap -iL ip-list.txt -v
+
 ```
 
-### Manually force a DHCP request from a client
-
-Normally DHCP requests happen automatically when a DHCP client is added to a network, but in this case we will manually force a DHCP request with the **dhclient** command.
-
-Use dhclient to force a DHCP lease resnew.
-```
-# Request DHCP lease with dhclient
-dhclient eth1
-
-#Verify IP addressed assigned
-ifconfig eth1
-```
-**Capture a screenshot of the results of ifconfig on H1 demonstrating that H1 as an IP address assigned to eth1.**
+### Service version and all ports scan
 
 --- 
 ## Challenge 4, Examine DHCP leases on Vyos
