@@ -68,10 +68,29 @@ Want to see the results as they are discovered? Include the **-v** option.
 ```
 nmap -iL ip-list.txt
 nmap -iL ip-list.txt -v
-
 ```
 
 ### Service version and all ports scan
+The default nmap scan will report the assigned version on discovered open ports (i.e., http for TCP 80, nfs for TCP 2049, etc). Those may or may not be the actual service running on the open port. For example, an administrator could configure ssh on TCP 80. The default scan would detect port 80 open and report http on that port.
+
+Nmap's **-sV** option attempts to enumerate services on discovered open ports, to include the version of that service. In the above example where an administrator configured ssh to listen on TCP, the following command would scan TCP 80 for the service version and return a result such as:
+```
+nmap localhost -sV -p 80
+  Starting Nmap 7.80 ( https://nmap.org ) at 2022-07-25 12:51 UTC
+  Nmap scan report for localhost (127.0.0.1)
+  Host is up (0.00023s latency).
+
+  PORT   STATE SERVICE VERSION
+  80/tcp open  ssh     OpenSSH 8.2p1 Ubuntu 4ubuntu0.4 (Ubuntu Linux; protocol 2.0)
+  Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+  Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+  Nmap done: 1 IP address (1 host up) scanned in 0.50 seconds
+```
+
+**Scan and report service versions for open ports on the hosts in the vitty.us domain.**
+
+The option **-p-** can be included to scan all ports. Recall that the default scan tests only the most common 1,000 ports. A host may have open ports that are not in that set of *most common ports*. Those ports would not be scanned by the default scan and therefore not detected. The **-p-** option would scan and detect all open ports.
 
 --- 
 ## Challenge 4, Examine DHCP leases on Vyos
