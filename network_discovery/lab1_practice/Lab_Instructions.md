@@ -18,7 +18,7 @@ Confirm that you can browse to the web server
 
 This labs deploys a network with routers, servers, and one client (H1). H1 includes a suite of networking tools that users can deploy to discover the servers and network topology. Table 1, Hostnames provides a place to documment server information.
 
-|Hostname|    IP Address    |
+|Hostname| ___ IP Address ___ |
 |---|---|
 |duck.vitty.us||
 |lizard.vitty.us||
