@@ -100,6 +100,13 @@ $d exec -it $f route add default gw 10.200.1.1 eth1
 $d exec -it $w route add default gw 10.200.1.1 eth1
 $d exec -it $t1 route add default gw 10.150.1.1 eth1
 
+# Delete Docker default gateways
+$d exec -it $h1 route delete default gw $gw eth0
+$d exec -it $t1 route delete default gw $gw eth0
+$d exec -it $zin route delete default gw $gw eth0
+$d exec -it $zan route delete default gw $gw eth0
+$d exec -it $zue route delete default gw $gw eth0
+
 # Copy router and h1 config files
 $d cp r1.config.boot $davi:$conf
 $d cp r2.config.boot $marf:$conf
