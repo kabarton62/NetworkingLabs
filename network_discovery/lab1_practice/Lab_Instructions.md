@@ -5,12 +5,6 @@
 Launch the topology by running the script deploy.sh and manually launch the http service on the web server.
 ```
   $ bash deploy.sh
-  $ sudo docker exec -it clab-lab1-web /httpd.sh
-
-Confirm that you can browse to the web server
-  
-  $ sudo docker exec -it clab-lab1-web ifconfig eth0
-  $ curl http://<web eth0 ip address>
 ```
 --- 
 ## Discovering hosts and enumerating services
