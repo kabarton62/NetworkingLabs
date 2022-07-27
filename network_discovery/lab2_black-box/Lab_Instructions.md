@@ -15,8 +15,7 @@ SSH-RSA keys, username and IP address are provided separately. Use those resourc
 Once connected to the containerlab server connect to H1 using the id_rsa key found in the student's home directory. 
 ```
 ssh -i id_rsa student@clab-lab2-h1
-```
---- 
+``` 
 ### Challenge 3: Network discovery
 
 Examine /etc/hosts on H1 to discover hosts in the demo.us domain. Fully enumerate router links, IP addresses on the router interfaces, and services on the demo.us domain servers. 
@@ -24,6 +23,8 @@ Examine /etc/hosts on H1 to discover hosts in the demo.us domain. Fully enumerat
 ### Challenge 4: Network diagram
 **Using the information collected, diagram the network from H1 to all hosts in demo.us. Include IP addresses as fully as possible on the router interfaces. Report service versions on all demo.us servers.**
 
+---
+## Exploiting Vulnberable Services
 ### Challenge 5: BONUS (10 PTS)
 One server in demo.us has a Local File Inclusion (LFI) vulnerability with a public exploit on https://exploit-db.com. Discover the vulnerability and exploit, then demonstrate exploiting the LFI vulnerability by reading /etc/passwd on the vulnerable server using the LFI exploit.
 
