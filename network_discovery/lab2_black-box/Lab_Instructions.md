@@ -12,9 +12,9 @@ Launch the topology by running the script deploy.sh and manually launch the http
 
 SSH-RSA keys, username and IP address are provided separately. Use those resources to gain access to the containerlab server. 
 
-Once connected to the containerlab server connect to H1. **The password is *easyin* **.
+Once connected to the containerlab server connect to H1 using the id_rsa key found in the student's home directory. 
 ```
-ssh student@clab-lab2-h1
+ssh -i id_rsa student@clab-lab2-h1
 ```
 --- 
 ### Challenge 3: Network discovery
@@ -25,7 +25,7 @@ Examine /etc/hosts on H1 to discover hosts in the demo.us domain. Fully enumerat
 **Using the information collected, diagram the network from H1 to all hosts in demo.us. Include IP addresses as fully as possible on the router interfaces. Report service versions on all demo.us servers.**
 
 ### Challenge 5: BONUS (10 PTS)
-One server in demo.us has a Local File Inclusion (LFI) vulnerability with a public exploit on exploit-db. Discover the vulnerability and exploit, then demonstrate exploiting the LFI vulnerability by reading /etc/passwd on the vulnerable server using the LFI exploit.
+One server in demo.us has a Local File Inclusion (LFI) vulnerability with a public exploit on https://exploit-db.com. Discover the vulnerability and exploit, then demonstrate exploiting the LFI vulnerability by reading /etc/passwd on the vulnerable server using the LFI exploit.
 
 **Capture a screenshot of the /etc/passwd file on the vulnerable server.**
 
