@@ -16,6 +16,8 @@ Once connected to the containerlab server connect to H1 using the id_rsa key fou
 ```
 ssh -i id_rsa student@clab-lab2-h1
 ``` 
+**NOTE:** The user *student* on h1 does not have history. That is deliberate. All students will share the same user, so history was excluded. The user also does not have bash completion so all commands must be typed fully.
+
 ### Challenge 3: Network discovery
 
 Examine /etc/hosts on H1 to discover hosts in the demo.us domain. Fully enumerate router links, IP addresses on the router interfaces, and services on the demo.us domain servers. 
