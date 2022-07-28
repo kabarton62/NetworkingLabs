@@ -14,7 +14,7 @@ SSH-RSA keys, username and IP address are provided separately. Use those resourc
 
 Once connected to the containerlab server connect to H1 using the id_rsa key found in the student's home directory. 
 ```
-ssh -i id_rsa student@clab-lab2-h1
+ssh -i id_rsa student@clab-lab2-h1 -p 2222
 ``` 
 **NOTE:** The user *student* on h1 does not have history. That is deliberate. All students will share the same user, so history was excluded. The user also does not have bash completion so all commands must be typed fully.
 
