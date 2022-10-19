@@ -2,17 +2,15 @@
 These networking labs use Docker and Containerlab for students, and whoever else wants to use these labs, easy to deploy computer networking labs.
 
 ---
-### eth_switch labs:
+## Part 1, Ethernet Switching [eth_switch labs](https://github.com/kabarton62/NetworkingLabs/tree/main/eth_switch)
 
-eth_switch labs use Linux bridges to simulate basic switch function. Frames are forwarded between hosts using TCP/IP Layer 2 functions in Linux bridges. These labs connect hosts to isolated bridges, simulating stand-alone Ethernet switches. Hosts connected to a single switch are capable of communicating, but hosts cannot communicate with hosts connected to other switches.
+Ethernet switching labs use Linux bridges to simulate basic switch function. Frames are forwarded between hosts using TCP/IP Layer 2 functions in Linux bridges. These labs connect hosts to isolated bridges, simulating stand-alone Ethernet switches. Hosts connected to a single switch are capable of communicating, but hosts cannot communicate with hosts connected to other switches. Bash scripts are provided that deploy and destroy the lab network in Containerlab.
 
----
-### router_basic labs:
-router_basic labs add Free Range Routing (FRRouting) routers to route traffic between two local networks. The switching technology introduced in eth_switch labs is used in router_basic to create the local networks, but two routers are added to the network to connect the two local networks. The practice lab demonstrates basic interface and static route configurations needed to make the topology work. 
+## Part 2, Router Basics [router_basic labs](https://github.com/kabarton62/NetworkingLabs/tree/main/router_basic)
+Router basics labs add open source Vyos routers to route traffic between two local networks. The switching technology introduced in Ethernet switching labs is used in these labs to create the local networks, but two routers are added to the network to connect the two local networks. The practice lab demonstrates basic interface and static route configurations needed to make the topology work. Bash scripts are provided that deploy and destroy the lab network in Containerlab.
 
----
-### router_troubleshooting labs:
-
+## Part 3, Troubleshooting Routing [router_troubleshooting labs](https://github.com/kabarton62/NetworkingLabs/tree/main/router_troubleshooting)
+Students may make errors when configuring routers and routing protocols. These labs deploy routers with intentional configuration errors and introduce a method to troubleshoot and correct those errors. Students practice isolating and correcting conf 
 
 ---
 ### routing_protocols labs:
