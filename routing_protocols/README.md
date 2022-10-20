@@ -1,4 +1,4 @@
-# <img src="https://www.tamusa.edu/brandguide/jpeglogos/tamusa_final_logo_bw1.jpg" width="100" height="50"> Routing Labs
+# <img src="https://www.tamusa.edu/brandguide/jpeglogos/tamusa_final_logo_bw1.jpg" width="100" height="50"> Routing Protocols
 ## Routing Protocol Practice
 This lab includes three networks (North, Central and South). Router and host interfaces are configured correctly, but the routers only know Kernel and Directly Connected routes. The routers are not learning routes. This lab introduces routing protocols that enable the routers to dynamically learn routes. 
 
