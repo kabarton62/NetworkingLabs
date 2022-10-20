@@ -1,4 +1,4 @@
-# <img src="https://www.tamusa.edu/brandguide/jpeglogos/tamusa_final_logo_bw1.jpg" width="100" height="50"> Routing Labs
+# <img src="https://www.tamusa.edu/brandguide/jpeglogos/tamusa_final_logo_bw1.jpg" width="100" height="50"> Network Services
 ## Networking Services Practice
 Lab 1 Practice includes routers, LANs and two DNS servers. Nodes in the LANs are preconfigured to request DHCP configuration. Routers include interface and routing protocol configurations. Users will configure NAT, DHCP and DNS services.
 
