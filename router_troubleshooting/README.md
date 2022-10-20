@@ -1,4 +1,4 @@
-# <img src="https://www.tamusa.edu/brandguide/jpeglogos/tamusa_final_logo_bw1.jpg" width="100" height="50"> Routing Labs
+# <img src="https://www.tamusa.edu/brandguide/jpeglogos/tamusa_final_logo_bw1.jpg" width="100" height="50"> Troubleshooting Routing
 ## Router Troubleshooting Practice
 This lab includes a network with router configuration errors. Router and host interfaces are configured with the correct IP addresses and subnet masks, but the routers do not have routes configured or known, other than Kernel and directly connected routes.
 
