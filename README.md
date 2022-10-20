@@ -12,11 +12,11 @@ Router basics labs add open source Vyos routers to route traffic between two loc
 ## Part 3, Troubleshooting Routing [router_troubleshooting labs](https://github.com/kabarton62/NetworkingLabs/tree/main/router_troubleshooting)
 Students may make errors when configuring routers and routing protocols. These labs deploy routers with intentional configuration errors and introduce a method to troubleshoot and correct those errors. Students practice isolating and correcting conf 
 
-### Part 4, Routing Protocols [routing_protocols labs](https://github.com/kabarton62/NetworkingLabs/tree/main/routing_protocols)
+## Part 4, Routing Protocols [routing_protocols labs](https://github.com/kabarton62/NetworkingLabs/tree/main/routing_protocols)
 An 8-router network is deployed. RIP and OSPF are configured to enable dynamic route learning throughout the network. 
 
-### Part 5, Network Services [network_services labs](https://github.com/kabarton62/NetworkingLabs/tree/main/network_services)
+## Part 5, Network Services [network_services labs](https://github.com/kabarton62/NetworkingLabs/tree/main/network_services)
 Students configure NAT, DHCP and DNS services in the network. Interfaces and routing protocols are pre-configured on the Vyos routers and end points are pre-configured as DHCP clients. The network also includes a web and two DNS servers to support network service configuration and testing.
 
-### Part 6, Network Discovery [network_discovery labs](https://github.com/kabarton62/NetworkingLabs/tree/main/network_services)
+## Part 6, Network Discovery [network_discovery labs](https://github.com/kabarton62/NetworkingLabs/tree/main/network_services)
 This lab practices collecting network configuration data using various methods, such as DNS queries and network scans. Students analyze that data and create a network diagram that illustrates the network topology and configuration details. 
