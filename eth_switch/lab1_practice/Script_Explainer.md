@@ -1,4 +1,6 @@
-# <img src="https://www.tamusa.edu/brandguide/jpeglogos/tamusa_final_logo_bw1.jpg" width="100" height="50"> Reading Bash Scripts
+<img src="https://www.tamusa.edu/brandguide/jpeglogos/tamusa_final_logo_bw1.jpg" width="200" height="100"> 
+
+# Reading Bash Scripts
 ## Why Bother with this?
 
 Although this is not a scripting course, you will see bash scripts. Additionally, you will need to read the scripts, perhaps modify scripts, and perhaps use commands found in scripts. Therefore, you need some basic bash scripting skills.
