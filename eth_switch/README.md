@@ -1,4 +1,6 @@
-# <img src="https://www.tamusa.edu/brandguide/jpeglogos/tamusa_final_logo_bw1.jpg" width="100" height="50"> Ethernet Switching Labs
+<img src="https://www.tamusa.edu/brandguide/jpeglogos/tamusa_final_logo_bw1.jpg" width="200" height="100"> 
+
+# Ethernet Switching Labs
 ## Practice
 The main goal of Lab1_practice is to examine network traffic in a switched network, but Lab1_practice also introduces Linux Bridges, Containerlabs, and the operation of Docker instances. The lab captures network traffic in a very simple switched Ethernet network. The topology does not include routers or the ability to *route* network traffic.
 ## Discovery
