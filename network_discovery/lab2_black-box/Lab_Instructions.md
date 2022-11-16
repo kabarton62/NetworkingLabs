@@ -1,5 +1,6 @@
-# <img src="https://www.tamusa.edu/brandguide/jpeglogos/tamusa_final_logo_bw1.jpg" width="100" height="50"> Lab Instructions
-# Network Discovery
+<img src="https://www.tamusa.edu/brandguide/jpeglogos/tamusa_final_logo_bw1.jpg" width="200" height="100"> 
+
+# Lab Instructions: Network Discovery
 ## Operating the Lab Network
 ### Challenge 1: Deploy the Lab Network
 Launch the topology by running the script deploy.sh and manually launch the http service on the web server.
