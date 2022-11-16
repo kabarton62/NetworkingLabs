@@ -1,4 +1,6 @@
-# <img src="https://www.tamusa.edu/brandguide/jpeglogos/tamusa_final_logo_bw1.jpg" width="100" height="50"> Lab 2 Discovery
+<img src="https://www.tamusa.edu/brandguide/jpeglogos/tamusa_final_logo_bw1.jpg" width="200" height="100"> 
+
+# Lab 2 Discovery
 ## Discovering & Illustrating Network Topology in an Ethernet Switched Network
 ### **Understanding deploy.sh**
 The script **deploy.sh** is similar to the deploy.sh in Lab 1. Script deploy.sh:
