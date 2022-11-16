@@ -1,5 +1,7 @@
-# <img src="https://www.tamusa.edu/brandguide/jpeglogos/tamusa_final_logo_bw1.jpg" width="100" height="50"> Lab Troubleshooting Tips
----
+<img src="https://www.tamusa.edu/brandguide/jpeglogos/tamusa_final_logo_bw1.jpg" width="200" height="100"> 
+
+# Lab Troubleshooting Tips
+
 ## Vyos: vyos user not found
 The boot configuration can fail to run when vyos boots, causing a router to not add the **vyos** user to the system. One solution is to login to the router as the root user and restart the routing service. The example commands assume R1 is throwing an error that user vyos does not exist.
 
