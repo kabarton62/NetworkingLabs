@@ -1,6 +1,7 @@
-# <img src="https://www.tamusa.edu/brandguide/jpeglogos/tamusa_final_logo_bw1.jpg" width="100" height="50"> Lab 1 Practice
-## Network discovery
---- 
+<img src="https://www.tamusa.edu/brandguide/jpeglogos/tamusa_final_logo_bw1.jpg" width="200" height="100"> 
+
+# Lab 1 Practice: Network discovery
+
 Submit the following:
 1. Challenge 4:
 - Network diagram with H1 and all hosts in the domain demo.us, and hops between h1 and demo.us hosts. Include all IP addresses on the router interfaces.
